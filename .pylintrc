@@ -1,0 +1,6 @@
+[MASTER]
+ignore-patterns=
+ignore=
+
+[MESSAGES CONTROL]
+disable=R0801,C0301,C0204,C0209,W1203,C0302
