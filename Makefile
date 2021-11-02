@@ -55,11 +55,17 @@ v := $(shell pip -V | grep virtualenvs)
 
 .PHONY: new_env
 new_env: clean
+	if [ ! -z "$(which svn)" ];\
+	then\
+		echo "The development setup requires SVN, exit";\
+		exit 1;\
+	fi;\
 	if [ -z "$v" ];\
 	then\
 		pipenv --rm;\
 		pipenv --python 3.8;\
 		pipenv install --dev --skip-lock --clear;\
+		svn export https://github.com/valory-xyz/open-aea.git/trunk/packages/open_aea packages/open_aea;\
 		echo "Enter virtual environment with all development dependencies now: 'pipenv shell'.";\
 	else\
 		echo "In a virtual environment! Exit first: 'exit'.";\
