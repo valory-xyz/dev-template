@@ -64,7 +64,7 @@ new_env: clean
 	then\
 		pipenv --rm;\
 		pipenv --python 3.8;\
-		pipenv install --dev --skip-lock --clear;\
+		pipenv install --dev --skip-lock;\
 		svn export https://github.com/valory-xyz/open-aea.git/trunk/packages/open_aea packages/open_aea;\
 		echo "Enter virtual environment with all development dependencies now: 'pipenv shell'.";\
 	else\
