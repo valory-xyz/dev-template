@@ -2,7 +2,7 @@
 
 A template for development with the open-aea and other agent tools and frameworks.
 
-## Requirements
+## System requirements
 
 - Python `>=3.7`
 - [Tendermint](https://docs.tendermint.com/master/introduction/install.html) `==0.34.11`
