@@ -1,5 +1,8 @@
 .PHONY: clean
-clean: clean-build clean-pyc clean-test clean-docs
+clean: clean-test clean-build clean-pyc clean-docs
+
+.PHONY: clean
+clean: clean-test clean-build clean-pyc clean-docs
 
 .PHONY: clean-build
 clean-build:
@@ -9,7 +12,10 @@ clean-build:
 	rm -fr pip-wheel-metadata
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -fr {} +
+	find . -type d -name __pycache__ -exec rm -rv {} +
 	rm -fr Pipfile.lock
+	rm -rf plugins/*/build
+	rm -rf plugins/*/dist
 
 .PHONY: clean-docs
 clean-docs:
@@ -33,22 +39,34 @@ clean-test:
 	rm -fr .hypothesis
 	rm -fr .pytest_cache
 	rm -fr .mypy_cache/
+	rm -fr .hypothesis/
 	find . -name 'log.txt' -exec rm -fr {} +
 	find . -name 'log.*.txt' -exec rm -fr {} +
 
-.PHONY: lint
-lint:
-	black packages
-	isort packages
-	flake8 packages
-	darglint packages
+# isort: fix import orders
+# black: format files according to the pep standards
+.PHONY: formatters
+formatters:
+	tox -e isort
+	tox -e black
 
-.PHONY: pylint
-pylint:
-	pylint -j4 packages
+# black-check: check code style
+# isort-check: check for import order
+# flake8: wrapper around various code checks, https://flake8.pycqa.org/en/latest/user/error-codes.html
+# mypy: static type checker
+# pylint: code analysis for code smells and refactoring suggestions
+# vulture: finds dead code
+# darglint: docstring linter
+.PHONY: code-checks
+code-checks:
+	tox -p -e black-check -e isort-check -e flake8 -e mypy -e pylint -e vulture -e darglint
 
-.PHONY: static
-static:
+# safety: checks dependencies for known security vulnerabilities
+# bandit: security linter
+.PHONY: security
+security:
+	tox -p -e safety -e bandit
+	gitleaks detect --report-format json --report-path leak_report
 	mypy packages --disallow-untyped-defs
 
 v := $(shell pip -V | grep virtualenvs)
