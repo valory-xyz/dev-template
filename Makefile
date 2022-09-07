@@ -64,7 +64,20 @@ code-checks:
 security:
 	tox -p -e safety -e bandit
 	gitleaks detect --report-format json --report-path leak_report
-	mypy packages --disallow-untyped-defs
+
+# generate latest hashes for updated packages
+# generate docs for updated packages
+# update copyright headers
+.PHONY: generators
+generators:
+	rm -rf packages/fetchai/connections/stub/input_file
+	tox -e fix-copyright
+	python -m aea.cli hash all
+	python -m aea.cli hash all --packages-dir=./tests/data/packages
+	python -m aea.cli generate-all-protocols
+	python -m aea.cli generate-all-protocols tests/data/packages
+	tox -e generate-api-documentation
+	tox -e fix-doc-hashes
 
 v := $(shell pip -V | grep virtualenvs)
 
@@ -75,12 +88,13 @@ new_env: clean
 		echo "The development setup requires SVN, exit";\
 		exit 1;\
 	fi;\
+
 	if [ -z "$v" ];\
 	then\
 		pipenv --rm;\
-		pipenv --python 3.8;\
+		pipenv --clear;\
+		pipenv --python 3.10;\
 		pipenv install --dev --skip-lock;\
-		svn export https://github.com/valory-xyz/open-aea.git/trunk/packages/open_aea packages/open_aea;\
 		echo "Enter virtual environment with all development dependencies now: 'pipenv shell'.";\
 	else\
 		echo "In a virtual environment! Exit first: 'exit'.";\

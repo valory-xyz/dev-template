@@ -28,4 +28,5 @@ To install the latest version of the open-AEA and development dependencies:
 
       make formatters
       make code-checks
+      make generators
       make security
