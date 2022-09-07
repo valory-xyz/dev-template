@@ -1,6 +1,6 @@
-# dev-template
+# Dev-template
 
-A template for development with the open-aea and other agent tools and frameworks.
+A template for development with the open-autonomy framework.
 
 ## System requirements
 
@@ -15,7 +15,7 @@ Alternatively, you can fetch this docker image with the relevant requirments sat
 
 ## It contains:
 
-- empty directory `packages` which acts as the local registry
+- Empty directory `packages` which acts as the local registry
 
 - .env file with Python path updated to include packages directory
 
@@ -26,6 +26,7 @@ To install the latest version of the open-AEA and development dependencies:
 
 ## Linters:
 
-      make lint
-      make static
-      make pylint
+      make formatters
+      make code-checks
+      make generators
+      make security

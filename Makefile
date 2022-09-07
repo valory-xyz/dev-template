@@ -1,5 +1,5 @@
 .PHONY: clean
-clean: clean-build clean-pyc clean-test clean-docs
+clean: clean-test clean-build clean-pyc clean-docs
 
 .PHONY: clean-build
 clean-build:
@@ -9,7 +9,10 @@ clean-build:
 	rm -fr pip-wheel-metadata
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -fr {} +
+	find . -type d -name __pycache__ -exec rm -rv {} +
 	rm -fr Pipfile.lock
+	rm -rf plugins/*/build
+	rm -rf plugins/*/dist
 
 .PHONY: clean-docs
 clean-docs:
@@ -33,23 +36,47 @@ clean-test:
 	rm -fr .hypothesis
 	rm -fr .pytest_cache
 	rm -fr .mypy_cache/
+	rm -fr .hypothesis/
 	find . -name 'log.txt' -exec rm -fr {} +
 	find . -name 'log.*.txt' -exec rm -fr {} +
 
-.PHONY: lint
-lint:
-	black packages
-	isort packages
-	flake8 packages
-	darglint packages
+# isort: fix import orders
+# black: format files according to the pep standards
+.PHONY: formatters
+formatters:
+	tox -e isort
+	tox -e black
 
-.PHONY: pylint
-pylint:
-	pylint -j4 packages
+# black-check: check code style
+# isort-check: check for import order
+# flake8: wrapper around various code checks, https://flake8.pycqa.org/en/latest/user/error-codes.html
+# mypy: static type checker
+# pylint: code analysis for code smells and refactoring suggestions
+# vulture: finds dead code
+# darglint: docstring linter
+.PHONY: code-checks
+code-checks:
+	tox -p -e black-check -e isort-check -e flake8 -e mypy -e pylint -e vulture -e darglint
 
-.PHONY: static
-static:
-	mypy packages --disallow-untyped-defs
+# safety: checks dependencies for known security vulnerabilities
+# bandit: security linter
+.PHONY: security
+security:
+	tox -p -e safety -e bandit
+	gitleaks detect --report-format json --report-path leak_report
+
+# generate latest hashes for updated packages
+# generate docs for updated packages
+# update copyright headers
+.PHONY: generators
+generators:
+	tox -e fix-copyright
+	python -m aea.cli hash all
+	python -m aea.cli hash all --packages-dir=./tests/data/packages
+	python -m aea.cli generate-all-protocols
+	python -m aea.cli generate-all-protocols tests/data/packages
+	tox -e generate-api-documentation
+	tox -e fix-doc-hashes
 
 v := $(shell pip -V | grep virtualenvs)
 
@@ -60,12 +87,13 @@ new_env: clean
 		echo "The development setup requires SVN, exit";\
 		exit 1;\
 	fi;\
+
 	if [ -z "$v" ];\
 	then\
 		pipenv --rm;\
-		pipenv --python 3.8;\
+		pipenv --clear;\
+		pipenv --python 3.10;\
 		pipenv install --dev --skip-lock;\
-		svn export https://github.com/valory-xyz/open-aea.git/trunk/packages/open_aea packages/open_aea;\
 		echo "Enter virtual environment with all development dependencies now: 'pipenv shell'.";\
 	else\
 		echo "In a virtual environment! Exit first: 'exit'.";\
