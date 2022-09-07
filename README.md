@@ -1,17 +1,10 @@
 # Dev-template
 
-A template for development with the open-autonomy framework.
+A template for development with the open-autonomy framework. Find the documentation [here](docs.autonolas.network).
 
 ## System requirements
 
-- Python `>=3.7`
-- [Tendermint](https://docs.tendermint.com/master/introduction/install.html) `==0.34.11`
-- [IPFS node](https://docs.ipfs.io/install/command-line/#official-distributions) `==0.6.0`
-
-Alternatively, you can fetch this docker image with the relevant requirments satisfied:
-
-        docker pull valory/dev-template:latest
-        docker container run -it valory/dev-template:latest
+Read the requirements section [here](https://docs.autonolas.network/quick_start/).
 
 ## It contains:
 
@@ -19,7 +12,7 @@ Alternatively, you can fetch this docker image with the relevant requirments sat
 
 - .env file with Python path updated to include packages directory
 
-To install the latest version of the open-AEA and development dependencies:
+To install the latest version of the open-autonomy and development dependencies:
 
 	  make new_env
 
