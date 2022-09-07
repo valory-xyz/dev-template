@@ -4,3 +4,7 @@
 .tox/.package.lock
 
 leak_report
+
+.tox/
+
+UNKNOWN.egg-info/
