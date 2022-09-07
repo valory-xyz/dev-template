@@ -1,2 +1,6 @@
 .mypy_cache
 .DS_Store
+
+.tox/.package.lock
+
+leak_report
