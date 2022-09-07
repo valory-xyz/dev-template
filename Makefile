@@ -1,9 +1,6 @@
 .PHONY: clean
 clean: clean-test clean-build clean-pyc clean-docs
 
-.PHONY: clean
-clean: clean-test clean-build clean-pyc clean-docs
-
 .PHONY: clean-build
 clean-build:
 	rm -fr build/
