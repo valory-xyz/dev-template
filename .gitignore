@@ -8,3 +8,7 @@ leak_report
 .tox/
 
 UNKNOWN.egg-info/
+
+.coverage
+
+coverage.xml
