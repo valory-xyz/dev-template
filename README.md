@@ -6,20 +6,23 @@ A template for development with the open-autonomy framework. Find the documentat
 
 Read the requirements section [here](https://docs.autonolas.network/quick_start/).
 
-## It contains:
+## Simple ABCI example
 
-- Empty directory `packages` which acts as the local registry
+Create a virtual environment with all development dependencies:
 
-- .env file with Python path updated to include packages directory
+```bash
+make new_env
+```
 
-To install the latest version of the open-autonomy and development dependencies:
+Enter virtual environment:
 
-	  make new_env
+``` bash
+pipenv shell
+```
 
+Get developing...
 
-## Linters:
+## Useful commands:
 
-      make formatters
-      make code-checks
-      make generators
-      make security
+Check out the `Makefile` for useful commands, e.g. `make formatters`, `make generators`, `make code-checks`, as well
+as `make common-checks-1`. To run all tests use `make test`.
