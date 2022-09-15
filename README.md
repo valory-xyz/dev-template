@@ -5,8 +5,6 @@ A template for development with the open-autonomy framework. Find the documentat
 ## System requirements
 
 - Python `>=3.7`
-- Yarn `>=1.22.xx`
-- Node `>=v12.xx`
 - [Tendermint](https://docs.tendermint.com/master/introduction/install.html) `==0.34.19`
 - [IPFS node](https://docs.ipfs.io/install/command-line/#official-distributions) `==0.6.0`
 - [Pipenv](https://pipenv.pypa.io/en/latest/install/) `>=2021.x.xx`
