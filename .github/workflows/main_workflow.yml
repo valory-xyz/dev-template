@@ -180,6 +180,8 @@ jobs:
           sudo mv tendermint /usr/local/bin/tendermint
           # pull node image needed for the integration tests
           docker pull trufflesuite/ganache:beta
+          docker pull valory/autonolas-registries:latest
+          docker pull valory/safe-contract-net:latest
       - name: Unit tests
         run: |
           tox -e py${{ matrix.python-version }} -- -m 'not e2e'
@@ -228,6 +230,8 @@ jobs:
 
           # pull node image needed for the integration tests
           docker pull trufflesuite/ganache:beta
+          docker pull valory/autonolas-registries:latest
+          docker pull valory/safe-contract-net:latest
 
       - name: e2e tests
         run: |
