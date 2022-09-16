@@ -152,10 +152,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Checkout submodules
-        uses: srt32/git-actions@v0.0.3
-        with:
-          args: git config --global --add safe.directory /github/workspace/third_party/safe-contracts && git config --global --add safe.directory /github/workspace && git submodule update --init --recursive
       - uses: actions/setup-python@v3
         with:
           submodules: recursive
@@ -183,8 +179,9 @@ jobs:
           tar -xf tendermint.tar.gz
           sudo mv tendermint /usr/local/bin/tendermint
           # pull node image needed for the integration tests
-          docker pull node:16.7.0
           docker pull trufflesuite/ganache:beta
+          docker pull valory/autonolas-registries:latest
+          docker pull valory/safe-contract-net:latest
       - name: Unit tests
         run: |
           tox -e py${{ matrix.python-version }} -- -m 'not e2e'
@@ -201,10 +198,6 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v2
-      - name: Checkout submodules
-        uses: srt32/git-actions@v0.0.3
-        with:
-          args: git config --global --add safe.directory /github/workspace/third_party/contracts-elcol/third-party/safe-contracts && git config --global --add safe.directory /github/workspace/third_party/safe-contracts && git config --global --add safe.directory /github/workspace && git submodule update --init --recursive
       - uses: actions/setup-python@v3
         with:
           submodules: recursive
@@ -236,7 +229,9 @@ jobs:
           sudo mv tendermint /usr/local/bin/tendermint
 
           # pull node image needed for the integration tests
-          docker pull node:16.7.0
+          docker pull trufflesuite/ganache:beta
+          docker pull valory/autonolas-registries:latest
+          docker pull valory/safe-contract-net:latest
 
       - name: e2e tests
         run: |

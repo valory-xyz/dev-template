@@ -4,22 +4,38 @@ A template for development with the open-autonomy framework. Find the documentat
 
 ## System requirements
 
-Read the requirements section [here](https://docs.autonolas.network/quick_start/).
+- Python `>=3.7`
+- [Tendermint](https://docs.tendermint.com/master/introduction/install.html) `==0.34.19`
+- [IPFS node](https://docs.ipfs.io/install/command-line/#official-distributions) `==0.6.0`
+- [Pip](https://pip.pypa.io/en/stable/installation/)
+- [Pipenv](https://pipenv.pypa.io/en/latest/install/) `>=2021.x.xx`
+- [Docker Engine](https://docs.docker.com/engine/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Gitleaks](https://github.com/zricethezav/gitleaks/releases/latest)
 
-## It contains:
+## This repository contains:
 
 - Empty directory `packages` which acts as the local registry
 
 - .env file with Python path updated to include packages directory
 
-To install the latest version of the open-autonomy and development dependencies:
+## How to use
 
-	  make new_env
+Create a virtual environment with all development dependencies:
 
+```bash
+make new_env
+```
 
-## Linters:
+Enter virtual environment:
 
-      make formatters
-      make code-checks
-      make generators
-      make security
+``` bash
+pipenv shell
+```
+
+Get developing...
+
+## Useful commands:
+
+Check out the `Makefile` for useful commands, e.g. `make formatters`, `make generators`, `make code-checks`, as well
+as `make common-checks-1`. To run all tests use `make test`.

@@ -1,14 +1,15 @@
 .mypy_cache
 .DS_Store
-
-.tox/.package.lock
-
+.pytest_cache
+coverage.xml
+.tox
+.coverage
+htmlcov
+*.egg-info
+packages/open_aea
+packages/valory
 leak_report
 
-.tox/
 
-UNKNOWN.egg-info/
 
-.coverage
 
-coverage.xml
