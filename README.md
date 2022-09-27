@@ -11,7 +11,15 @@ A template for development with the open-autonomy framework. Find the documentat
 - [Pipenv](https://pipenv.pypa.io/en/latest/install/) `>=2021.x.xx`
 - [Docker Engine](https://docs.docker.com/engine/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
-- [Gitleaks](https://github.com/zricethezav/gitleaks/releases/latest)
+
+Alternatively, you can fetch this docker image with the relevant requirements satisfied:
+
+> **_NOTE:_**  Tendermint and IPFS dependencies are missing from the image at the moment.
+
+```bash
+docker pull valory/open-autonomy-user:latest
+docker container run -it valory/open-autonomy-user:latest
+```
 
 ## This repository contains:
 
