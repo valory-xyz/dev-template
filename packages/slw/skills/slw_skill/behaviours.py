@@ -22,7 +22,7 @@
 from abc import abstractmethod
 from typing import Generator, Set, Type, cast
 
-from packages.slw.skills.slw_skill.models import Params
+from packages.slw.skills.slw_skill.models import Params, SharedState
 from packages.slw.skills.slw_skill.payloads import (
     GetDataPayload,
     PrintResultPayload,
@@ -50,6 +50,13 @@ from packages.valory.skills.abstract_round_abci.behaviours import (
 
 class SlwWorldBaseBehaviour(BaseBehaviour):
     """Base behaviour for the common apps' skill."""
+
+    @property
+    def synchronized_data(self) -> SynchronizedData:
+        """Return the synchronized data."""
+        return cast(
+            SynchronizedData, cast(SharedState, self.context.state).synchronized_data
+        )
 
 
 class GetDataBehaviour(SlwWorldBaseBehaviour):
@@ -95,22 +102,28 @@ class ProcessDataBehaviour(SlwWorldBaseBehaviour):
 
 
 class PrintResultBehaviour(SlwWorldBaseBehaviour):
-    """PrintResultBehaviour"""
+    """
+    PrintResultBehaviour
 
-    # TODO: set the following class attributes
+    Only keeper prints and send message.
+    """
+
     state_id: str
     behaviour_id: str = "print_result"
     matching_round: Type[AbstractRound] = PrintResultRound
 
     def async_act(self) -> Generator:
         """Do the act, supporting asynchronous execution."""
-
         printed_data = f"printed: {self.synchronized_data.processed_data}"
-        self.context.logger.info(f"PRINT: {printed_data}")
-        payload = PrintResultPayload(
-            self.context.agent_address, printed_data=printed_data
-        )
-        yield from self.send_a2a_transaction(payload)
+        if (
+            self.context.agent_address
+            == self.synchronized_data.most_voted_keeper_address
+        ):
+            self.context.logger.info(f"PRINT: {printed_data}")
+            payload = PrintResultPayload(
+                self.context.agent_address, printed_data=printed_data
+            )
+            yield from self.send_a2a_transaction(payload)
         yield from self.wait_until_round_end()
         self.set_done()
 

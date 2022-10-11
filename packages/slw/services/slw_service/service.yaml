@@ -5,9 +5,9 @@ description: A simple demonstration of a simple ABCI application
 aea_version: '>=1.0.0, <2.0.0'
 license: Apache-2.0
 fingerprint:
-  README.md: bafybeiapubcoersqnsnh3acia5hd7otzt7kjxekr6gkbrlumv6tkajl6jm
+  README.md: bafybeig4i4qrk3gsffv44tx2ivpxgktylsqrssveb5deqp5u6ivtfw5x7m
 fingerprint_ignore_patterns: []
-agent: slw/slw_agent:0.1.0:bafybeiat75o4ym5knk4rfl4wmyxwokvrikernfzdrcrttwbn7n2juin74m
+agent: slw/slw_agent:0.1.0:bafybeievpbxn24nzd4lgnaxmftjvfxxua3jya5eh5cbqdhhfjsdhklx2vu
 number_of_agents: 4
 ---
 benchmark_persistence_params:

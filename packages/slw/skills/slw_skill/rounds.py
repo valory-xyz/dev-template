@@ -43,6 +43,7 @@ from packages.valory.skills.abstract_round_abci.base import (
     CollectSameUntilThresholdRound,
     DegenerateRound,
     EventToTimeout,
+    OnlyKeeperSendsRound,
     TransactionType,
 )
 
@@ -135,23 +136,21 @@ class ProcessDataRound(CollectSameUntilThresholdRound, BaseRound):
         return None
 
 
-class PrintResultRound(CollectSameUntilThresholdRound, BaseRound):
-    """PrintResultRound"""
+class PrintResultRound(OnlyKeeperSendsRound, BaseRound):
+    """
+    PrintResultRound.
+    
+    Only keeper sends a message
+    """
 
-    # TODO: replace AbstractRound with one of CollectDifferentUntilAllRound, CollectSameUntilAllRound, CollectSameUntilThresholdRound, CollectDifferentUntilThresholdRound, OnlyKeeperSendsRound, VotingRound
-    # TODO: set the following class attributes
     round_id: str = "print_result"
     allowed_tx_type = PrintResultPayload.transaction_type
     payload_attribute: str = "printed_data"
-
-    def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
-        """Process the end of the block."""
-        if self.threshold_reached:
-            synchronized_data = self.synchronized_data.update(
-                printed_data=self.most_voted_payload,
-            )
-            return synchronized_data, Event.DONE
-        return None
+    payload_key: str = "printed_data"
+    done_event = Event.DONE
+    fail_event = Event.ROUND_TIMEOUT  # not sure it's the best event here
+    
+    
 
 
 class RegistrationRound(CollectDifferentUntilAllRound, BaseRound):
@@ -188,6 +187,7 @@ class ResetAndPauseRound(CollectSameUntilThresholdRound, BaseRound):
         """Process the end of the block."""
         if self.threshold_reached:
             synchronized_data = self.synchronized_data.create(
+                SynchronizedData,
                 participants=[self.synchronized_data.participants],
                 all_participants=[self.synchronized_data.all_participants],
             )
@@ -230,6 +230,7 @@ class SlwWorldAbciApp(AbciApp[Event]):
         GetDataRound: {
             Event.DONE: ProcessDataRound,
             Event.ROUND_TIMEOUT: RegistrationRound,
+            Event.NO_MAJORITY: GetDataRound,
         },
         ProcessDataRound: {
             Event.DONE: PrintResultRound,
@@ -241,7 +242,7 @@ class SlwWorldAbciApp(AbciApp[Event]):
         },
         RegistrationRound: {Event.DONE: SelectKeeperRound},
         ResetAndPauseRound: {
-            Event.DONE: SelectKeeperRound,
+            Event.DONE: RegistrationRound,
             Event.NO_MAJORITY: RegistrationRound,
             Event.RESET_TIMEOUT: RegistrationRound,
         },

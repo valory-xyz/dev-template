@@ -8,12 +8,13 @@ aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   README.md: bafybeibuxojknpzcbop5arowpzhgdnmcdtnn7bbuexvxjizonwjezepgqy
   __init__.py: bafybeif2mmrvsd6lqcovbhpmmkey5qpvupeub25asoymemdf5gnmxn76ly
-  behaviours.py: bafybeiekekukjg63ndeij36fihofdhnudya2asoutjhkvvqnhzokzhicvm
+  behaviours.py: bafybeifw2y6pd5obr2x2clitu2b62o7ziedupitnr4sl3uob67jvbvb2hq
   dialogues.py: bafybeifdilmmue7w7m47qlmbtnq4c75jsdcmpzfhu7f5vxn2xldbnx2goa
+  fsm_specification.yaml: bafybeigxs54vpfcmkvdsu4fj6dusn4yo3ti3hnu6q5jgd4l2pnosfcrt4y
   handlers.py: bafybeifaxzmorlliqebkjxjmseisw3floceim4xr552g7cgotfsu2exlji
   models.py: bafybeia7mwu5rzbdu7nah2332x7g7bieeqrc2uhifb3o4dbyrtzr3kuyd4
   payloads.py: bafybeifqt2xu24mmi44z6fa4fek7q2hhyqbo6sslrppst4zjjfywsh53rq
-  rounds.py: bafybeiciayoxirpigthcz25k2ikfdti5orjefqwdk3fwvibvfw367czhg4
+  rounds.py: bafybeibgbdrpkzu3njlwqi5nmxxweh3fkfqlg2iuzofyutibdfmzli2t44
   tests/__init__.py: bafybeib42wqezi4kgsi742sh4zcmtlmx5kez2wduunroxschy444b7r6ci
   tests/test_behaviours.py: bafybeicb5uafkstcvuqzqzxakzu6ec3hahyjvblpmrqsskcoakk4qi7bqi
   tests/test_rounds.py: bafybeid573u5stzekjtmgsaznfaf7mu5wnbavnk7zrqof6lcabbffg6vry
@@ -68,7 +69,7 @@ models:
       cleanup_history_depth: 1
       cleanup_history_depth_current: null
       consensus:
-        max_participants: 1
+        max_participants: 4
       drand_public_key: 868f005eb8e6e4ca0a47c8a77ceaa5309a47978a7c71bc5cce96366b5d7a569937c529eeda66c7293784a9402801af31
       finalize_timeout: 60.0
       genesis_config:

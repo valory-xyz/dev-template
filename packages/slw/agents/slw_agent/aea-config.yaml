@@ -4,7 +4,8 @@ version: 0.1.0
 license: Apache-2.0
 description: ''
 aea_version: '>=1.20.0, <2.0.0'
-fingerprint: {}
+fingerprint:
+  README.md: bafybeihshxzf7bjg6y44d2hpdvjqnlbaiufibvwpfqcyxcxavfkjcawhji
 fingerprint_ignore_patterns: []
 connections:
 - valory/abci:0.1.0:bafybeidphoubsmjfndoqdj4ykkzygnz7jm57vleppj2qegplr4zsmw4vwy
@@ -20,7 +21,7 @@ protocols:
 - valory/ledger_api:1.0.0:bafybeifawyt7ayxrvpagqecowx6y5hvc3dxzjbhhkutxsuk7u54cxo2g54
 - valory/tendermint:0.1.0:bafybeihcnjhovvyyfbkuw5sjyfx2lfd4soeocfqzxz54g67333m6nk5gxq
 skills:
-- slw/slw_skill:0.1.0:bafybeifsx4zw2cj7utrnxn732slicye43bqqmo6xtaombchu4vlq6eadhe
+- slw/slw_skill:0.1.0:bafybeie67aol66usam26y7u36l6dpox55w3yeixlpc2hkmz52rp6g3mvpy
 - valory/abstract_abci:0.1.0:bafybeihlqczjtcdw3gfix2kakshmq2ujsbnqxxcxsxm2fvn6x6zg7kltga
 - valory/abstract_round_abci:0.1.0:bafybeieotxp2hbqxiwgolysh3ka2phc4cszqqp3tjuvfgwriwjb3evrhfq
 default_ledger: ethereum
@@ -71,5 +72,7 @@ type: skill
 models:
   params:
     args:
+      consensus:
+        max_participants: 4
       tendermint_url: ${TENDERMINT_URL:str:http://localhost:26657}
       tendermint_com_url: ${TENDERMINT_COM_URL:str:http://localhost:8080}
