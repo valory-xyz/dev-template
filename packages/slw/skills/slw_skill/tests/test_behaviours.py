@@ -145,18 +145,34 @@ class TestProcessDataBehaviour(BaseSlwWorldTest):
         self.complete(Event.DONE)
 
 
-class TestProcessDataBehaviourTimeout(BaseSlwWorldTest):
-    """Tests ProcessDataBehaviour"""
+class TestGetDataBehaviourNoMajority(BaseSlwWorldTest):
+    """Tests GetDataBehaviour No majority"""
 
-    behaviour_class: Type[BaseBehaviour] = ProcessDataBehaviour
-    next_behaviour_class: Type[BaseBehaviour] = RegistrationBehaviour
+    behaviour_class: Type[BaseBehaviour] = GetDataBehaviour
+    next_behaviour_class: Type[BaseBehaviour] = GetDataBehaviour
 
     def test_run(self) -> None:
         """Run tests."""
 
-        self.fast_forward({"init_data": 12})
+        self.fast_forward({})
         self.behaviour.act_wrapper()
-        self.complete(Event.ROUND_TIMEOUT)
+        self.mock_http_request(
+            request_kwargs=dict(
+                method="GET",
+                headers="",
+                version="",
+                body=b"",
+                url="https://www.random.org/integers/?num=1&min=1&max=3&col=1&base=10&format=plain&rnd=new",
+            ),
+            response_kwargs=dict(
+                version="",
+                status_code=200,
+                status_text="",
+                headers="",
+                body=b"17",
+            ),
+        )
+        self.complete(Event.NO_MAJORITY)
 
 
 ### sure can use BehaviourTestCase, but wantede to try manually
