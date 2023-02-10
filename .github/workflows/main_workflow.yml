@@ -185,7 +185,7 @@ jobs:
           # pull node image needed for the integration tests
           docker pull node:16.7.0
           docker pull trufflesuite/ganache:beta
-          docker pull valory/autonomous-fund-contracts:latest
+          docker pull valory/autonolas-registries:latest
 
       - if: matrix.os == 'ubuntu-latest'
         name: Unit tests (ubuntu-latest)
@@ -304,8 +304,6 @@ jobs:
 
           # pull node image needed for the integration tests
           docker pull node:16.7.0
-
-          docker pull valory/autonomous-fund-contracts:latest
 
       - name: e2e tests
         run: |
