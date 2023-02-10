@@ -46,4 +46,4 @@ Get developing...
 ## Useful commands:
 
 Check out the `Makefile` for useful commands, e.g. `make formatters`, `make generators`, `make code-checks`, as well
-as `make common-checks-1`. To run all tests use `make test`.
+as `make common-checks-1`. To run tests use the `autonomy test` command. Run `autonomy test --help` for help about its usage.

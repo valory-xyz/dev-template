@@ -72,7 +72,6 @@ security:
 generators:
 	tox -e abci-docstrings
 	tox -e fix-copyright
-	autonomy hash all
 	autonomy packages lock
 
 v := $(shell pip -V | grep virtualenvs)
