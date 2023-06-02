@@ -53,7 +53,7 @@ def some_method(some_arg: Type) -> ReturnType:
     """
 ```
 - To run documentation server use `mkdocs serve`.
-- After editing documentation use `./scripts/spell-check.sh` to ensure spelling is correct.
+- After editing documentation use `tomte check-spelling` to ensure spelling is correct.
 
 ### Some more suggestions to help you write better code.
 
@@ -62,4 +62,4 @@ def some_method(some_arg: Type) -> ReturnType:
 
 ### Agent development
 
-You can find several general recommendations in the **Considerations to Develop FSM Apps** section in our documentation [here](https://docs.autonolas.network/fsm_app_introduction/).
+You can find several general recommendations in the **Considerations to Develop FSM Apps** section in our documentation [here](https://docs.autonolas.network/open-autonomy/key_concepts/fsm_app_introduction/).

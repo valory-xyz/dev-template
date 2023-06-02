@@ -44,25 +44,23 @@ clean-test:
 # black: format files according to the pep standards
 .PHONY: formatters
 formatters:
-	tox -e isort
-	tox -e black
+	tomte format-code
 
 # black-check: check code style
 # isort-check: check for import order
 # flake8: wrapper around various code checks, https://flake8.pycqa.org/en/latest/user/error-codes.html
 # mypy: static type checker
 # pylint: code analysis for code smells and refactoring suggestions
-# vulture: finds dead code
 # darglint: docstring linter
 .PHONY: code-checks
 code-checks:
-	tox -p -e black-check -e isort-check -e flake8 -e mypy -e pylint -e vulture -e darglint
+	tomte check-code
 
 # safety: checks dependencies for known security vulnerabilities
 # bandit: security linter
 .PHONY: security
 security:
-	tox -p -e safety -e bandit
+	tomte check-security
 	gitleaks detect --report-format json --report-path leak_report
 
 # generate latest hashes for updated packages
@@ -71,8 +69,14 @@ security:
 .PHONY: generators
 generators:
 	tox -e abci-docstrings
-	tox -e fix-copyright
+	tomte format-copyright --author author_name
 	autonomy packages lock
+
+.PHONY: common-checks-1
+common-checks-1:
+	tomte check-copyright --author author_name
+	tomte check-doc-links
+	tox -p -e check-hash -e check-packages -e check-doc-hashes
 
 v := $(shell pip -V | grep virtualenvs)
 
