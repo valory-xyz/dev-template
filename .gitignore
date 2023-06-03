@@ -9,7 +9,4 @@ htmlcov
 packages/open_aea
 packages/valory
 leak_report
-
-
-
-
+/Pipfile.lock
