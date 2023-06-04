@@ -79,22 +79,3 @@ common-checks-1:
 	tox -p -e check-hash -e check-packages -e check-doc-hashes
 
 v := $(shell pip -V | grep virtualenvs)
-
-.PHONY: new_env
-new_env: clean
-	if [ ! -z "$(which svn)" ];\
-	then\
-		echo "The development setup requires SVN, exit";\
-		exit 1;\
-	fi;\
-
-	if [ -z "$v" ];\
-	then\
-		pipenv --rm;\
-		pipenv --clear;\
-		pipenv --python 3.10;\
-		pipenv install --dev --skip-lock;\
-		echo "Enter virtual environment with all development dependencies now: 'pipenv shell'.";\
-	else\
-		echo "In a virtual environment! Exit first: 'exit'.";\
-	fi

@@ -8,7 +8,7 @@ A template for development with the open-autonomy framework. Find the documentat
 - [Tendermint](https://docs.tendermint.com/v0.34/introduction/install.html) `==0.34.19`
 - [IPFS node](https://docs.ipfs.io/install/command-line/#official-distributions) `==0.6.0`
 - [Pip](https://pip.pypa.io/en/stable/installation/)
-- [Pipenv](https://pipenv.pypa.io/en/latest/installation/) `>=2021.x.xx`
+- [Poetry](https://python-poetry.org/)
 - [Docker Engine](https://docs.docker.com/engine/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
@@ -32,13 +32,8 @@ docker container run -it valory/open-autonomy-user:latest
 Create a virtual environment with all development dependencies:
 
 ```bash
-make new_env
-```
-
-Enter virtual environment:
-
-``` bash
-pipenv shell
+poetry shell
+poetry install
 ```
 
 Get developing...

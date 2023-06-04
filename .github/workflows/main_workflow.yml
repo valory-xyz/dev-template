@@ -10,31 +10,31 @@ on:
 jobs:
   lock_check:
     continue-on-error: False
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         os: [ ubuntu-latest, macos-latest, windows-latest ]
         python-version: [ "3.10" ]
+        poetry-version: ["1.3.2"]
 
     timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          pip install pipenv
-      - name: Pipenv install requirements
-        run: |
-          pipenv install --dev --skip-lock
-      - name: Pipenv lock
-        run: |
-          pipenv lock
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install and configure Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: ${{ matrix.poetry-version }}
+        virtualenvs-create: true
+        virtualenvs-in-project: false
+        virtualenvs-path: ~/my-custom-path
+        installer-parallel: true
 
-  copyright_and_doc_check:
+  copyright_and_dependencies_check:
     continue-on-error: False
     runs-on: ${{ matrix.os }}
 
@@ -59,10 +59,12 @@ jobs:
           sudo apt-get autoclean
           pip install tomte[tox,cli]==0.2.12
           pip install --upgrade setuptools==60.10.0
-      - name: Check copyright
+      - name: Check copyright headers
         run: tomte check-copyright --author author_name
       - name: License compatibility check
         run: tox -e liccheck
+      - name: Check dependencies
+        run: tox -e check-dependencies
       - name: Check doc links
         run: tomte check-doc-links
       - name: Check doc IPFS hashes
@@ -89,18 +91,24 @@ jobs:
           sudo apt-get update --fix-missing
           sudo apt-get autoremove
           sudo apt-get autoclean
-          pip install tomte[tox,cli]==0.2.12
-          pip install --upgrade setuptools==60.10.0
+          pip install tomte[tox,cli]==0.2.12 
+          pip install --user --upgrade setuptools
+
           # install Protobuf compiler
-          wget https://github.com/protocolbuffers/protobuf/releases/download/v3.11.4/protoc-3.11.4-linux-x86_64.zip
-          unzip protoc-3.11.4-linux-x86_64.zip -d protoc
+          wget https://github.com/protocolbuffers/protobuf/releases/download/v3.19.4/protoc-3.19.4-linux-x86_64.zip
+          unzip protoc-3.19.4-linux-x86_64.zip -d protoc
           sudo mv protoc/bin/protoc /usr/local/bin/protoc
+
           # install IPFS
           sudo apt-get install -y wget
           wget -O ./go-ipfs.tar.gz https://dist.ipfs.io/go-ipfs/v0.6.0/go-ipfs_v0.6.0_linux-amd64.tar.gz
           tar xvfz go-ipfs.tar.gz
           sudo mv go-ipfs/ipfs /usr/local/bin/ipfs
           ipfs init
+
+          # Install `mdspell` for spelling checks
+          sudo npm install -g markdown-spellcheck
+
       - name: Security checks
         run: tomte check-security
       - name: Check packages
@@ -134,7 +142,7 @@ jobs:
     continue-on-error: True
     needs:
       - lock_check
-      - copyright_and_doc_check
+      - copyright_and_dependencies_check
       - linter_checks
     runs-on: ${{ matrix.os }}
 
