@@ -10,31 +10,31 @@ on:
 jobs:
   lock_check:
     continue-on-error: False
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         os: [ ubuntu-latest, macos-latest, windows-latest ]
         python-version: [ "3.10" ]
+        poetry-version: ["1.3.2"]
 
     timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          pip install pipenv
-      - name: Pipenv install requirements
-        run: |
-          pipenv install --dev --skip-lock
-      - name: Pipenv lock
-        run: |
-          pipenv lock
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install and configure Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: ${{ matrix.poetry-version }}
+        virtualenvs-create: true
+        virtualenvs-in-project: false
+        virtualenvs-path: ~/my-custom-path
+        installer-parallel: true
 
-  copyright_and_doc_check:
+  copyright_and_dependencies_check:
     continue-on-error: False
     runs-on: ${{ matrix.os }}
 
@@ -59,10 +59,12 @@ jobs:
           sudo apt-get autoclean
           pip install tomte[tox,cli]==0.2.12
           pip install --upgrade setuptools==60.10.0
-      - name: Check copyright
+      - name: Check copyright headers
         run: tomte check-copyright --author author_name
       - name: License compatibility check
         run: tox -e liccheck
+      - name: Check dependencies
+        run: tox -e check-dependencies
       - name: Check doc links
         run: tomte check-doc-links
       - name: Check doc IPFS hashes
