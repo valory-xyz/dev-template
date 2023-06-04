@@ -60,7 +60,7 @@ def get_package_dependencies() -> Dict[str, Any]:
     for package in package_manager.iter_dependency_tree():
         if package.package_type == PackageType.SERVICE:
             continue
-        _dependencies = load_configuration(
+        _dependencies = load_configuration(  # type: ignore
             package_type=package.package_type,
             package_path=package_manager.package_path_from_package_id(
                 package_id=package
