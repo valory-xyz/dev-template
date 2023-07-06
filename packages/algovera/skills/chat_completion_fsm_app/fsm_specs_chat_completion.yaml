@@ -1,0 +1,31 @@
+alphabet_in:
+- DONE
+- ERROR
+- NO_MAJORITY
+- ROUND_TIMEOUT
+default_start_state: RegistrationRound
+final_states: []
+label: LLMChatCompletionAbciApp
+start_states:
+- RegistrationRound
+states:
+- RegistrationRound
+- CollectRandomnessRound
+- SelectKeeperRound
+- WaitForRequestRound
+- ProcessRequestRound
+- PublishResponseRound
+transition_func:
+    (RegistrationRound, DONE): CollectRandomnessRound
+    (CollectRandomnessRound, DONE): SelectKeeperRound
+    (CollectRandomnessRound, NO_MAJORITY): CollectRandomnessRound
+    (CollectRandomnessRound, ROUND_TIMEOUT): CollectRandomnessRound
+    (SelectKeeperRound, DONE): WaitForRequestRound
+    (SelectKeeperRound, NO_MAJORITY): RegistrationRound
+    (SelectKeeperRound, ROUND_TIMEOUT): RegistrationRound
+    (WaitForRequestRound, DONE): ProcessRequestRound
+    (WaitForRequestRound, ERROR): RegistrationRound
+    (ProcessRequestRound, DONE): PublishResponseRound
+    (ProcessRequestRound, ERROR): RegistrationRound
+    (PublishResponseRound, DONE): CollectRandomnessRound
+    (PublishResponseRound, ERROR): RegistrationRound

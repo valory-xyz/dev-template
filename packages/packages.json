@@ -1,7 +1,7 @@
 {
     "dev": {
-        "skill/arshy/prime_number_app/0.1.0": "bafybeihjf3gmzs4dgd23gqlx3hs3nu5brafovrhcnx3ow3prigtbeasnei",
-        "agent/arshy/prime_number_agent/0.1.0": "bafybeihtdrsmju42ohz24qlktht52lw2kqsrcoe4ekpzdmbn6clvk2th6e"
+        "skill/algovera/chat_completion_fsm_app/0.1.0": "bafybeifxinnk6v4xasdvxls3t6qnpkn3buq2pi65ozcsvdjgmmo6odz55u",
+        "agent/algovera/chat_completion_agent/0.1.0": "bafybeiai7w5ektmrpdvrpbrqzobxdpekvyhjhxoxq5saskbflwnzildeou"
     },
     "third_party": {
         "service/valory/hello_world/0.1.0": "bafybeida3m3b3m5pnf7xlewzz7zfj24dynn6rqr4t3cr6ljfps47745cqu",
