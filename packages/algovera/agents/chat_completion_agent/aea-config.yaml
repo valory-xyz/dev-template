@@ -12,16 +12,20 @@ connections:
 - valory/ipfs:0.1.0:bafybeigr2cipad23aebjpnqtzpgymiwrwgmnior2fk4inbscdnqyl5epla
 - valory/ledger:0.19.0:bafybeicgfupeudtmvehbwziqfxiz6ztsxr5rxzvalzvsdsspzz73o5fzfi
 - valory/p2p_libp2p_client:0.1.0:bafybeidwcobzb7ut3efegoedad7jfckvt2n6prcmd4g7xnkm6hp6aafrva
+- algovera/chat_completion:0.1.0:bafybeihjjhrdeeoaelhwu6wpb66bi5zkx4fxvl3h2y3jmgq6rct6mhfsgu
+- algovera/rabbitmq:0.1.0:bafybeigv4ak74cxkynyvwziflygqxfmkma5aipixslo2wnegzjt2eotxiq
 contracts: []
 protocols:
 - open_aea/signing:1.0.0:bafybeibqlfmikg5hk4phzak6gqzhpkt6akckx7xppbp53mvwt6r73h7tk4
 - valory/abci:0.1.0:bafybeig3dj5jhsowlvg3t73kgobf6xn4nka7rkttakdb2gwsg5bp7rt7q4
 - valory/http:1.0.0:bafybeifyoio7nlh5zzyn5yz7krkou56l22to3cwg7gw5v5o3vxwklibhty
 - valory/ipfs:0.1.0:bafybeic72ncgqbzoz2guj4p4yjqulid7mv6yroeh65hxznloamoveeg7hq
+- algovera/chat_completion:1.0.0:bafybeibsqqwg253ooi6vg35gwo77d35jym3rsybhuuhe53dhsmj6vug5fe
+- algovera/rabbitmq:1.0.0:bafybeiehdu5f4t5to4poh3fkofbfaomrhxlyxelkj7v7qoxkkpmjrtxlhu
 skills:
 - valory/abstract_abci:0.1.0:bafybeifeqstiynx2n37k7lpdbcclylgg7tsmym7vtj4tanrukkvw4pp5nu
 - valory/abstract_round_abci:0.1.0:bafybeiarzpxsy7ulitk5obs4zajhll2m77motjn5st7mi6qvjtkoirfikq
-- algovera/chat_completion_fsm_app:0.1.0:bafybeifxinnk6v4xasdvxls3t6qnpkn3buq2pi65ozcsvdjgmmo6odz55u
+- algovera/chat_completion_abci:0.1.0:bafybeih6uto4zbo7wpynriuhx7ovmhxyvm2exs3dts5sj72uqmatm2yc5u
 default_ledger: ethereum
 required_ledgers:
 - ethereum
@@ -57,7 +61,7 @@ dependencies:
     version: ==0.10.7
 default_connection: null
 ---
-public_id: algovera/chat_completion_fsm_app:0.1.0
+public_id: algovera/chat_completion_abci:0.1.0
 type: skill
 models:
   benchmark_tool:
@@ -75,6 +79,12 @@ models:
       tendermint_url: ${str:http://localhost:26657}
       tendermint_com_url: ${str:http://localhost:8080}
       tendermint_p2p_url: ${str:localhost:26656}
+      rabbitmq_host: localhost
+      rabbitmq_port: 5672
+      rabbitmq_username: guest
+      rabbitmq_password: guest
+      consume_queue_name: consume_queue
+      publish_queue_name: publish_queue
 ---
 public_id: valory/abci:0.1.0
 type: connection
@@ -118,3 +128,21 @@ cert_requests:
   public_key: ${str:02e741c62d706e1dcf6986bf37fa74b98681bc32669623ac9ee6ff72488d4f59e8}
   save_path: .certs/acn_cosmos_9006.txt
 is_abstract: true
+---
+public_id: algovera/chat_completion:0.1.0
+type: connection
+config:
+  model: gpt-3.5-turbo
+  max_tokens: 256
+  openai_api_key: null
+  temperature: 0.7
+---
+public_id: algovera/rabbitmq:0.1.0
+type: connection
+config:
+  host: localhost
+  port: 5672
+  username: guest
+  password: guest
+  consume_queue_name: consume_queue
+  publish_queue_name: publish_queue

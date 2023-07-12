@@ -1,0 +1,28 @@
+name: chat_completion
+author: algovera
+version: 0.1.0
+type: connection
+description: The chat_completion connection provides a wrapper around LangChain's
+  ChatOpenAI.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  __init__.py: bafybeiftu27piztiu5bfxbvhqsbppgtseykyfot6wtlrrzeuzya6zrgpky
+  connection.py: bafybeicix2oddfabqhjbyajvvk4j2ebmm243gq3aeegplhkcuz4pz2tf4q
+fingerprint_ignore_patterns: []
+connections: []
+protocols:
+- algovera/chat_completion:1.0.0:bafybeibsqqwg253ooi6vg35gwo77d35jym3rsybhuuhe53dhsmj6vug5fe
+class_name: ChatCompletion
+config:
+  model: gpt-3.5-turbo
+  max_tokens: 256
+  openai_api_key: null
+  temperature: 0.7
+excluded_protocols: []
+restricted_to_protocols: []
+dependencies:
+  langchain:
+    version: ==0.0.209
+is_abstract: false
+cert_requests: []

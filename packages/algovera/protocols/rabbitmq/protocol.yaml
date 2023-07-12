@@ -1,0 +1,18 @@
+name: rabbitmq
+author: algovera
+version: 1.0.0
+protocol_specification_id: algovera/rabbitmq:1.0.0
+type: protocol
+description: A protocol for consuming and publishing messages to RabbitMQ
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  __init__.py: bafybeial2jnp75mm2fv6hg5mx2iibtrqwhlqcqbtoy42tsca7oz3x2qu24
+  dialogues.py: bafybeidr2qjf5ur6pwkhqywzf4vzkd45ua76nbxodvrsz22tquwtg72mwi
+  message.py: bafybeiaq6nocjwezdiiohtrlhqyhesfivdnpmae3sfz7f5vud3zbhts4r4
+  rabbitmq.proto: bafybeic3ycl56stvp26l4rkubr2gab44ixxcwsxa6zqoc5p2mamjzj6pxq
+  rabbitmq_pb2.py: bafybeifusqr5eetiu7pzxmm3g3zz6ky3eftoa4uzbjs76nqjsvexoigpzy
+  serialization.py: bafybeibp6cjcxq3t2vounrvxwpdfxctn2zbz7dyxdlubuze532tecstysq
+fingerprint_ignore_patterns: []
+dependencies:
+  protobuf: {}

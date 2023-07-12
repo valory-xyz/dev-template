@@ -24,7 +24,7 @@ from dataclasses import dataclass, field
 
 import pytest
 
-from packages.algovera.skills.chat_completion_fsm_app.payloads import (
+from packages.algovera.skills.chat_completion_abci.payloads import (
     CollectRandomnessPayload,
     ProcessRequestPayload,
     PublishResponsePayload,
@@ -32,7 +32,7 @@ from packages.algovera.skills.chat_completion_fsm_app.payloads import (
     SelectKeeperPayload,
     WaitForRequestPayload,
 )
-from packages.algovera.skills.chat_completion_fsm_app.rounds import (
+from packages.algovera.skills.chat_completion_abci.rounds import (
     AbstractRound,
     Event,
     SynchronizedData,

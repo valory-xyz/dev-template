@@ -24,7 +24,7 @@ from dataclasses import dataclass
 
 import pytest
 
-from packages.algovera.skills.chat_completion_fsm_app.payloads import (
+from packages.algovera.skills.chat_completion_abci.payloads import (
     BaseTxPayload,
     CollectRandomnessPayload,
     ProcessRequestPayload,

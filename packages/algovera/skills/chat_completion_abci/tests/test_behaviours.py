@@ -31,7 +31,7 @@ from packages.valory.skills.abstract_round_abci.behaviours import (
     BaseBehaviour,
     make_degenerate_behaviour,
 )
-from packages.algovera.skills.chat_completion_fsm_app.behaviours import (
+from packages.algovera.skills.chat_completion_abci.behaviours import (
     LLMChatCompletionBaseBehaviour,
     LLMChatCompletionRoundBehaviour,
     CollectRandomnessBehaviour,
@@ -41,7 +41,7 @@ from packages.algovera.skills.chat_completion_fsm_app.behaviours import (
     SelectKeeperBehaviour,
     WaitForRequestBehaviour,
 )
-from packages.algovera.skills.chat_completion_fsm_app.rounds import (
+from packages.algovera.skills.chat_completion_abci.rounds import (
     SynchronizedData,
     DegenerateRound,
     Event,

@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package aea.algovera.rabbitmq.v1_0_0;
+
+message RabbitMQMessage{
+  // Performatives and contents
+  message Consume_Request_Performative{
+    string consume_queue_name = 1;
+  }
+
+  message Consume_Response_performative{
+    map<string, string> consume_response = 1;
+  }
+
+  message Publish_Request_Performative{
+    string publish_queue_name = 1;
+    map<string, string> publish_message = 3;
+  }
+
+  message Publish_Response_Performative{
+    map<string, string> publish_response = 1;
+  }
+
+  oneof performative{
+    Consume_Request_Performative consume_request = 5;
+    Consume_Response_performative consume_response = 6;
+    Publish_Request_Performative publish_request = 7;
+    Publish_Response_Performative publish_response = 8;
+  }
+}

@@ -9,23 +9,24 @@ label: LLMChatCompletionAbciApp
 start_states:
 - RegistrationRound
 states:
-- RegistrationRound
 - CollectRandomnessRound
-- SelectKeeperRound
-- WaitForRequestRound
 - ProcessRequestRound
 - PublishResponseRound
+- RegistrationRound
+- SelectKeeperRound
+- WaitForRequestRound
 transition_func:
     (RegistrationRound, DONE): CollectRandomnessRound
     (CollectRandomnessRound, DONE): SelectKeeperRound
     (CollectRandomnessRound, NO_MAJORITY): CollectRandomnessRound
     (CollectRandomnessRound, ROUND_TIMEOUT): CollectRandomnessRound
+    (ProcessRequestRound, DONE): PublishResponseRound
+    (ProcessRequestRound, ERROR): RegistrationRound
+    (PublishResponseRound, DONE): CollectRandomnessRound
+    (PublishResponseRound, ERROR): RegistrationRound
     (SelectKeeperRound, DONE): WaitForRequestRound
     (SelectKeeperRound, NO_MAJORITY): RegistrationRound
     (SelectKeeperRound, ROUND_TIMEOUT): RegistrationRound
     (WaitForRequestRound, DONE): ProcessRequestRound
     (WaitForRequestRound, ERROR): RegistrationRound
-    (ProcessRequestRound, DONE): PublishResponseRound
-    (ProcessRequestRound, ERROR): RegistrationRound
-    (PublishResponseRound, DONE): CollectRandomnessRound
-    (PublishResponseRound, ERROR): RegistrationRound
+    (WaitForRequestRound, ROUND_TIMEOUT): WaitForRequestRound

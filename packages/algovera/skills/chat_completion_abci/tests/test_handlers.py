@@ -17,16 +17,11 @@
 #
 # ------------------------------------------------------------------------------
 
-"""Test the models.py module of the LLMChatCompletion."""
+"""Test the handlers.py module of the LLMChatCompletion."""
 
-from packages.valory.skills.abstract_round_abci.test_tools.base import DummyContext
-from packages.algovera.skills.chat_completion_fsm_app.models import SharedState
+import packages.algovera.skills.chat_completion_abci.handlers  # noqa
 
 
-class TestSharedState:
-    """Test SharedState of LLMChatCompletion."""
-
-    def test_initialization(self) -> None:
-        """Test initialization."""
-        SharedState(name="", skill_context=DummyContext())
+def test_import() -> None:
+    """Test that the 'handlers.py' of the LLMChatCompletion can be imported."""
 

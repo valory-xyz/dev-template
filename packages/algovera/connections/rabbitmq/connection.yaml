@@ -1,0 +1,29 @@
+name: rabbitmq
+author: algovera
+version: 0.1.0
+type: connection
+description: The rabbitmq connection provides a connection to get and add items from
+  RabbitMQ queue.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  connection.py: bafybeicd6bmaol2bd32c25hxzd72auenn2vtxcm45hla65s5q335s5ed5a
+fingerprint_ignore_patterns: []
+connections: []
+protocols:
+- algovera/rabbitmq:1.0.0:bafybeiehdu5f4t5to4poh3fkofbfaomrhxlyxelkj7v7qoxkkpmjrtxlhu
+class_name: RabbitMQConnection
+config:
+  host: localhost
+  port: 5672
+  username: guest
+  password: guest
+  consume_queue_name: consume_queue
+  publish_queue_name: publish_queue
+excluded_protocols: []
+restricted_to_protocols: []
+dependencies:
+  pika:
+    version: ==1.3.2
+is_abstract: false
+cert_requests: []

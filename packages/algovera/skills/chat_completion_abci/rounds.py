@@ -18,9 +18,8 @@
 # ------------------------------------------------------------------------------
 
 """This package contains the rounds of LLMChatCompletionAbciApp."""
-
-from enum import Enum
 from abc import ABC
+from enum import Enum
 from typing import Dict, List, Optional, Set, Tuple, cast, Type
 
 from packages.valory.skills.abstract_round_abci.base import (
@@ -29,16 +28,14 @@ from packages.valory.skills.abstract_round_abci.base import (
     AbstractRound,
     AppState,
     BaseSynchronizedData,
-    DegenerateRound,
     EventToTimeout,
     get_name,
-    CollectSameUntilAllRound,
     CollectSameUntilThresholdRound,
-    CollectDifferentUntilAllRound,
-    OnlyKeeperSendsRound
+    CollectSameUntilAllRound,
+    OnlyKeeperSendsRound,
 )
 
-from packages.algovera.skills.chat_completion_fsm_app.payloads import (
+from packages.algovera.skills.chat_completion_abci.payloads import (
     CollectRandomnessPayload,
     ProcessRequestPayload,
     PublishResponsePayload,
@@ -50,7 +47,6 @@ from packages.algovera.skills.chat_completion_fsm_app.payloads import (
 
 class Event(Enum):
     """LLMChatCompletionAbciApp Events"""
-
     ERROR = "error"
     ROUND_TIMEOUT = "round_timeout"
     NO_MAJORITY = "no_majority"
@@ -82,6 +78,49 @@ class LLMChatCompletionABCIAbstractRound(AbstractRound, ABC):
         return cast(SynchronizedData, self._synchronized_data)
 
 
+class CollectRandomnessRound(CollectSameUntilThresholdRound, LLMChatCompletionABCIAbstractRound):
+    """CollectRandomnessRound"""
+    payload_class = CollectRandomnessPayload
+    synchronized_data_class = SynchronizedData
+    done_event = Event.DONE
+    no_majority_event = Event.NO_MAJORITY
+    collection_key = get_name(SynchronizedData.participant_to_randomness)
+    selection_key = get_name(SynchronizedData.most_voted_randomness)
+
+
+class ProcessRequestRound(OnlyKeeperSendsRound, LLMChatCompletionABCIAbstractRound):
+    """ProcessRequestRound"""
+
+    payload_class = ProcessRequestPayload
+
+    def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
+        """Process the end of the block."""
+        if self.keeper_payload:
+            payload = self.keeper_payload
+            error = payload.error
+            if error:
+                return self.synchronized_data, Event.ERROR
+            else:
+                return self.synchronized_data, Event.DONE
+
+
+class PublishResponseRound(OnlyKeeperSendsRound, LLMChatCompletionABCIAbstractRound):
+    """PublishResponseRound"""
+
+    payload_class = PublishResponsePayload
+    synchronized_data_class = SynchronizedData
+
+    def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
+        """Process the end of the block."""
+        if self.keeper_payload:
+            payload = self.keeper_payload
+            published = payload.published
+            if published:
+                return self.synchronized_data, Event.DONE
+            else:
+                return self.synchronized_data, Event.ERROR
+
+
 class RegistrationRound(CollectSameUntilAllRound, LLMChatCompletionABCIAbstractRound):
     """RegistrationRound"""
 
@@ -99,16 +138,6 @@ class RegistrationRound(CollectSameUntilAllRound, LLMChatCompletionABCIAbstractR
         return None
 
 
-class CollectRandomnessRound(CollectSameUntilThresholdRound, LLMChatCompletionABCIAbstractRound):
-    """CollectRandomnessRound"""
-    payload_class = CollectRandomnessPayload
-    synchronized_data_class = SynchronizedData
-    done_event = Event.DONE
-    no_majority_event = Event.NO_MAJORITY
-    collection_key = get_name(SynchronizedData.participant_to_randomness)
-    selection_key = get_name(SynchronizedData.most_voted_randomness)
-
-
 class SelectKeeperRound(CollectSameUntilThresholdRound, LLMChatCompletionABCIAbstractRound):
     """SelectKeeperRound"""
 
@@ -119,6 +148,7 @@ class SelectKeeperRound(CollectSameUntilThresholdRound, LLMChatCompletionABCIAbs
     collection_key = get_name(SynchronizedData.participant_to_selection)
     selection_key = get_name(SynchronizedData.most_voted_keeper_address)
 
+
 class WaitForRequestRound(OnlyKeeperSendsRound, LLMChatCompletionABCIAbstractRound):
     """WaitForRequestRound"""
     payload_class = WaitForRequestPayload
@@ -127,39 +157,19 @@ class WaitForRequestRound(OnlyKeeperSendsRound, LLMChatCompletionABCIAbstractRou
 
     def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Event]]:
         """Process the end of the block."""
-        if self.keeper_payload is None:
-            return None
-        else:
+        if self.keeper_payload:
+            payload = self.keeper_payload
+            received_request = payload.received_request
+            error = payload.error
+
+            if not received_request:
+                if error:
+                    return self.synchronized_data, Event.ERROR
+                else:
+                    return self.synchronized_data, Event.ROUND_TIMEOUT
+
             return self.synchronized_data, Event.DONE
 
-        
-class ProcessRequestRound(CollectDifferentUntilAllRound, LLMChatCompletionABCIAbstractRound):
-    """ProcessRequestRound"""
-
-    payload_class = ProcessRequestPayload
-    def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Event]]:
-        """Process the end of the block."""
-
-        if self.collection_threshold_reached:
-            synchronized_data = self.synchronized_data.update(
-                synchronized_data_class=SynchronizedData,
-            )
-            return synchronized_data, Event.DONE
-        return None
-
-class PublishResponseRound(CollectDifferentUntilAllRound, LLMChatCompletionABCIAbstractRound):
-    """PublishResponseRound"""
-
-    payload_class = PublishResponsePayload
-    def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Event]]:
-        """Process the end of the block."""
-
-        if self.collection_threshold_reached:
-            synchronized_data = self.synchronized_data.update(
-                synchronized_data_class=SynchronizedData,
-            )
-            return synchronized_data, Event.DONE
-        return None
 
 class LLMChatCompletionAbciApp(AbciApp[Event]):
     """LLMChatCompletionAbciApp"""
@@ -175,15 +185,6 @@ class LLMChatCompletionAbciApp(AbciApp[Event]):
             Event.NO_MAJORITY: CollectRandomnessRound,
             Event.ROUND_TIMEOUT: CollectRandomnessRound
         },
-        SelectKeeperRound: {
-            Event.DONE: WaitForRequestRound,
-            Event.NO_MAJORITY: RegistrationRound,
-            Event.ROUND_TIMEOUT: RegistrationRound
-        },
-        WaitForRequestRound: {
-            Event.DONE: ProcessRequestRound,
-            Event.ERROR: RegistrationRound
-        },
         ProcessRequestRound: {
             Event.DONE: PublishResponseRound,
             Event.ERROR: RegistrationRound
@@ -191,6 +192,16 @@ class LLMChatCompletionAbciApp(AbciApp[Event]):
         PublishResponseRound: {
             Event.DONE: CollectRandomnessRound,
             Event.ERROR: RegistrationRound
+        },
+        SelectKeeperRound: {
+            Event.DONE: WaitForRequestRound,
+            Event.NO_MAJORITY: RegistrationRound,
+            Event.ROUND_TIMEOUT: RegistrationRound
+        },
+        WaitForRequestRound: {
+            Event.DONE: ProcessRequestRound,
+            Event.ERROR: RegistrationRound,
+            Event.ROUND_TIMEOUT: WaitForRequestRound
         }
     }
     final_states: Set[AppState] = set()
