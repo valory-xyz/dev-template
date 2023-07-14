@@ -7,25 +7,30 @@ aea_version: '>=1.0.0, <2.0.0'
 fingerprint: {}
 fingerprint_ignore_patterns: []
 connections:
+- algovera/chat_completion:0.1.0:bafybeid5wdv5ha4accwui62o2ca2vp53vzi2viifnly43bnekfyqek3iom
+- algovera/rabbitmq:0.1.0:bafybeid7y7rskum6tmq6mlubnywuqfvwheyd5drn6b2pkiqef7w5ov3ika
 - valory/abci:0.1.0:bafybeie7fsmdzatyofhagfice7afbmyn7ht3zuzojdlu6cjaz7zncjspfq
 - valory/http_client:0.23.0:bafybeidykl4elwbcjkqn32wt5h4h7tlpeqovrcq3c5bcplt6nhpznhgczi
 - valory/ipfs:0.1.0:bafybeigr2cipad23aebjpnqtzpgymiwrwgmnior2fk4inbscdnqyl5epla
 - valory/ledger:0.19.0:bafybeicgfupeudtmvehbwziqfxiz6ztsxr5rxzvalzvsdsspzz73o5fzfi
 - valory/p2p_libp2p_client:0.1.0:bafybeidwcobzb7ut3efegoedad7jfckvt2n6prcmd4g7xnkm6hp6aafrva
-- algovera/chat_completion:0.1.0:bafybeihjjhrdeeoaelhwu6wpb66bi5zkx4fxvl3h2y3jmgq6rct6mhfsgu
-- algovera/rabbitmq:0.1.0:bafybeigv4ak74cxkynyvwziflygqxfmkma5aipixslo2wnegzjt2eotxiq
-contracts: []
+contracts:
+- valory/service_registry:0.1.0:bafybeiatcuw6zeqok4spkkonui6likgdfwtp2dichzrlbjxnf76eg42sdq
 protocols:
+- algovera/chat_completion:0.1.0:bafybeie6xqeo5jold2rok5b2dlgd3twj3om3otfqvfqnzikz3toup3fadu
+- algovera/rabbitmq:0.1.0:bafybeiaegj3ns4qjzjxu34fuqj6cj52t6uppxgr4pggjxdz2qbeu2qze5u
 - open_aea/signing:1.0.0:bafybeibqlfmikg5hk4phzak6gqzhpkt6akckx7xppbp53mvwt6r73h7tk4
 - valory/abci:0.1.0:bafybeig3dj5jhsowlvg3t73kgobf6xn4nka7rkttakdb2gwsg5bp7rt7q4
+- valory/acn:1.1.0:bafybeignmc5uh3vgpuckljcj2tgg7hdqyytkm6m5b6v6mxtazdcvubibva
+- valory/contract_api:1.0.0:bafybeidv6wxpjyb2sdyibnmmum45et4zcla6tl63bnol6ztyoqvpl4spmy
 - valory/http:1.0.0:bafybeifyoio7nlh5zzyn5yz7krkou56l22to3cwg7gw5v5o3vxwklibhty
 - valory/ipfs:0.1.0:bafybeic72ncgqbzoz2guj4p4yjqulid7mv6yroeh65hxznloamoveeg7hq
-- algovera/chat_completion:1.0.0:bafybeibsqqwg253ooi6vg35gwo77d35jym3rsybhuuhe53dhsmj6vug5fe
-- algovera/rabbitmq:1.0.0:bafybeiehdu5f4t5to4poh3fkofbfaomrhxlyxelkj7v7qoxkkpmjrtxlhu
+- valory/ledger_api:1.0.0:bafybeibo4bdtcrxi2suyzldwoetjar6pqfzm6vt5xal22ravkkcvdmtksi
+- valory/tendermint:0.1.0:bafybeicusvezoqlmyt6iqomcbwaz3xkhk2qf3d56q5zprmj3xdxfy64k54
 skills:
+- algovera/chat_completion_abci:0.1.0:bafybeihn7smzzy7aqf7rpwd5nty4gamxkcnmimxhc7froobl3l4umf67zu
 - valory/abstract_abci:0.1.0:bafybeifeqstiynx2n37k7lpdbcclylgg7tsmym7vtj4tanrukkvw4pp5nu
 - valory/abstract_round_abci:0.1.0:bafybeiarzpxsy7ulitk5obs4zajhll2m77motjn5st7mi6qvjtkoirfikq
-- algovera/chat_completion_abci:0.1.0:bafybeih6uto4zbo7wpynriuhx7ovmhxyvm2exs3dts5sj72uqmatm2yc5u
 default_ledger: ethereum
 required_ledgers:
 - ethereum
@@ -89,7 +94,7 @@ models:
 public_id: valory/abci:0.1.0
 type: connection
 config:
-  target_skill_id: algovera/chat_completion_fsm_app:0.1.0
+  target_skill_id: algovera/chat_completion_abci:0.1.0
   host: ${str:localhost}
   port: ${int:26658}
   use_tendermint: ${bool:false}
@@ -134,7 +139,7 @@ type: connection
 config:
   model: gpt-3.5-turbo
   max_tokens: 256
-  openai_api_key: null
+  openai_api_key: ${OPENAI_API_KEY}
   temperature: 0.7
 ---
 public_id: algovera/rabbitmq:0.1.0

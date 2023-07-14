@@ -2,530 +2,811 @@
 # source: rabbitmq.proto
 
 import sys
-_b=sys.version_info[0]<3 and (lambda x:x) or (lambda x:x.encode('latin1'))
+
+_b = sys.version_info[0] < 3 and (lambda x: x) or (lambda x: x.encode("latin1"))
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
 from google.protobuf import descriptor_pb2
+
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
 
 
-
-
 DESCRIPTOR = _descriptor.FileDescriptor(
-  name='rabbitmq.proto',
-  package='aea.algovera.rabbitmq.v1_0_0',
-  syntax='proto3',
-  serialized_pb=_b('\n\x0erabbitmq.proto\x12\x1c\x61\x65\x61.algovera.rabbitmq.v1_0_0\"\xfd\x0b\n\x0fRabbitMQMessage\x12\x65\n\x0f\x63onsume_request\x18\x05 \x01(\x0b\x32J.aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Request_PerformativeH\x00\x12g\n\x10\x63onsume_response\x18\x06 \x01(\x0b\x32K.aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Response_performativeH\x00\x12\x65\n\x0fpublish_request\x18\x07 \x01(\x0b\x32J.aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_PerformativeH\x00\x12g\n\x10publish_response\x18\x08 \x01(\x0b\x32K.aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Response_PerformativeH\x00\x1a\xed\x01\n\x1c\x43onsume_Request_Performative\x12\x1a\n\x12\x63onsume_queue_name\x18\x01 \x01(\t\x12y\n\x10rabbitmq_details\x18\x02 \x03(\x0b\x32_.aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Request_Performative.RabbitmqDetailsEntry\x1a\x36\n\x14RabbitmqDetailsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\xd3\x01\n\x1d\x43onsume_Response_performative\x12z\n\x10\x63onsume_response\x18\x01 \x03(\x0b\x32`.aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Response_performative.ConsumeResponseEntry\x1a\x36\n\x14\x43onsumeResponseEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x9d\x03\n\x1cPublish_Request_Performative\x12\x1a\n\x12publish_queue_name\x18\x01 \x01(\t\x12y\n\x10rabbitmq_details\x18\x02 \x03(\x0b\x32_.aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative.RabbitmqDetailsEntry\x12w\n\x0fpublish_message\x18\x03 \x03(\x0b\x32^.aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative.PublishMessageEntry\x1a\x36\n\x14RabbitmqDetailsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x35\n\x13PublishMessageEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\xd3\x01\n\x1dPublish_Response_Performative\x12z\n\x10publish_response\x18\x01 \x03(\x0b\x32`.aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Response_Performative.PublishResponseEntry\x1a\x36\n\x14PublishResponseEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x42\x0e\n\x0cperformativeb\x06proto3')
+    name="rabbitmq.proto",
+    package="aea.algovera.rabbitmq.v0_1_0",
+    syntax="proto3",
+    serialized_pb=_b(
+        '\n\x0erabbitmq.proto\x12\x1c\x61\x65\x61.algovera.rabbitmq.v0_1_0"\xfd\x0b\n\x0fRabbitmqMessage\x12\x65\n\x0f\x63onsume_request\x18\x05 \x01(\x0b\x32J.aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Request_PerformativeH\x00\x12g\n\x10\x63onsume_response\x18\x06 \x01(\x0b\x32K.aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Response_PerformativeH\x00\x12\x65\n\x0fpublish_request\x18\x07 \x01(\x0b\x32J.aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_PerformativeH\x00\x12g\n\x10publish_response\x18\x08 \x01(\x0b\x32K.aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Response_PerformativeH\x00\x1a\xed\x01\n\x1c\x43onsume_Request_Performative\x12y\n\x10rabbitmq_details\x18\x01 \x03(\x0b\x32_.aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Request_Performative.RabbitmqDetailsEntry\x12\x1a\n\x12\x63onsume_queue_name\x18\x02 \x01(\t\x1a\x36\n\x14RabbitmqDetailsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\xd3\x01\n\x1d\x43onsume_Response_Performative\x12z\n\x10\x63onsume_response\x18\x01 \x03(\x0b\x32`.aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Response_Performative.ConsumeResponseEntry\x1a\x36\n\x14\x43onsumeResponseEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x9d\x03\n\x1cPublish_Request_Performative\x12y\n\x10rabbitmq_details\x18\x01 \x03(\x0b\x32_.aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative.RabbitmqDetailsEntry\x12\x1a\n\x12publish_queue_name\x18\x02 \x01(\t\x12w\n\x0fpublish_message\x18\x03 \x03(\x0b\x32^.aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative.PublishMessageEntry\x1a\x36\n\x14RabbitmqDetailsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x35\n\x13PublishMessageEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\xd3\x01\n\x1dPublish_Response_Performative\x12z\n\x10publish_response\x18\x01 \x03(\x0b\x32`.aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Response_Performative.PublishResponseEntry\x1a\x36\n\x14PublishResponseEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x42\x0e\n\x0cperformativeb\x06proto3'
+    ),
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
-
-
 _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY = _descriptor.Descriptor(
-  name='RabbitmqDetailsEntry',
-  full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Request_Performative.RabbitmqDetailsEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Request_Performative.RabbitmqDetailsEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Request_Performative.RabbitmqDetailsEntry.value', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=668,
-  serialized_end=722,
+    name="RabbitmqDetailsEntry",
+    full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Request_Performative.RabbitmqDetailsEntry",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Request_Performative.RabbitmqDetailsEntry.key",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="value",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Request_Performative.RabbitmqDetailsEntry.value",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001")),
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=668,
+    serialized_end=722,
 )
 
 _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE = _descriptor.Descriptor(
-  name='Consume_Request_Performative',
-  full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Request_Performative',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='consume_queue_name', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Request_Performative.consume_queue_name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='rabbitmq_details', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Request_Performative.rabbitmq_details', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[_RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY, ],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=485,
-  serialized_end=722,
+    name="Consume_Request_Performative",
+    full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Request_Performative",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="rabbitmq_details",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Request_Performative.rabbitmq_details",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="consume_queue_name",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Request_Performative.consume_queue_name",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[
+        _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY,
+    ],
+    enum_types=[],
+    options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=485,
+    serialized_end=722,
 )
 
 _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE_CONSUMERESPONSEENTRY = _descriptor.Descriptor(
-  name='ConsumeResponseEntry',
-  full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Response_performative.ConsumeResponseEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Response_performative.ConsumeResponseEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Response_performative.ConsumeResponseEntry.value', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=882,
-  serialized_end=936,
+    name="ConsumeResponseEntry",
+    full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Response_Performative.ConsumeResponseEntry",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Response_Performative.ConsumeResponseEntry.key",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="value",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Response_Performative.ConsumeResponseEntry.value",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001")),
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=882,
+    serialized_end=936,
 )
 
 _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE = _descriptor.Descriptor(
-  name='Consume_Response_performative',
-  full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Response_performative',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='consume_response', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Response_performative.consume_response', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[_RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE_CONSUMERESPONSEENTRY, ],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=725,
-  serialized_end=936,
+    name="Consume_Response_Performative",
+    full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Response_Performative",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="consume_response",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Response_Performative.consume_response",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[
+        _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE_CONSUMERESPONSEENTRY,
+    ],
+    enum_types=[],
+    options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=725,
+    serialized_end=936,
 )
 
 _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY = _descriptor.Descriptor(
-  name='RabbitmqDetailsEntry',
-  full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative.RabbitmqDetailsEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative.RabbitmqDetailsEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative.RabbitmqDetailsEntry.value', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=668,
-  serialized_end=722,
+    name="RabbitmqDetailsEntry",
+    full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative.RabbitmqDetailsEntry",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative.RabbitmqDetailsEntry.key",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="value",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative.RabbitmqDetailsEntry.value",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001")),
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=668,
+    serialized_end=722,
 )
 
 _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_PUBLISHMESSAGEENTRY = _descriptor.Descriptor(
-  name='PublishMessageEntry',
-  full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative.PublishMessageEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative.PublishMessageEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative.PublishMessageEntry.value', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1299,
-  serialized_end=1352,
+    name="PublishMessageEntry",
+    full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative.PublishMessageEntry",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative.PublishMessageEntry.key",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="value",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative.PublishMessageEntry.value",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001")),
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1299,
+    serialized_end=1352,
 )
 
 _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE = _descriptor.Descriptor(
-  name='Publish_Request_Performative',
-  full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='publish_queue_name', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative.publish_queue_name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='rabbitmq_details', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative.rabbitmq_details', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='publish_message', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative.publish_message', index=2,
-      number=3, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY, _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_PUBLISHMESSAGEENTRY, ],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=939,
-  serialized_end=1352,
+    name="Publish_Request_Performative",
+    full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="rabbitmq_details",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative.rabbitmq_details",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="publish_queue_name",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative.publish_queue_name",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="publish_message",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative.publish_message",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[
+        _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY,
+        _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_PUBLISHMESSAGEENTRY,
+    ],
+    enum_types=[],
+    options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=939,
+    serialized_end=1352,
 )
 
 _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE_PUBLISHRESPONSEENTRY = _descriptor.Descriptor(
-  name='PublishResponseEntry',
-  full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Response_Performative.PublishResponseEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Response_Performative.PublishResponseEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Response_Performative.PublishResponseEntry.value', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1512,
-  serialized_end=1566,
+    name="PublishResponseEntry",
+    full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Response_Performative.PublishResponseEntry",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Response_Performative.PublishResponseEntry.key",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="value",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Response_Performative.PublishResponseEntry.value",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001")),
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1512,
+    serialized_end=1566,
 )
 
 _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE = _descriptor.Descriptor(
-  name='Publish_Response_Performative',
-  full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Response_Performative',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='publish_response', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Response_Performative.publish_response', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[_RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE_PUBLISHRESPONSEENTRY, ],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1355,
-  serialized_end=1566,
+    name="Publish_Response_Performative",
+    full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Response_Performative",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="publish_response",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Response_Performative.publish_response",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[
+        _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE_PUBLISHRESPONSEENTRY,
+    ],
+    enum_types=[],
+    options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1355,
+    serialized_end=1566,
 )
 
 _RABBITMQMESSAGE = _descriptor.Descriptor(
-  name='RabbitMQMessage',
-  full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='consume_request', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.consume_request', index=0,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='consume_response', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.consume_response', index=1,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='publish_request', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.publish_request', index=2,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='publish_response', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.publish_response', index=3,
-      number=8, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[_RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE, _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE, _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE, _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE, ],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-    _descriptor.OneofDescriptor(
-      name='performative', full_name='aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.performative',
-      index=0, containing_type=None, fields=[]),
-  ],
-  serialized_start=49,
-  serialized_end=1582,
+    name="RabbitmqMessage",
+    full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="consume_request",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.consume_request",
+            index=0,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="consume_response",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.consume_response",
+            index=1,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="publish_request",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.publish_request",
+            index=2,
+            number=7,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="publish_response",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.publish_response",
+            index=3,
+            number=8,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[
+        _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE,
+        _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE,
+        _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE,
+        _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE,
+    ],
+    enum_types=[],
+    options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[
+        _descriptor.OneofDescriptor(
+            name="performative",
+            full_name="aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.performative",
+            index=0,
+            containing_type=None,
+            fields=[],
+        ),
+    ],
+    serialized_start=49,
+    serialized_end=1582,
 )
 
-_RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY.containing_type = _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE
-_RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE.fields_by_name['rabbitmq_details'].message_type = _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY
+_RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY.containing_type = (
+    _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE
+)
+_RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE.fields_by_name[
+    "rabbitmq_details"
+].message_type = _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY
 _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE.containing_type = _RABBITMQMESSAGE
-_RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE_CONSUMERESPONSEENTRY.containing_type = _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE
-_RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE.fields_by_name['consume_response'].message_type = _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE_CONSUMERESPONSEENTRY
+_RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE_CONSUMERESPONSEENTRY.containing_type = (
+    _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE
+)
+_RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE.fields_by_name[
+    "consume_response"
+].message_type = _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE_CONSUMERESPONSEENTRY
 _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE.containing_type = _RABBITMQMESSAGE
-_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY.containing_type = _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE
-_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_PUBLISHMESSAGEENTRY.containing_type = _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE
-_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE.fields_by_name['rabbitmq_details'].message_type = _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY
-_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE.fields_by_name['publish_message'].message_type = _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_PUBLISHMESSAGEENTRY
+_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY.containing_type = (
+    _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE
+)
+_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_PUBLISHMESSAGEENTRY.containing_type = (
+    _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE
+)
+_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE.fields_by_name[
+    "rabbitmq_details"
+].message_type = _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY
+_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE.fields_by_name[
+    "publish_message"
+].message_type = _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_PUBLISHMESSAGEENTRY
 _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE.containing_type = _RABBITMQMESSAGE
-_RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE_PUBLISHRESPONSEENTRY.containing_type = _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE
-_RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE.fields_by_name['publish_response'].message_type = _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE_PUBLISHRESPONSEENTRY
+_RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE_PUBLISHRESPONSEENTRY.containing_type = (
+    _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE
+)
+_RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE.fields_by_name[
+    "publish_response"
+].message_type = _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE_PUBLISHRESPONSEENTRY
 _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE.containing_type = _RABBITMQMESSAGE
-_RABBITMQMESSAGE.fields_by_name['consume_request'].message_type = _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE
-_RABBITMQMESSAGE.fields_by_name['consume_response'].message_type = _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE
-_RABBITMQMESSAGE.fields_by_name['publish_request'].message_type = _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE
-_RABBITMQMESSAGE.fields_by_name['publish_response'].message_type = _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE
-_RABBITMQMESSAGE.oneofs_by_name['performative'].fields.append(
-  _RABBITMQMESSAGE.fields_by_name['consume_request'])
-_RABBITMQMESSAGE.fields_by_name['consume_request'].containing_oneof = _RABBITMQMESSAGE.oneofs_by_name['performative']
-_RABBITMQMESSAGE.oneofs_by_name['performative'].fields.append(
-  _RABBITMQMESSAGE.fields_by_name['consume_response'])
-_RABBITMQMESSAGE.fields_by_name['consume_response'].containing_oneof = _RABBITMQMESSAGE.oneofs_by_name['performative']
-_RABBITMQMESSAGE.oneofs_by_name['performative'].fields.append(
-  _RABBITMQMESSAGE.fields_by_name['publish_request'])
-_RABBITMQMESSAGE.fields_by_name['publish_request'].containing_oneof = _RABBITMQMESSAGE.oneofs_by_name['performative']
-_RABBITMQMESSAGE.oneofs_by_name['performative'].fields.append(
-  _RABBITMQMESSAGE.fields_by_name['publish_response'])
-_RABBITMQMESSAGE.fields_by_name['publish_response'].containing_oneof = _RABBITMQMESSAGE.oneofs_by_name['performative']
-DESCRIPTOR.message_types_by_name['RabbitMQMessage'] = _RABBITMQMESSAGE
+_RABBITMQMESSAGE.fields_by_name[
+    "consume_request"
+].message_type = _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE
+_RABBITMQMESSAGE.fields_by_name[
+    "consume_response"
+].message_type = _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE
+_RABBITMQMESSAGE.fields_by_name[
+    "publish_request"
+].message_type = _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE
+_RABBITMQMESSAGE.fields_by_name[
+    "publish_response"
+].message_type = _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE
+_RABBITMQMESSAGE.oneofs_by_name["performative"].fields.append(
+    _RABBITMQMESSAGE.fields_by_name["consume_request"]
+)
+_RABBITMQMESSAGE.fields_by_name[
+    "consume_request"
+].containing_oneof = _RABBITMQMESSAGE.oneofs_by_name["performative"]
+_RABBITMQMESSAGE.oneofs_by_name["performative"].fields.append(
+    _RABBITMQMESSAGE.fields_by_name["consume_response"]
+)
+_RABBITMQMESSAGE.fields_by_name[
+    "consume_response"
+].containing_oneof = _RABBITMQMESSAGE.oneofs_by_name["performative"]
+_RABBITMQMESSAGE.oneofs_by_name["performative"].fields.append(
+    _RABBITMQMESSAGE.fields_by_name["publish_request"]
+)
+_RABBITMQMESSAGE.fields_by_name[
+    "publish_request"
+].containing_oneof = _RABBITMQMESSAGE.oneofs_by_name["performative"]
+_RABBITMQMESSAGE.oneofs_by_name["performative"].fields.append(
+    _RABBITMQMESSAGE.fields_by_name["publish_response"]
+)
+_RABBITMQMESSAGE.fields_by_name[
+    "publish_response"
+].containing_oneof = _RABBITMQMESSAGE.oneofs_by_name["performative"]
+DESCRIPTOR.message_types_by_name["RabbitmqMessage"] = _RABBITMQMESSAGE
 
-RabbitMQMessage = _reflection.GeneratedProtocolMessageType('RabbitMQMessage', (_message.Message,), dict(
-
-  Consume_Request_Performative = _reflection.GeneratedProtocolMessageType('Consume_Request_Performative', (_message.Message,), dict(
-
-    RabbitmqDetailsEntry = _reflection.GeneratedProtocolMessageType('RabbitmqDetailsEntry', (_message.Message,), dict(
-      DESCRIPTOR = _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY,
-      __module__ = 'rabbitmq_pb2'
-      # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Request_Performative.RabbitmqDetailsEntry)
-      ))
-    ,
-    DESCRIPTOR = _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE,
-    __module__ = 'rabbitmq_pb2'
-    # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Request_Performative)
-    ))
-  ,
-
-  Consume_Response_performative = _reflection.GeneratedProtocolMessageType('Consume_Response_performative', (_message.Message,), dict(
-
-    ConsumeResponseEntry = _reflection.GeneratedProtocolMessageType('ConsumeResponseEntry', (_message.Message,), dict(
-      DESCRIPTOR = _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE_CONSUMERESPONSEENTRY,
-      __module__ = 'rabbitmq_pb2'
-      # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Response_performative.ConsumeResponseEntry)
-      ))
-    ,
-    DESCRIPTOR = _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE,
-    __module__ = 'rabbitmq_pb2'
-    # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Consume_Response_performative)
-    ))
-  ,
-
-  Publish_Request_Performative = _reflection.GeneratedProtocolMessageType('Publish_Request_Performative', (_message.Message,), dict(
-
-    RabbitmqDetailsEntry = _reflection.GeneratedProtocolMessageType('RabbitmqDetailsEntry', (_message.Message,), dict(
-      DESCRIPTOR = _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY,
-      __module__ = 'rabbitmq_pb2'
-      # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative.RabbitmqDetailsEntry)
-      ))
-    ,
-
-    PublishMessageEntry = _reflection.GeneratedProtocolMessageType('PublishMessageEntry', (_message.Message,), dict(
-      DESCRIPTOR = _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_PUBLISHMESSAGEENTRY,
-      __module__ = 'rabbitmq_pb2'
-      # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative.PublishMessageEntry)
-      ))
-    ,
-    DESCRIPTOR = _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE,
-    __module__ = 'rabbitmq_pb2'
-    # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Request_Performative)
-    ))
-  ,
-
-  Publish_Response_Performative = _reflection.GeneratedProtocolMessageType('Publish_Response_Performative', (_message.Message,), dict(
-
-    PublishResponseEntry = _reflection.GeneratedProtocolMessageType('PublishResponseEntry', (_message.Message,), dict(
-      DESCRIPTOR = _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE_PUBLISHRESPONSEENTRY,
-      __module__ = 'rabbitmq_pb2'
-      # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Response_Performative.PublishResponseEntry)
-      ))
-    ,
-    DESCRIPTOR = _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE,
-    __module__ = 'rabbitmq_pb2'
-    # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage.Publish_Response_Performative)
-    ))
-  ,
-  DESCRIPTOR = _RABBITMQMESSAGE,
-  __module__ = 'rabbitmq_pb2'
-  # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v1_0_0.RabbitMQMessage)
-  ))
-_sym_db.RegisterMessage(RabbitMQMessage)
-_sym_db.RegisterMessage(RabbitMQMessage.Consume_Request_Performative)
-_sym_db.RegisterMessage(RabbitMQMessage.Consume_Request_Performative.RabbitmqDetailsEntry)
-_sym_db.RegisterMessage(RabbitMQMessage.Consume_Response_performative)
-_sym_db.RegisterMessage(RabbitMQMessage.Consume_Response_performative.ConsumeResponseEntry)
-_sym_db.RegisterMessage(RabbitMQMessage.Publish_Request_Performative)
-_sym_db.RegisterMessage(RabbitMQMessage.Publish_Request_Performative.RabbitmqDetailsEntry)
-_sym_db.RegisterMessage(RabbitMQMessage.Publish_Request_Performative.PublishMessageEntry)
-_sym_db.RegisterMessage(RabbitMQMessage.Publish_Response_Performative)
-_sym_db.RegisterMessage(RabbitMQMessage.Publish_Response_Performative.PublishResponseEntry)
+RabbitmqMessage = _reflection.GeneratedProtocolMessageType(
+    "RabbitmqMessage",
+    (_message.Message,),
+    dict(
+        Consume_Request_Performative=_reflection.GeneratedProtocolMessageType(
+            "Consume_Request_Performative",
+            (_message.Message,),
+            dict(
+                RabbitmqDetailsEntry=_reflection.GeneratedProtocolMessageType(
+                    "RabbitmqDetailsEntry",
+                    (_message.Message,),
+                    dict(
+                        DESCRIPTOR=_RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY,
+                        __module__="rabbitmq_pb2"
+                        # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Request_Performative.RabbitmqDetailsEntry)
+                    ),
+                ),
+                DESCRIPTOR=_RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE,
+                __module__="rabbitmq_pb2"
+                # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Request_Performative)
+            ),
+        ),
+        Consume_Response_Performative=_reflection.GeneratedProtocolMessageType(
+            "Consume_Response_Performative",
+            (_message.Message,),
+            dict(
+                ConsumeResponseEntry=_reflection.GeneratedProtocolMessageType(
+                    "ConsumeResponseEntry",
+                    (_message.Message,),
+                    dict(
+                        DESCRIPTOR=_RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE_CONSUMERESPONSEENTRY,
+                        __module__="rabbitmq_pb2"
+                        # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Response_Performative.ConsumeResponseEntry)
+                    ),
+                ),
+                DESCRIPTOR=_RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE,
+                __module__="rabbitmq_pb2"
+                # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Consume_Response_Performative)
+            ),
+        ),
+        Publish_Request_Performative=_reflection.GeneratedProtocolMessageType(
+            "Publish_Request_Performative",
+            (_message.Message,),
+            dict(
+                RabbitmqDetailsEntry=_reflection.GeneratedProtocolMessageType(
+                    "RabbitmqDetailsEntry",
+                    (_message.Message,),
+                    dict(
+                        DESCRIPTOR=_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY,
+                        __module__="rabbitmq_pb2"
+                        # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative.RabbitmqDetailsEntry)
+                    ),
+                ),
+                PublishMessageEntry=_reflection.GeneratedProtocolMessageType(
+                    "PublishMessageEntry",
+                    (_message.Message,),
+                    dict(
+                        DESCRIPTOR=_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_PUBLISHMESSAGEENTRY,
+                        __module__="rabbitmq_pb2"
+                        # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative.PublishMessageEntry)
+                    ),
+                ),
+                DESCRIPTOR=_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE,
+                __module__="rabbitmq_pb2"
+                # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Request_Performative)
+            ),
+        ),
+        Publish_Response_Performative=_reflection.GeneratedProtocolMessageType(
+            "Publish_Response_Performative",
+            (_message.Message,),
+            dict(
+                PublishResponseEntry=_reflection.GeneratedProtocolMessageType(
+                    "PublishResponseEntry",
+                    (_message.Message,),
+                    dict(
+                        DESCRIPTOR=_RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE_PUBLISHRESPONSEENTRY,
+                        __module__="rabbitmq_pb2"
+                        # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Response_Performative.PublishResponseEntry)
+                    ),
+                ),
+                DESCRIPTOR=_RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE,
+                __module__="rabbitmq_pb2"
+                # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage.Publish_Response_Performative)
+            ),
+        ),
+        DESCRIPTOR=_RABBITMQMESSAGE,
+        __module__="rabbitmq_pb2"
+        # @@protoc_insertion_point(class_scope:aea.algovera.rabbitmq.v0_1_0.RabbitmqMessage)
+    ),
+)
+_sym_db.RegisterMessage(RabbitmqMessage)
+_sym_db.RegisterMessage(RabbitmqMessage.Consume_Request_Performative)
+_sym_db.RegisterMessage(
+    RabbitmqMessage.Consume_Request_Performative.RabbitmqDetailsEntry
+)
+_sym_db.RegisterMessage(RabbitmqMessage.Consume_Response_Performative)
+_sym_db.RegisterMessage(
+    RabbitmqMessage.Consume_Response_Performative.ConsumeResponseEntry
+)
+_sym_db.RegisterMessage(RabbitmqMessage.Publish_Request_Performative)
+_sym_db.RegisterMessage(
+    RabbitmqMessage.Publish_Request_Performative.RabbitmqDetailsEntry
+)
+_sym_db.RegisterMessage(
+    RabbitmqMessage.Publish_Request_Performative.PublishMessageEntry
+)
+_sym_db.RegisterMessage(RabbitmqMessage.Publish_Response_Performative)
+_sym_db.RegisterMessage(
+    RabbitmqMessage.Publish_Response_Performative.PublishResponseEntry
+)
 
 
 _RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY.has_options = True
-_RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_RABBITMQMESSAGE_CONSUME_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY._options = (
+    _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001"))
+)
 _RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE_CONSUMERESPONSEENTRY.has_options = True
-_RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE_CONSUMERESPONSEENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_RABBITMQMESSAGE_CONSUME_RESPONSE_PERFORMATIVE_CONSUMERESPONSEENTRY._options = (
+    _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001"))
+)
 _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY.has_options = True
-_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_RABBITMQDETAILSENTRY._options = (
+    _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001"))
+)
 _RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_PUBLISHMESSAGEENTRY.has_options = True
-_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_PUBLISHMESSAGEENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_RABBITMQMESSAGE_PUBLISH_REQUEST_PERFORMATIVE_PUBLISHMESSAGEENTRY._options = (
+    _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001"))
+)
 _RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE_PUBLISHRESPONSEENTRY.has_options = True
-_RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE_PUBLISHRESPONSEENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_RABBITMQMESSAGE_PUBLISH_RESPONSE_PERFORMATIVE_PUBLISHRESPONSEENTRY._options = (
+    _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001"))
+)
 # @@protoc_insertion_point(module_scope)

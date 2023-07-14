@@ -8,12 +8,12 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeiftu27piztiu5bfxbvhqsbppgtseykyfot6wtlrrzeuzya6zrgpky
-  connection.py: bafybeicix2oddfabqhjbyajvvk4j2ebmm243gq3aeegplhkcuz4pz2tf4q
+  connection.py: bafybeibosn2x6p3cswwe23s6j4k5vbnyu7bjwipx5ruwj5f4j6g2sikrq4
 fingerprint_ignore_patterns: []
 connections: []
 protocols:
-- algovera/chat_completion:1.0.0:bafybeibsqqwg253ooi6vg35gwo77d35jym3rsybhuuhe53dhsmj6vug5fe
-class_name: ChatCompletion
+- algovera/chat_completion:0.1.0:bafybeie6xqeo5jold2rok5b2dlgd3twj3om3otfqvfqnzikz3toup3fadu
+class_name: ChatCompletionConnection
 config:
   model: gpt-3.5-turbo
   max_tokens: 256

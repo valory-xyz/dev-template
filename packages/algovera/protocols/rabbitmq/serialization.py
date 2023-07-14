@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 #
-#   Copyright 2021-2023 Valory AG
+#   Copyright 2023 algovera
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -18,7 +17,7 @@
 #
 # ------------------------------------------------------------------------------
 
-"""Serialization module for chat_completion protocol."""
+"""Serialization module for rabbitmq protocol."""
 
 # pylint: disable=too-many-statements,too-many-locals,no-member,too-few-public-methods,redefined-builtin
 from typing import Any, Dict, cast
@@ -28,24 +27,24 @@ from aea.mail.base_pb2 import Message as ProtobufMessage
 from aea.protocols.base import Message, Serializer
 
 from packages.algovera.protocols.rabbitmq import rabbitmq_pb2
-from packages.algovera.protocols.rabbitmq.message import RabbitMQMessage
+from packages.algovera.protocols.rabbitmq.message import RabbitmqMessage
 
 
-class RabbitMQSerializer(Serializer):
+class RabbitmqSerializer(Serializer):
     """Serialization for the 'rabbitmq' protocol."""
 
     @staticmethod
     def encode(msg: Message) -> bytes:
         """
-        Encode a 'RabbitMQ' message into bytes.
+        Encode a 'Rabbitmq' message into bytes.
 
         :param msg: the message object.
         :return: the bytes.
         """
-        msg = cast(RabbitMQMessage, msg)
+        msg = cast(RabbitmqMessage, msg)
         message_pb = ProtobufMessage()
         dialogue_message_pb = DialogueMessage()
-        rabbitmq_msg = rabbitmq_pb2.RabbitMQMessage()
+        rabbitmq_msg = rabbitmq_pb2.RabbitmqMessage()
 
         dialogue_message_pb.message_id = msg.message_id
         dialogue_reference = msg.dialogue_reference
@@ -54,27 +53,29 @@ class RabbitMQSerializer(Serializer):
         dialogue_message_pb.target = msg.target
 
         performative_id = msg.performative
-        if performative_id == RabbitMQMessage.Performative.CONSUME_REQUEST:
-            performative = rabbitmq_pb2.RabbitMQMessage.Consume_Request_Performative()
-            consume_queue_name = msg.consume_queue_name
-            performative.consume_queue_name = consume_queue_name
+        if performative_id == RabbitmqMessage.Performative.CONSUME_REQUEST:
+            performative = rabbitmq_pb2.RabbitmqMessage.Consume_Request_Performative()  # type: ignore
             rabbitmq_details = msg.rabbitmq_details
             performative.rabbitmq_details.update(rabbitmq_details)
+            consume_queue_name = msg.consume_queue_name
+            performative.consume_queue_name = consume_queue_name
             rabbitmq_msg.consume_request.CopyFrom(performative)
-        elif performative_id == RabbitMQMessage.Performative.CONSUME_RESPONSE:
-            performative = rabbitmq_pb2.RabbitMQMessage.Consume_Response_Performative()
-            consume_reponse = msg.consume_reponse
-            performative.consume_reponse.update(consume_reponse)
+        elif performative_id == RabbitmqMessage.Performative.CONSUME_RESPONSE:
+            performative = rabbitmq_pb2.RabbitmqMessage.Consume_Response_Performative()  # type: ignore
+            consume_response = msg.consume_response
+            performative.consume_response.update(consume_response)
             rabbitmq_msg.consume_response.CopyFrom(performative)
-        elif performative_id == RabbitMQMessage.Performative.PUBLISH_REQUEST:
-            performative = rabbitmq_pb2.RabbitMQMessage.Publish_Request_Performative()
+        elif performative_id == RabbitmqMessage.Performative.PUBLISH_REQUEST:
+            performative = rabbitmq_pb2.RabbitmqMessage.Publish_Request_Performative()  # type: ignore
+            rabbitmq_details = msg.rabbitmq_details
+            performative.rabbitmq_details.update(rabbitmq_details)
             publish_queue_name = msg.publish_queue_name
             performative.publish_queue_name = publish_queue_name
             publish_message = msg.publish_message
             performative.publish_message.update(publish_message)
             rabbitmq_msg.publish_request.CopyFrom(performative)
-        elif performative_id == RabbitMQMessage.Performative.PUBLISH_RESPONSE:
-            performative = rabbitmq_pb2.RabbitMQMessage.Publish_Response_Performative()
+        elif performative_id == RabbitmqMessage.Performative.PUBLISH_RESPONSE:
+            performative = rabbitmq_pb2.RabbitmqMessage.Publish_Response_Performative()  # type: ignore
             publish_response = msg.publish_response
             performative.publish_response.update(publish_response)
             rabbitmq_msg.publish_response.CopyFrom(performative)
@@ -90,13 +91,13 @@ class RabbitMQSerializer(Serializer):
     @staticmethod
     def decode(obj: bytes) -> Message:
         """
-        Decode bytes into a 'ChatCompletion' message.
+        Decode bytes into a 'Rabbitmq' message.
 
         :param obj: the bytes object.
-        :return: the 'ChatCompletion' message.
+        :return: the 'Rabbitmq' message.
         """
         message_pb = ProtobufMessage()
-        rabbitmq_pb = rabbitmq_pb2.RabbitMQMessage()
+        rabbitmq_pb = rabbitmq_pb2.RabbitmqMessage()
         message_pb.ParseFromString(obj)
         message_id = message_pb.dialogue_message.message_id
         dialogue_reference = (
@@ -105,31 +106,37 @@ class RabbitMQSerializer(Serializer):
         )
         target = message_pb.dialogue_message.target
 
-        message_pb.ParseFromString(message_pb.dialogue_message.content)
-        performative = message_pb.WhichOneof("performative")
-        performative_id = RabbitMQMessage.Performative(str(performative))
+        rabbitmq_pb.ParseFromString(message_pb.dialogue_message.content)
+        performative = rabbitmq_pb.WhichOneof("performative")
+        performative_id = RabbitmqMessage.Performative(str(performative))
         performative_content = dict()  # type: Dict[str, Any]
-        if performative_id == RabbitMQMessage.Performative.CONSUME_REQUEST:
+        if performative_id == RabbitmqMessage.Performative.CONSUME_REQUEST:
+            rabbitmq_details = rabbitmq_pb.consume_request.rabbitmq_details
+            rabbitmq_details_dict = dict(rabbitmq_details)
+            performative_content["rabbitmq_details"] = rabbitmq_details_dict
             consume_queue_name = rabbitmq_pb.consume_request.consume_queue_name
             performative_content["consume_queue_name"] = consume_queue_name
-            rabbitmq_details = rabbitmq_pb.consume_request.rabbitmq_details
-            performative_content["rabbitmq_details"] = rabbitmq_details
-        elif performative_id == RabbitMQMessage.Performative.CONSUME_RESPONSE:
-            consume_reponse = rabbitmq_pb.consume_response.consume_reponse
-            performative_content["consume_reponse"] = consume_reponse
-        elif performative_id == RabbitMQMessage.Performative.PUBLISH_REQUEST:
+        elif performative_id == RabbitmqMessage.Performative.CONSUME_RESPONSE:
+            consume_response = rabbitmq_pb.consume_response.consume_response
+            consume_response_dict = dict(consume_response)
+            performative_content["consume_response"] = consume_response_dict
+        elif performative_id == RabbitmqMessage.Performative.PUBLISH_REQUEST:
+            rabbitmq_details = rabbitmq_pb.publish_request.rabbitmq_details
+            rabbitmq_details_dict = dict(rabbitmq_details)
+            performative_content["rabbitmq_details"] = rabbitmq_details_dict
             publish_queue_name = rabbitmq_pb.publish_request.publish_queue_name
             performative_content["publish_queue_name"] = publish_queue_name
             publish_message = rabbitmq_pb.publish_request.publish_message
-            performative_content["publish_message"] = publish_message
-            rabbitmq_details = rabbitmq_pb.publish_request.rabbitmq_details
-            performative_content["rabbitmq_details"] = rabbitmq_details
-        elif performative_id == RabbitMQMessage.Performative.PUBLISH_RESPONSE:
+            publish_message_dict = dict(publish_message)
+            performative_content["publish_message"] = publish_message_dict
+        elif performative_id == RabbitmqMessage.Performative.PUBLISH_RESPONSE:
             publish_response = rabbitmq_pb.publish_response.publish_response
-            performative_content["publish_response"] = publish_response
+            publish_response_dict = dict(publish_response)
+            performative_content["publish_response"] = publish_response_dict
         else:
             raise ValueError("Performative not valid: {}.".format(performative_id))
-        return RabbitMQMessage(
+
+        return RabbitmqMessage(
             message_id=message_id,
             dialogue_reference=dialogue_reference,
             target=target,

@@ -18,8 +18,8 @@
 # ------------------------------------------------------------------------------
 
 """This module contains the transaction payloads of the LLMChatCompletionAbciApp."""
-from os import error, system
-from typing import Optional
+from os import error
+from typing import Optional, Dict, Any
 from dataclasses import dataclass
 
 from packages.valory.skills.abstract_round_abci.base import BaseTxPayload
@@ -35,20 +35,16 @@ class CollectRandomnessPayload(BaseTxPayload):
 @dataclass(frozen=True)
 class ProcessRequestPayload(BaseTxPayload):
     """Represent a transaction payload for the ProcessRequestRound."""
-    request_id: Optional[int] = None
-    system_message: Optional[str] = None
-    user_message: Optional[str] = None
-    response: Optional[str] = None
-    total_tokens: Optional[int] = None
-    total_cost: Optional[float] = None
-    error: Optional[bool] = None
+    response_data: Optional[Dict[str, Any]] = None
     request_processed_at: Optional[str] = None
 
 
 @dataclass(frozen=True)
 class PublishResponsePayload(BaseTxPayload):
     """Represent a transaction payload for the PublishResponseRound."""
+    published: bool
     error: Optional[bool] = None
+    error_message: Optional[str] = None
     request_published_at: Optional[str] = None
 
 
@@ -67,8 +63,6 @@ class SelectKeeperPayload(BaseTxPayload):
 @dataclass(frozen=True)
 class WaitForRequestPayload(BaseTxPayload):
     """Represent a transaction payload for the WaitForRequestRound."""
-    id: Optional[str] = None
-    user_message: Optional[str] = None
-    system_message: Optional[str] = None
+    request_data: Optional[Dict[str, Any]] = None
     request_received_at: Optional[str] = None
 

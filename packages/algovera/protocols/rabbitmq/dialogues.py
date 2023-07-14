@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 #
-#   Copyright 2021-2023 Valory AG
+#   Copyright 2023 algovera
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -19,10 +18,10 @@
 # ------------------------------------------------------------------------------
 
 """
-This module contains the classes required for llm dialogue management.
+This module contains the classes required for rabbitmq dialogue management.
 
-- ChatCompletionDialogue: The dialogue class maintains state of a dialogue and manages it.
-- ChatCompletionDialogues: The dialogues class keeps track of all dialogues.
+- RabbitmqDialogue: The dialogue class maintains state of a dialogue and manages it.
+- RabbitmqDialogues: The dialogues class keeps track of all dialogues.
 """
 
 from abc import ABC
@@ -32,42 +31,53 @@ from aea.common import Address
 from aea.protocols.base import Message
 from aea.protocols.dialogue.base import Dialogue, DialogueLabel, Dialogues
 
-from packages.algovera.protocols.rabbitmq.message import RabbitMQMessage
+from packages.algovera.protocols.rabbitmq.message import RabbitmqMessage
 
-class RabbitMQDialogue(Dialogue):
-    """The chat_completion dialogue class maintains state of a dialogue and manages it."""
+
+class RabbitmqDialogue(Dialogue):
+    """The rabbitmq dialogue class maintains state of a dialogue and manages it."""
 
     INITIAL_PERFORMATIVES: FrozenSet[Message.Performative] = frozenset(
-        {RabbitMQMessage.Performative.PUBLISH_REQUEST,
-         RabbitMQMessage.Performative.CONSUME_REQUEST}
+        {
+            RabbitmqMessage.Performative.CONSUME_REQUEST,
+            RabbitmqMessage.Performative.PUBLISH_REQUEST,
+        }
     )
     TERMINAL_PERFORMATIVES: FrozenSet[Message.Performative] = frozenset(
-        {RabbitMQMessage.Performative.PUBLISH_RESPONSE,
-         RabbitMQMessage.Performative.CONSUME_RESPONSE}
+        {
+            RabbitmqMessage.Performative.CONSUME_RESPONSE,
+            RabbitmqMessage.Performative.PUBLISH_RESPONSE,
+        }
     )
     VALID_REPLIES: Dict[Message.Performative, FrozenSet[Message.Performative]] = {
-        RabbitMQMessage.Performative.PUBLISH_REQUEST: frozenset({RabbitMQMessage.Performative.PUBLISH_RESPONSE}),
-        RabbitMQMessage.Performative.PUBLISH_RESPONSE: frozenset(),
-        RabbitMQMessage.Performative.CONSUME_REQUEST: frozenset({RabbitMQMessage.Performative.CONSUME_RESPONSE}),
-        RabbitMQMessage.Performative.CONSUME_RESPONSE: frozenset(),
+        RabbitmqMessage.Performative.CONSUME_REQUEST: frozenset(
+            {RabbitmqMessage.Performative.CONSUME_RESPONSE}
+        ),
+        RabbitmqMessage.Performative.CONSUME_RESPONSE: frozenset(),
+        RabbitmqMessage.Performative.PUBLISH_REQUEST: frozenset(
+            {RabbitmqMessage.Performative.PUBLISH_RESPONSE}
+        ),
+        RabbitmqMessage.Performative.PUBLISH_RESPONSE: frozenset(),
     }
 
     class Role(Dialogue.Role):
-        """This class defines the agent's role in a llm dialogue."""
+        """This class defines the agent's role in a rabbitmq dialogue."""
 
         CONNECTION = "connection"
         SKILL = "skill"
 
     class EndState(Dialogue.EndState):
-        """This class defines the end states of a llm dialogue."""
+        """This class defines the end states of a rabbitmq dialogue."""
+
         SUCCESSFUL = 0
+        FAILED = 1
 
     def __init__(
         self,
         dialogue_label: DialogueLabel,
         self_address: Address,
         role: Dialogue.Role,
-        message_class: Type[RabbitMQMessage] = RabbitMQMessage,
+        message_class: Type[RabbitmqMessage] = RabbitmqMessage,
     ) -> None:
         """
         Initialize a dialogue.
@@ -85,18 +95,21 @@ class RabbitMQDialogue(Dialogue):
             role=role,
         )
 
-class RabbitMQDialogues(Dialogues, ABC):
-    """This class keeps track of all llm dialogues."""
 
-    END_STATES = frozenset({RabbitMQDialogue.EndState.SUCCESSFUL})
+class RabbitmqDialogues(Dialogues, ABC):
+    """This class keeps track of all rabbitmq dialogues."""
 
-    _keep_terminal_state_dialogues = False
+    END_STATES = frozenset(
+        {RabbitmqDialogue.EndState.SUCCESSFUL, RabbitmqDialogue.EndState.FAILED}
+    )
+
+    _keep_terminal_state_dialogues = True
 
     def __init__(
         self,
         self_address: Address,
         role_from_first_message: Callable[[Message, Address], Dialogue.Role],
-        dialogue_class: Type[RabbitMQDialogue] = RabbitMQDialogue,
+        dialogue_class: Type[RabbitmqDialogue] = RabbitmqDialogue,
     ) -> None:
         """
         Initialize dialogues.
@@ -109,7 +122,7 @@ class RabbitMQDialogues(Dialogues, ABC):
             self,
             self_address=self_address,
             end_states=cast(FrozenSet[Dialogue.EndState], self.END_STATES),
-            message_class=RabbitMQMessage,
+            message_class=RabbitmqMessage,
             dialogue_class=dialogue_class,
             role_from_first_message=role_from_first_message,
         )

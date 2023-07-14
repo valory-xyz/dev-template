@@ -30,10 +30,10 @@ from aea.mail.base import Envelope
 from aea.protocols.base import Address, Message
 from aea.protocols.dialogue.base import Dialogue
 
-from packages.algovera.protocols.rabbitmq.message import RabbitMQMessage
+from packages.algovera.protocols.rabbitmq.message import RabbitmqMessage
 from packages.algovera.protocols.rabbitmq.dialogues import (
-    RabbitMQDialogue,
-    RabbitMQDialogues as BaseRabbitMQDialogues,
+    RabbitmqDialogue,
+    RabbitmqDialogues as BaseRabbitmqDialogues,
 )   
 
 
@@ -41,7 +41,7 @@ from packages.algovera.protocols.rabbitmq.dialogues import (
 PUBLIC_ID = PublicId.from_str("algovera/rabbitmq:0.1.0")
 
 
-class RabbitMQDialogues(BaseRabbitMQDialogues):
+class RabbitmqDialogues(BaseRabbitmqDialogues):
 
     def __init__(self, **kwargs: Any) -> None:
         """
@@ -59,9 +59,9 @@ class RabbitMQDialogues(BaseRabbitMQDialogues):
             :param receiver_address: the address of the receiving agent
             :return: The role of the agent
             """
-            return RabbitMQDialogue.Role.CONNECTION
+            return RabbitmqDialogue.Role.CONNECTION
 
-        BaseRabbitMQDialogues.__init__(
+        BaseRabbitmqDialogues.__init__(
             self,
             self_address=str(kwargs.pop("connection_id")),
             role_from_first_message=role_from_first_message,
@@ -98,7 +98,7 @@ class RabbitMQConnection(BaseSyncConnection):
             setting: self.configuration.config.get(setting)
             for setting in ("host", "port", "username", "password", "consume_queue_name", "publish_queue_name")
         }
-        self.dialogues = RabbitMQDialogues(connection_id=PUBLIC_ID)
+        self.dialogues = RabbitmqDialogues(connection_id=PUBLIC_ID)
 
 
     def main(self) -> None:
@@ -132,27 +132,31 @@ class RabbitMQConnection(BaseSyncConnection):
 
         :param envelope: the envelope to send.
         """
-        rabbitmq_message = cast(RabbitMQMessage, envelope.message)
+        rabbitmq_message = cast(RabbitmqMessage, envelope.message)
         dialogue = self.dialogues.update(rabbitmq_message)
 
-        if rabbitmq_message.performative is not (
-            RabbitMQMessage.Performative.PUBLISH_REQUEST,
-            RabbitMQMessage.Performative.CONSUME_REQUEST,
+        self.logger.info(f"Processing envelope: {envelope}")
+        self.logger.info(f"RabbitMQ message: {rabbitmq_message}")
+
+        if rabbitmq_message.performative not in (
+            RabbitmqMessage.Performative.PUBLISH_REQUEST,
+            RabbitmqMessage.Performative.CONSUME_REQUEST,
         ):
             self.logger.error("Performative not recognized.")
             return
 
-        if rabbitmq_message.performative == RabbitMQMessage.Performative.CONSUME_REQUEST:
+        if rabbitmq_message.performative == RabbitmqMessage.Performative.CONSUME_REQUEST:
             consume_response = self._get_consume_response(rabbitmq_message)
 
             consume_response_reply = cast(
-                RabbitMQMessage,
+                RabbitmqMessage,
                 dialogue.reply(
-                    performative=RabbitMQMessage.Performative.CONSUME_RESPONSE,
+                    performative=RabbitmqMessage.Performative.CONSUME_RESPONSE,
                     target_message=rabbitmq_message,
                     consume_response=consume_response,
                 ),
             )
+            
             response_envelope = Envelope(
                 to=envelope.sender,
                 sender=envelope.to,
@@ -160,12 +164,13 @@ class RabbitMQConnection(BaseSyncConnection):
                 message=consume_response_reply,
             )
 
-        if rabbitmq_message.performative == RabbitMQMessage.Performative.PUBLISH_REQUEST:
+        if rabbitmq_message.performative == RabbitmqMessage.Performative.PUBLISH_REQUEST:
+
             publish_response = self._get_publish_response(rabbitmq_message)
             publish_response_reply = cast(
-                RabbitMQMessage,
+                RabbitmqMessage,
                 dialogue.reply(
-                    performative=RabbitMQMessage.Performative.PUBLISH_RESPONSE,
+                    performative=RabbitmqMessage.Performative.PUBLISH_RESPONSE,
                     target_message=rabbitmq_message,
                     publish_response=publish_response,
                 ),
@@ -213,40 +218,42 @@ class RabbitMQConnection(BaseSyncConnection):
 
             # Get message from queue
             method_frame, header_frame, body = channel.basic_get(queue=rabbitmq_queue_name)
-            connection.close()
 
             # Message not found
             if method_frame is None:
                 self.logger.info("Nothing in queue")
-                return {"received_request": False, "error": False, "error_message": ""}
+                connection.close()
+                return {"received_request": "False", "error": "False", "error_message": ""}
 
             # Message found
             else:
                 self.logger.info(f"Message found: {body}")
                 channel.basic_ack(delivery_tag=method_frame.delivery_tag)
+                connection.close()
                 data = json.loads(body)
-                data["received_request"] = True
-                data["error"] = False
+                data["received_request"] = "True"
+                data["error"] = "False"
                 data["error_message"] = ""
                 
                 # if not id in data raise exception
                 if not "id" in data:
                     raise Exception("No id in message")
+
                 if not "user_message" in data:
                     raise Exception("No user_message in message")
 
-                if not "system_message" in data or data["system_message"] == "":
+                if not "system_message" in data:
                     data["system_message"] = ""
+
                 return data
 
         except Exception as e:
             self.logger.info(f"Exception: {e}")
-            return {"received_request": False, "error": True, "error_message": str(e)}
+            return {"received_request": "False", "error": "True", "error_message": str(e)}
 
-
-    def _get_publish_response(self, rabbitmq_msg: RabbitMQMessage):
+    def _get_publish_response(self, rabbitmq_msg: RabbitmqMessage):
         try:
-            rabbitmq_host, rabbitmq_port, rabbitmq_username, rabbitmq_password, rabbitmq_queue_name = self._get_rabbitmq_details(rabbitmq_msg)
+            rabbitmq_host, rabbitmq_port, rabbitmq_username, rabbitmq_password, rabbitmq_queue_name = self._get_rabbitmq_details(rabbitmq_msg, consume=False)
             
             # Connect to RabbitMQ
             credentials = pika.PlainCredentials(
@@ -269,12 +276,11 @@ class RabbitMQConnection(BaseSyncConnection):
 
             # Close connection
             connection.close()
-            return {"published": True}
+            return {"published": "True"}
 
         except Exception as e:
             self.logger.info(f"Failed to publish message: {e}")
-            return {"published": False}
-
+            return {"published": "False"}
 
     def on_connect(self) -> None:
         """

@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 #
-#   Copyright 2021-2023 Valory AG
+#   Copyright 2023 algovera
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -56,15 +55,13 @@ class ChatCompletionSerializer(Serializer):
         performative_id = msg.performative
         if performative_id == ChatCompletionMessage.Performative.REQUEST:
             performative = chat_completion_pb2.ChatCompletionMessage.Request_Performative()  # type: ignore
-            system_template = msg.system_template
-            performative.prompt_template = system_template
-            user_template = msg.user_template
-            performative.user_template = user_template
+            request = msg.request
+            performative.request.update(request)
             chat_completion_msg.request.CopyFrom(performative)
         elif performative_id == ChatCompletionMessage.Performative.RESPONSE:
             performative = chat_completion_pb2.ChatCompletionMessage.Response_Performative()  # type: ignore
             response = msg.response
-            performative.response = response
+            performative.response.update(response)
             chat_completion_msg.response.CopyFrom(performative)
         else:
             raise ValueError("Performative not valid: {}".format(performative_id))
@@ -93,18 +90,18 @@ class ChatCompletionSerializer(Serializer):
         )
         target = message_pb.dialogue_message.target
 
-        message_pb.ParseFromString(message_pb.dialogue_message.content)
-        performative = message_pb.WhichOneof("performative")
+        chat_completion_pb.ParseFromString(message_pb.dialogue_message.content)
+        performative = chat_completion_pb.WhichOneof("performative")
         performative_id = ChatCompletionMessage.Performative(str(performative))
         performative_content = dict()  # type: Dict[str, Any]
         if performative_id == ChatCompletionMessage.Performative.REQUEST:
-            system_template = chat_completion_pb.request.system_template
-            performative_content["system_template"] = system_template
-            user_template = chat_completion_pb.request.user_template
-            performative_content["user_template"] = user_template
+            request = chat_completion_pb.request.request
+            request_dict = dict(request)
+            performative_content["request"] = request_dict
         elif performative_id == ChatCompletionMessage.Performative.RESPONSE:
-            value = chat_completion_pb.response.value
-            performative_content["value"] = value
+            response = chat_completion_pb.response.response
+            response_dict = dict(response)
+            performative_content["response"] = response_dict
         else:
             raise ValueError("Performative not valid: {}.".format(performative_id))
 

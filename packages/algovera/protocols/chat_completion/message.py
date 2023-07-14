@@ -1,28 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 #
-#   Copyright 2021-2023 Valory AG
-#
-#   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
-#
-#       http://www.apache.org/licenses/LICENSE-2.0
-#
-#   Unless required by applicable law or agreed to in writing, software
-#   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
-#
-# ------------------------------------------------------------------------------
-
-
-# -*- coding: utf-8 -*-
-# ------------------------------------------------------------------------------
-#
-#   Copyright 2023 valory
+#   Copyright 2023 algovera
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -40,26 +19,31 @@
 
 """This module contains chat_completion's message definition."""
 
+# pylint: disable=too-many-statements,too-many-locals,no-member,too-few-public-methods,too-many-branches,not-an-iterable,unidiomatic-typecheck,unsubscriptable-object
+
 import logging
 from typing import Any, Dict, Set, Tuple, cast
 
 from aea.configurations.base import PublicId
-from aea.exceptions import enforce
+from aea.exceptions import AEAEnforceError, enforce
 from aea.protocols.base import Message
 
 
-_default_logger = logging.getLogger("aea.packages.algovera.protocols.chat_completion.message")
+_default_logger = logging.getLogger(
+    "aea.packages.algovera.protocols.chat_completion.message"
+)
 
 DEFAULT_BODY_SIZE = 4
 
-class ChatCompletionMessage(Message):
-    """A protocol for Chat Completion requests and responses."""
 
-    protocol_id = PublicId.from_str("algovera/chat_completion:1.0.0")
-    protocol_specification_id = PublicId.from_str("algovera/chat_completion:1.0.0")
+class ChatCompletionMessage(Message):
+    """A protocol to interact with Chat Completion using LangChain."""
+
+    protocol_id = PublicId.from_str("algovera/chat_completion:0.1.0")
+    protocol_specification_id = PublicId.from_str("algovera/chat_completion:0.1.0")
 
     class Performative(Message.Performative):
-        """Performatives for the chat completion protocol."""
+        """Performatives for the chat_completion protocol."""
 
         REQUEST = "request"
         RESPONSE = "response"
@@ -76,10 +60,9 @@ class ChatCompletionMessage(Message):
             "dialogue_reference",
             "message_id",
             "performative",
-            "system_message",
-            "user_message",
-            "target",
+            "request",
             "response",
+            "target",
         )
 
     def __init__(
@@ -137,41 +120,124 @@ class ChatCompletionMessage(Message):
         return cast(int, self.get("target"))
 
     @property
-    def system_message(self) -> str:
-        """Get the 'system_message' content from the message."""
-        enforce(self.is_set("system_message"), "'system_message' content is not set.")
-        return cast(str, self.get("system_message"))
+    def request(self) -> Dict[str, str]:
+        """Get the 'request' content from the message."""
+        enforce(self.is_set("request"), "'request' content is not set.")
+        return cast(Dict[str, str], self.get("request"))
 
     @property
-    def user_message(self) -> str:
-        """Get the 'user_message' content from the message."""
-        enforce(self.is_set("user_message"), "'user_message' content is not set.")
-        return cast(str, self.get("user_message"))
-
-    @property
-    def response(self) -> dict:
-        """Get the 'value' content from the message."""
+    def response(self) -> Dict[str, str]:
+        """Get the 'response' content from the message."""
         enforce(self.is_set("response"), "'response' content is not set.")
-        return cast(dict, self.get("response"))
+        return cast(Dict[str, str], self.get("response"))
 
     def _is_consistent(self) -> bool:
-        """Check that the message follows the chat completion protocol."""
+        """Check that the message follows the chat_completion protocol."""
         try:
-            if not isinstance(self.dialogue_reference, tuple):
-                return False
-            elif not isinstance(self.message_id, int):
-                return False
-            elif self.performative not in ChatCompletionMessage.Performative.valid_performatives:
-                return False
-            elif not isinstance(self.target, int):
-                return False
-            elif not isinstance(self.system_template, str):
-                return False
-            elif not isinstance(self.user_template, str):
-                return False
-            elif not isinstance(self.response, dict):
-                return False
-            return True
-        except (AssertionError, AttributeError, KeyError, TypeError, ValueError) as e:
-            _default_logger.exception(str(e))
+            enforce(
+                isinstance(self.dialogue_reference, tuple),
+                "Invalid type for 'dialogue_reference'. Expected 'tuple'. Found '{}'.".format(
+                    type(self.dialogue_reference)
+                ),
+            )
+            enforce(
+                isinstance(self.dialogue_reference[0], str),
+                "Invalid type for 'dialogue_reference[0]'. Expected 'str'. Found '{}'.".format(
+                    type(self.dialogue_reference[0])
+                ),
+            )
+            enforce(
+                isinstance(self.dialogue_reference[1], str),
+                "Invalid type for 'dialogue_reference[1]'. Expected 'str'. Found '{}'.".format(
+                    type(self.dialogue_reference[1])
+                ),
+            )
+            enforce(
+                type(self.message_id) is int,
+                "Invalid type for 'message_id'. Expected 'int'. Found '{}'.".format(
+                    type(self.message_id)
+                ),
+            )
+            enforce(
+                type(self.target) is int,
+                "Invalid type for 'target'. Expected 'int'. Found '{}'.".format(
+                    type(self.target)
+                ),
+            )
+
+            # Light Protocol Rule 2
+            # Check correct performative
+            enforce(
+                isinstance(self.performative, ChatCompletionMessage.Performative),
+                "Invalid 'performative'. Expected either of '{}'. Found '{}'.".format(
+                    self.valid_performatives, self.performative
+                ),
+            )
+
+            # Check correct contents
+            actual_nb_of_contents = len(self._body) - DEFAULT_BODY_SIZE
+            expected_nb_of_contents = 0
+            if self.performative == ChatCompletionMessage.Performative.REQUEST:
+                expected_nb_of_contents = 1
+                enforce(
+                    isinstance(self.request, dict),
+                    "Invalid type for content 'request'. Expected 'dict'. Found '{}'.".format(
+                        type(self.request)
+                    ),
+                )
+                for key_of_request, value_of_request in self.request.items():
+                    enforce(
+                        isinstance(key_of_request, str),
+                        "Invalid type for dictionary keys in content 'request'. Expected 'str'. Found '{}'.".format(
+                            type(key_of_request)
+                        ),
+                    )
+                    enforce(
+                        isinstance(value_of_request, str),
+                        "Invalid type for dictionary values in content 'request'. Expected 'str'. Found '{}'.".format(
+                            type(value_of_request)
+                        ),
+                    )
+            elif self.performative == ChatCompletionMessage.Performative.RESPONSE:
+                expected_nb_of_contents = 1
+                enforce(
+                    isinstance(self.response, dict),
+                    "Invalid type for content 'response'. Expected 'dict'. Found '{}'.".format(
+                        type(self.response)
+                    ),
+                )
+                for key_of_response, value_of_response in self.response.items():
+                    enforce(
+                        isinstance(key_of_response, str),
+                        "Invalid type for dictionary keys in content 'response'. Expected 'str'. Found '{}'.".format(
+                            type(key_of_response)
+                        ),
+                    )
+                    enforce(
+                        isinstance(value_of_response, str),
+                        "Invalid type for dictionary values in content 'response'. Expected 'str'. Found '{}'.".format(
+                            type(value_of_response)
+                        ),
+                    )
+
+            # Check correct content count
+            enforce(
+                expected_nb_of_contents == actual_nb_of_contents,
+                "Incorrect number of contents. Expected {}. Found {}".format(
+                    expected_nb_of_contents, actual_nb_of_contents
+                ),
+            )
+
+            # Light Protocol Rule 3
+            if self.message_id == 1:
+                enforce(
+                    self.target == 0,
+                    "Invalid 'target'. Expected 0 (because 'message_id' is 1). Found {}.".format(
+                        self.target
+                    ),
+                )
+        except (AEAEnforceError, ValueError, KeyError) as e:
+            _default_logger.error(str(e))
             return False
+
+        return True

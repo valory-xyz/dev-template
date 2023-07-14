@@ -2,220 +2,373 @@
 # source: chat_completion.proto
 
 import sys
-_b=sys.version_info[0]<3 and (lambda x:x) or (lambda x:x.encode('latin1'))
+
+_b = sys.version_info[0] < 3 and (lambda x: x) or (lambda x: x.encode("latin1"))
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
 from google.protobuf import descriptor_pb2
+
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
 
 
-
-
 DESCRIPTOR = _descriptor.FileDescriptor(
-  name='chat_completion.proto',
-  package='aea.algovera.chat_completion.v1_0_0',
-  syntax='proto3',
-  serialized_pb=_b('\n\x15\x63hat_completion.proto\x12#aea.algovera.chat_completion.v1_0_0\"\xf6\x03\n\x15\x43hatCompletionMessage\x12\x62\n\x07request\x18\x05 \x01(\x0b\x32O.aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Request_PerformativeH\x00\x12\x64\n\x08response\x18\x06 \x01(\x0b\x32P.aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Response_PerformativeH\x00\x1a\x46\n\x14Request_Performative\x12\x17\n\x0fsystem_template\x18\x01 \x01(\t\x12\x15\n\ruser_template\x18\x02 \x01(\t\x1a\xba\x01\n\x15Response_Performative\x12p\n\x08response\x18\x01 \x03(\x0b\x32^.aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Response_Performative.ResponseEntry\x1a/\n\rResponseEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x42\x0e\n\x0cperformativeb\x06proto3')
+    name="chat_completion.proto",
+    package="aea.algovera.chat_completion.v0_1_0",
+    syntax="proto3",
+    serialized_pb=_b(
+        '\n\x15\x63hat_completion.proto\x12#aea.algovera.chat_completion.v0_1_0"\xe6\x04\n\x15\x43hatCompletionMessage\x12\x62\n\x07request\x18\x05 \x01(\x0b\x32O.aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Request_PerformativeH\x00\x12\x64\n\x08response\x18\x06 \x01(\x0b\x32P.aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Response_PerformativeH\x00\x1a\xb5\x01\n\x14Request_Performative\x12m\n\x07request\x18\x01 \x03(\x0b\x32\\.aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Request_Performative.RequestEntry\x1a.\n\x0cRequestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\xba\x01\n\x15Response_Performative\x12p\n\x08response\x18\x01 \x03(\x0b\x32^.aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Response_Performative.ResponseEntry\x1a/\n\rResponseEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x42\x0e\n\x0cperformativeb\x06proto3'
+    ),
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
-
+_CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE_REQUESTENTRY = _descriptor.Descriptor(
+    name="RequestEntry",
+    full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Request_Performative.RequestEntry",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Request_Performative.RequestEntry.key",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="value",
+            full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Request_Performative.RequestEntry.value",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001")),
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=426,
+    serialized_end=472,
+)
 
 _CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE = _descriptor.Descriptor(
-  name='Request_Performative',
-  full_name='aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Request_Performative',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='system_template', full_name='aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Request_Performative.system_template', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='user_template', full_name='aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Request_Performative.user_template', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=290,
-  serialized_end=360,
+    name="Request_Performative",
+    full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Request_Performative",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="request",
+            full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Request_Performative.request",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[
+        _CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE_REQUESTENTRY,
+    ],
+    enum_types=[],
+    options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=291,
+    serialized_end=472,
 )
 
 _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE_RESPONSEENTRY = _descriptor.Descriptor(
-  name='ResponseEntry',
-  full_name='aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Response_Performative.ResponseEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Response_Performative.ResponseEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Response_Performative.ResponseEntry.value', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=502,
-  serialized_end=549,
+    name="ResponseEntry",
+    full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Response_Performative.ResponseEntry",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Response_Performative.ResponseEntry.key",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="value",
+            full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Response_Performative.ResponseEntry.value",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=_b("").decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001")),
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=614,
+    serialized_end=661,
 )
 
 _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE = _descriptor.Descriptor(
-  name='Response_Performative',
-  full_name='aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Response_Performative',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='response', full_name='aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Response_Performative.response', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[_CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE_RESPONSEENTRY, ],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=363,
-  serialized_end=549,
+    name="Response_Performative",
+    full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Response_Performative",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="response",
+            full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Response_Performative.response",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[
+        _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE_RESPONSEENTRY,
+    ],
+    enum_types=[],
+    options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=475,
+    serialized_end=661,
 )
 
 _CHATCOMPLETIONMESSAGE = _descriptor.Descriptor(
-  name='ChatCompletionMessage',
-  full_name='aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='request', full_name='aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.request', index=0,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='response', full_name='aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.response', index=1,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[_CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE, _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE, ],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-    _descriptor.OneofDescriptor(
-      name='performative', full_name='aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.performative',
-      index=0, containing_type=None, fields=[]),
-  ],
-  serialized_start=63,
-  serialized_end=565,
+    name="ChatCompletionMessage",
+    full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="request",
+            full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.request",
+            index=0,
+            number=5,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+        _descriptor.FieldDescriptor(
+            name="response",
+            full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.response",
+            index=1,
+            number=6,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            options=None,
+        ),
+    ],
+    extensions=[],
+    nested_types=[
+        _CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE,
+        _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE,
+    ],
+    enum_types=[],
+    options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[
+        _descriptor.OneofDescriptor(
+            name="performative",
+            full_name="aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.performative",
+            index=0,
+            containing_type=None,
+            fields=[],
+        ),
+    ],
+    serialized_start=63,
+    serialized_end=677,
 )
 
+_CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE_REQUESTENTRY.containing_type = (
+    _CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE
+)
+_CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE.fields_by_name[
+    "request"
+].message_type = _CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE_REQUESTENTRY
 _CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE.containing_type = _CHATCOMPLETIONMESSAGE
-_CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE_RESPONSEENTRY.containing_type = _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE
-_CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE.fields_by_name['response'].message_type = _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE_RESPONSEENTRY
+_CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE_RESPONSEENTRY.containing_type = (
+    _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE
+)
+_CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE.fields_by_name[
+    "response"
+].message_type = _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE_RESPONSEENTRY
 _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE.containing_type = _CHATCOMPLETIONMESSAGE
-_CHATCOMPLETIONMESSAGE.fields_by_name['request'].message_type = _CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE
-_CHATCOMPLETIONMESSAGE.fields_by_name['response'].message_type = _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE
-_CHATCOMPLETIONMESSAGE.oneofs_by_name['performative'].fields.append(
-  _CHATCOMPLETIONMESSAGE.fields_by_name['request'])
-_CHATCOMPLETIONMESSAGE.fields_by_name['request'].containing_oneof = _CHATCOMPLETIONMESSAGE.oneofs_by_name['performative']
-_CHATCOMPLETIONMESSAGE.oneofs_by_name['performative'].fields.append(
-  _CHATCOMPLETIONMESSAGE.fields_by_name['response'])
-_CHATCOMPLETIONMESSAGE.fields_by_name['response'].containing_oneof = _CHATCOMPLETIONMESSAGE.oneofs_by_name['performative']
-DESCRIPTOR.message_types_by_name['ChatCompletionMessage'] = _CHATCOMPLETIONMESSAGE
+_CHATCOMPLETIONMESSAGE.fields_by_name[
+    "request"
+].message_type = _CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE
+_CHATCOMPLETIONMESSAGE.fields_by_name[
+    "response"
+].message_type = _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE
+_CHATCOMPLETIONMESSAGE.oneofs_by_name["performative"].fields.append(
+    _CHATCOMPLETIONMESSAGE.fields_by_name["request"]
+)
+_CHATCOMPLETIONMESSAGE.fields_by_name[
+    "request"
+].containing_oneof = _CHATCOMPLETIONMESSAGE.oneofs_by_name["performative"]
+_CHATCOMPLETIONMESSAGE.oneofs_by_name["performative"].fields.append(
+    _CHATCOMPLETIONMESSAGE.fields_by_name["response"]
+)
+_CHATCOMPLETIONMESSAGE.fields_by_name[
+    "response"
+].containing_oneof = _CHATCOMPLETIONMESSAGE.oneofs_by_name["performative"]
+DESCRIPTOR.message_types_by_name["ChatCompletionMessage"] = _CHATCOMPLETIONMESSAGE
 
-ChatCompletionMessage = _reflection.GeneratedProtocolMessageType('ChatCompletionMessage', (_message.Message,), dict(
-
-  Request_Performative = _reflection.GeneratedProtocolMessageType('Request_Performative', (_message.Message,), dict(
-    DESCRIPTOR = _CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE,
-    __module__ = 'chat_completion_pb2'
-    # @@protoc_insertion_point(class_scope:aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Request_Performative)
-    ))
-  ,
-
-  Response_Performative = _reflection.GeneratedProtocolMessageType('Response_Performative', (_message.Message,), dict(
-
-    ResponseEntry = _reflection.GeneratedProtocolMessageType('ResponseEntry', (_message.Message,), dict(
-      DESCRIPTOR = _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE_RESPONSEENTRY,
-      __module__ = 'chat_completion_pb2'
-      # @@protoc_insertion_point(class_scope:aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Response_Performative.ResponseEntry)
-      ))
-    ,
-    DESCRIPTOR = _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE,
-    __module__ = 'chat_completion_pb2'
-    # @@protoc_insertion_point(class_scope:aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage.Response_Performative)
-    ))
-  ,
-  DESCRIPTOR = _CHATCOMPLETIONMESSAGE,
-  __module__ = 'chat_completion_pb2'
-  # @@protoc_insertion_point(class_scope:aea.algovera.chat_completion.v1_0_0.ChatCompletionMessage)
-  ))
+ChatCompletionMessage = _reflection.GeneratedProtocolMessageType(
+    "ChatCompletionMessage",
+    (_message.Message,),
+    dict(
+        Request_Performative=_reflection.GeneratedProtocolMessageType(
+            "Request_Performative",
+            (_message.Message,),
+            dict(
+                RequestEntry=_reflection.GeneratedProtocolMessageType(
+                    "RequestEntry",
+                    (_message.Message,),
+                    dict(
+                        DESCRIPTOR=_CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE_REQUESTENTRY,
+                        __module__="chat_completion_pb2"
+                        # @@protoc_insertion_point(class_scope:aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Request_Performative.RequestEntry)
+                    ),
+                ),
+                DESCRIPTOR=_CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE,
+                __module__="chat_completion_pb2"
+                # @@protoc_insertion_point(class_scope:aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Request_Performative)
+            ),
+        ),
+        Response_Performative=_reflection.GeneratedProtocolMessageType(
+            "Response_Performative",
+            (_message.Message,),
+            dict(
+                ResponseEntry=_reflection.GeneratedProtocolMessageType(
+                    "ResponseEntry",
+                    (_message.Message,),
+                    dict(
+                        DESCRIPTOR=_CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE_RESPONSEENTRY,
+                        __module__="chat_completion_pb2"
+                        # @@protoc_insertion_point(class_scope:aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Response_Performative.ResponseEntry)
+                    ),
+                ),
+                DESCRIPTOR=_CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE,
+                __module__="chat_completion_pb2"
+                # @@protoc_insertion_point(class_scope:aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage.Response_Performative)
+            ),
+        ),
+        DESCRIPTOR=_CHATCOMPLETIONMESSAGE,
+        __module__="chat_completion_pb2"
+        # @@protoc_insertion_point(class_scope:aea.algovera.chat_completion.v0_1_0.ChatCompletionMessage)
+    ),
+)
 _sym_db.RegisterMessage(ChatCompletionMessage)
 _sym_db.RegisterMessage(ChatCompletionMessage.Request_Performative)
+_sym_db.RegisterMessage(ChatCompletionMessage.Request_Performative.RequestEntry)
 _sym_db.RegisterMessage(ChatCompletionMessage.Response_Performative)
 _sym_db.RegisterMessage(ChatCompletionMessage.Response_Performative.ResponseEntry)
 
 
+_CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE_REQUESTENTRY.has_options = True
+_CHATCOMPLETIONMESSAGE_REQUEST_PERFORMATIVE_REQUESTENTRY._options = (
+    _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001"))
+)
 _CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE_RESPONSEENTRY.has_options = True
-_CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE_RESPONSEENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_CHATCOMPLETIONMESSAGE_RESPONSE_PERFORMATIVE_RESPONSEENTRY._options = (
+    _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b("8\001"))
+)
 # @@protoc_insertion_point(module_scope)

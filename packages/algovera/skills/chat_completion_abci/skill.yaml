@@ -7,15 +7,15 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeieonojdsyjar763yrp6wbtd2yrxllpso7l3hn6h4s4gclnaxyhmsm
-  behaviours.py: bafybeicd2xuipcrhkrmzmveovxujmkqgliqthpklqhh4jqcws7bpeq5frm
-  dialogues.py: bafybeierlemc772etw7haexybnpzystfcvuoo5v24unli4jglnkbtq5s6i
+  behaviours.py: bafybeifcsfmjstdo7ebqs7lqmndcpbuoqmshqyossln4fvys7niunwlguq
+  dialogues.py: bafybeichvs3euzqzu36jllbu4hpc2dxklzmzpixvmbqojprg5mrejg5ica
   fsm_specs_chat_completion2.yaml: bafybeihvnul25dkftnk6htcgqiiwfebi4grxspaq7unkvysx5c44udymqu
-  handlers.py: bafybeiff6avrlhg7ge5xez2wv6agdnn4lyqqk25khp4bk6nkcpx4sibpua
-  models.py: bafybeiasxlfw6brfitox3leropklc2kwcrcke5f55jamfdx7xatv6xvthu
-  payloads.py: bafybeicayp4v27zxr6732vzv7dce7dinldp42titybkszeq433zfd7aaly
-  rounds.py: bafybeidjz44pgdicbx2uakrbcaetpycrpuih36volfjpwitheouhhnhwz4
+  handlers.py: bafybeihkgkzawi2yqump6odusrqixeibodwcy27hl22zo7pjwt2rftpnte
+  models.py: bafybeic6mv47p5extvf7tgawekaemrkuuk7pv4r5o5fuzfkj5so4lzqwhi
+  payloads.py: bafybeihgxwkaooxtntlxg42stg556uxrng64xovdyn6i6cdppy2ryvqusu
+  rounds.py: bafybeidfqiorafqe3s7riixw5nve232bnoujgtmgshcdz3fcpjxanp7twe
   tests/__init__.py: bafybeic3534aro4pdtsdcuxywzlgkccczx2elhnwisiq3r6okvnrdu4aia
-  tests/test_behaviours.py: bafybeihvyhvbo7c47hfbmx6nbs645wqylzvo2j26sx4vwgsqzb4cb3mc6i
+  tests/test_behaviours.py: bafybeia6jyi4xb2pn5cauvv3srzvbnp5ryghlf4pdhgpvtgyen25dfczym
   tests/test_dialogues.py: bafybeidxzli374onapcsafyumyduaccaqhi6sl5bncuanyal2kx2w4dsey
   tests/test_handlers.py: bafybeihei7ruipicenknzjf7xaz4wrlmvhtdvrypiokjpolcnsfwuxnl5y
   tests/test_models.py: bafybeiam4x7nx62fg7ibwojn3r5ycordcibtae724rykjxojfbu3tyx2ka
@@ -23,12 +23,12 @@ fingerprint:
   tests/test_rounds.py: bafybeihssfjmvyvy533z3dtehvm6sswr3xaiggei4va6mg3u4nog3nmzhi
 fingerprint_ignore_patterns: []
 connections:
-- algovera/chat_completion:0.1.0:bafybeihjjhrdeeoaelhwu6wpb66bi5zkx4fxvl3h2y3jmgq6rct6mhfsgu
-- algovera/rabbitmq:0.1.0:bafybeigv4ak74cxkynyvwziflygqxfmkma5aipixslo2wnegzjt2eotxiq
+- algovera/chat_completion:0.1.0:bafybeid5wdv5ha4accwui62o2ca2vp53vzi2viifnly43bnekfyqek3iom
+- algovera/rabbitmq:0.1.0:bafybeid7y7rskum6tmq6mlubnywuqfvwheyd5drn6b2pkiqef7w5ov3ika
 contracts: []
 protocols:
-- algovera/chat_completion:1.0.0:bafybeibsqqwg253ooi6vg35gwo77d35jym3rsybhuuhe53dhsmj6vug5fe
-- algovera/rabbitmq:1.0.0:bafybeiehdu5f4t5to4poh3fkofbfaomrhxlyxelkj7v7qoxkkpmjrtxlhu
+- algovera/chat_completion:0.1.0:bafybeie6xqeo5jold2rok5b2dlgd3twj3om3otfqvfqnzikz3toup3fadu
+- algovera/rabbitmq:0.1.0:bafybeiaegj3ns4qjzjxu34fuqj6cj52t6uppxgr4pggjxdz2qbeu2qze5u
 skills:
 - valory/abstract_round_abci:0.1.0:bafybeiarzpxsy7ulitk5obs4zajhll2m77motjn5st7mi6qvjtkoirfikq
 behaviours:
@@ -57,6 +57,12 @@ handlers:
   tendermint:
     args: {}
     class_name: TendermintHandler
+  chatcompletionhandler:
+    args: {}
+    class_name: ChatCompletionHandler
+  RabbitmqHandler:
+    args: {}
+    class_name: RabbitmqHandler
 models:
   abci_dialogues:
     args: {}
@@ -129,6 +135,7 @@ models:
       tendermint_p2p_url: localhost:26656
       tendermint_url: http://localhost:26657
       tx_timeout: 10.0
+      use_termination: false
       validate_timeout: 1205
       rabbitmq_host: localhost
       rabbitmq_port: 5672
@@ -160,6 +167,12 @@ models:
   tendermint_dialogues:
     args: {}
     class_name: TendermintDialogues
+  rabbitmq_dialogues:
+    args: {}
+    class_name: RabbitmqDialogues
+  chat_completion_dialogues:
+    args: {}
+    class_name: ChatCompletionDialogues
 dependencies:
   langchain:
     version: ==0.0.209

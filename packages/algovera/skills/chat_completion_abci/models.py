@@ -21,7 +21,7 @@
 from typing import Any
 from aea.skills.base import SkillContext
 
-from packages.valory.skills.abstract_round_abci.models import BaseParams
+from packages.valory.skills.abstract_round_abci.models import BaseParams, ApiSpecs
 from packages.valory.skills.abstract_round_abci.models import (
     BenchmarkTool as BaseBenchmarkTool,
 )
@@ -40,13 +40,33 @@ class SharedState(BaseSharedState):
     def __init__(self, *args: Any, skill_context: SkillContext, **kwargs: Any) -> None:
         """Init"""
         super().__init__(*args, skill_context=skill_context, **kwargs)
-        # Added in WaitForRequestRound and empty in ProcessRequestRound
-        self.request_data: dict = {}
-        
-        # Added in ProcessRequestRound and empty in PublishResponseRound
-        self.response_data: dict = {}
 
 
-Params = BaseParams
 Requests = BaseRequests
 BenchmarkTool = BaseBenchmarkTool
+
+class RandomnessApi(ApiSpecs):
+    """A model that wraps ApiSpecs for randomness api specifications."""
+
+class Params(BaseParams):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        """Init"""
+        self.rabbitmq_host = self._ensure(
+            "rabbitmq_host", kwargs, str
+        )
+        self.rabbitmq_port = self._ensure(
+            "rabbitmq_port", kwargs, int
+        )
+        self.rabbitmq_username = self._ensure(
+            "rabbitmq_username", kwargs, str
+        )
+        self.rabbitmq_password = self._ensure(
+            "rabbitmq_password", kwargs, str
+        )
+        self.consume_queue_name = self._ensure(
+            "consume_queue_name", kwargs, str
+        )
+        self.publish_queue_name = self._ensure(
+            "publish_queue_name", kwargs, str
+        )
+        super().__init__(*args, **kwargs)

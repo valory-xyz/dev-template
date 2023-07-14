@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 #
-#   Copyright 2021-2023 Valory AG
+#   Copyright 2023 algovera
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -20,12 +19,16 @@
 
 """Test messages module for chat_completion protocol."""
 
+# pylint: disable=too-many-statements,too-many-locals,no-member,too-few-public-methods,redefined-builtin
 from typing import List
+
 from aea.test_tools.test_protocol import BaseProtocolMessagesTestCase
+
 from packages.algovera.protocols.chat_completion.message import ChatCompletionMessage
 
-class TestMessageLlm(BaseProtocolMessagesTestCase):
-    """Test for the 'llm' protocol message."""
+
+class TestMessageChatCompletion(BaseProtocolMessagesTestCase):
+    """Test for the 'chat_completion' protocol message."""
 
     MESSAGE_CLASS = ChatCompletionMessage
 
@@ -34,25 +37,23 @@ class TestMessageLlm(BaseProtocolMessagesTestCase):
         return [
             ChatCompletionMessage(
                 performative=ChatCompletionMessage.Performative.REQUEST,
-                system_template="some str",
-                user_template="some str",
+                request={"some str": "some str"},
             ),
             ChatCompletionMessage(
                 performative=ChatCompletionMessage.Performative.RESPONSE,
-                value="some str",
+                response={"some str": "some str"},
             ),
         ]
 
-    def build_inconsistent(self) -> List[LlmMessage]:  # type: ignore[override]
+    def build_inconsistent(self) -> List[ChatCompletionMessage]:  # type: ignore[override]
         """Build inconsistent messages to be used for testing."""
         return [
             ChatCompletionMessage(
                 performative=ChatCompletionMessage.Performative.REQUEST,
-                # skip content: prompt_template
-                prompt_values={"some str": "some str"},
+                # skip content: request
             ),
             ChatCompletionMessage(
                 performative=ChatCompletionMessage.Performative.RESPONSE,
-                # skip content: value
+                # skip content: response
             ),
         ]

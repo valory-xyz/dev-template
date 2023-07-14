@@ -20,7 +20,8 @@
 """This package contains the rounds of LLMChatCompletionAbciApp."""
 from abc import ABC
 from enum import Enum
-from typing import Dict, List, Optional, Set, Tuple, cast, Type
+from os import sync
+from typing import Dict, List, Optional, Set, Tuple, cast, Type, Any
 
 from packages.valory.skills.abstract_round_abci.base import (
     AbciApp,
@@ -62,10 +63,25 @@ class SynchronizedData(BaseSynchronizedData):
     @property
     def printed_messages(self) -> List[str]:
         """Get the printed messages list."""
-
         return cast(
             List[str],
             self.db.get_strict("printed_messages"),
+        )
+
+    @property
+    def request_data(self) -> Dict[str, str]:
+        """Get the request data."""
+        return cast(
+            Dict[str, str],
+            self.db.get_strict("request_data"),
+        )
+
+    @property
+    def response_data(self) -> Dict[str, Any]:
+        """Get the response data."""
+        return cast(
+            Dict[str, Any],
+            self.db.get_strict("response_data"),
         )
 
 
@@ -97,11 +113,17 @@ class ProcessRequestRound(OnlyKeeperSendsRound, LLMChatCompletionABCIAbstractRou
         """Process the end of the block."""
         if self.keeper_payload:
             payload = self.keeper_payload
-            error = payload.error
-            if error:
+            error = payload.response_data["error"]
+            if error == "True":
                 return self.synchronized_data, Event.ERROR
-            else:
-                return self.synchronized_data, Event.DONE
+
+            synchronized_data = self.synchronized_data.update(
+                request_data={},
+                response_data=payload.response_data,
+                synchronized_data_class=SynchronizedData,
+            )
+            
+            return synchronized_data, Event.DONE
 
 
 class PublishResponseRound(OnlyKeeperSendsRound, LLMChatCompletionABCIAbstractRound):
@@ -159,16 +181,15 @@ class WaitForRequestRound(OnlyKeeperSendsRound, LLMChatCompletionABCIAbstractRou
         """Process the end of the block."""
         if self.keeper_payload:
             payload = self.keeper_payload
-            received_request = payload.received_request
-            error = payload.error
+            error = payload.request_data["error"]
+            if error == "True":
+                return self.synchronized_data, Event.ERROR
 
-            if not received_request:
-                if error:
-                    return self.synchronized_data, Event.ERROR
-                else:
-                    return self.synchronized_data, Event.ROUND_TIMEOUT
-
-            return self.synchronized_data, Event.DONE
+            synchronized_data = self.synchronized_data.update(
+                request_data=payload.request_data,
+                synchronized_data_class=SynchronizedData,
+            )
+            return synchronized_data, Event.DONE
 
 
 class LLMChatCompletionAbciApp(AbciApp[Event]):

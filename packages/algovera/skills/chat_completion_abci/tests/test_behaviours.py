@@ -43,7 +43,6 @@ from packages.algovera.skills.chat_completion_abci.behaviours import (
 )
 from packages.algovera.skills.chat_completion_abci.rounds import (
     SynchronizedData,
-    DegenerateRound,
     Event,
     LLMChatCompletionAbciApp,
     CollectRandomnessRound,

@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 #
-#   Copyright 2021-2023 Valory AG
+#   Copyright 2023 algovera
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -21,10 +20,11 @@
 """
 This module contains the support resources for the rabbitmq protocol.
 
-It was created with protocol buffer compiler version `libprotoc 3.19.4` and aea protocol generator version `1.0.0`.
+It was created with protocol buffer compiler version `libprotoc 3.0.0` and aea protocol generator version `1.0.0`.
 """
 
-from packages.algovera.protocols.rabbitmq.message import RabbitMQMessage
-from packages.algovera.protocols.rabbitmq.serialization import RabbitMQSerializer
+from packages.algovera.protocols.rabbitmq.message import RabbitmqMessage
+from packages.algovera.protocols.rabbitmq.serialization import RabbitmqSerializer
 
-RabbitMQMessage.serializer = RabbitMQSerializer
+
+RabbitmqMessage.serializer = RabbitmqSerializer

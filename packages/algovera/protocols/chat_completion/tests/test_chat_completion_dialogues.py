@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 #
-#   Copyright 2021-2023 Valory AG
+#   Copyright 2023 algovera
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -18,17 +17,20 @@
 #
 # ------------------------------------------------------------------------------
 
-"""Test dialogues module for llm protocol."""
+"""Test dialogues module for chat_completion protocol."""
 
 # pylint: disable=too-many-statements,too-many-locals,no-member,too-few-public-methods,redefined-builtin
 from aea.test_tools.test_protocol import BaseProtocolDialoguesTestCase
 
-from packages.algovera.protocols.chat_completion.dialogues import ChatCompletionDialogue, ChatCompletionDialogues
+from packages.algovera.protocols.chat_completion.dialogues import (
+    ChatCompletionDialogue,
+    ChatCompletionDialogues,
+)
 from packages.algovera.protocols.chat_completion.message import ChatCompletionMessage
 
 
 class TestDialoguesChatCompletion(BaseProtocolDialoguesTestCase):
-    """Test for the 'llm' protocol dialogues."""
+    """Test for the 'chat_completion' protocol dialogues."""
 
     MESSAGE_CLASS = ChatCompletionMessage
 
@@ -42,6 +44,5 @@ class TestDialoguesChatCompletion(BaseProtocolDialoguesTestCase):
         """Make a dict with message contruction content for dialogues.create."""
         return dict(
             performative=ChatCompletionMessage.Performative.REQUEST,
-            system_template="system_template",
-            user_template="user_template",
+            request={"some str": "some str"},
         )

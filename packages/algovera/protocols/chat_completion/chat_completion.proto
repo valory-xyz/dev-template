@@ -1,13 +1,12 @@
 syntax = "proto3";
 
-package aea.algovera.chat_completion.v1_0_0;
+package aea.algovera.chat_completion.v0_1_0;
 
 message ChatCompletionMessage{
 
   // Performatives and contents
   message Request_Performative{
-    string system_template = 1;
-    string user_template = 2;
+    map<string, string> request = 1;
   }
 
   message Response_Performative{

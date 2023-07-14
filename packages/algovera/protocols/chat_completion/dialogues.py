@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 #
-#   Copyright 2021-2023 Valory AG
+#   Copyright 2023 algovera
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -19,7 +18,7 @@
 # ------------------------------------------------------------------------------
 
 """
-This module contains the classes required for llm dialogue management.
+This module contains the classes required for chat_completion dialogue management.
 
 - ChatCompletionDialogue: The dialogue class maintains state of a dialogue and manages it.
 - ChatCompletionDialogues: The dialogues class keeps track of all dialogues.
@@ -34,6 +33,7 @@ from aea.protocols.dialogue.base import Dialogue, DialogueLabel, Dialogues
 
 from packages.algovera.protocols.chat_completion.message import ChatCompletionMessage
 
+
 class ChatCompletionDialogue(Dialogue):
     """The chat_completion dialogue class maintains state of a dialogue and manages it."""
 
@@ -44,20 +44,23 @@ class ChatCompletionDialogue(Dialogue):
         {ChatCompletionMessage.Performative.RESPONSE}
     )
     VALID_REPLIES: Dict[Message.Performative, FrozenSet[Message.Performative]] = {
-        ChatCompletionMessage.Performative.REQUEST: frozenset({ChatCompletionMessage.Performative.RESPONSE}),
+        ChatCompletionMessage.Performative.REQUEST: frozenset(
+            {ChatCompletionMessage.Performative.RESPONSE}
+        ),
         ChatCompletionMessage.Performative.RESPONSE: frozenset(),
     }
 
     class Role(Dialogue.Role):
-        """This class defines the agent's role in a llm dialogue."""
+        """This class defines the agent's role in a chat_completion dialogue."""
 
         CONNECTION = "connection"
         SKILL = "skill"
 
     class EndState(Dialogue.EndState):
-        """This class defines the end states of a llm dialogue."""
+        """This class defines the end states of a chat_completion dialogue."""
 
         SUCCESSFUL = 0
+        FAILED = 1
 
     def __init__(
         self,
@@ -82,12 +85,18 @@ class ChatCompletionDialogue(Dialogue):
             role=role,
         )
 
+
 class ChatCompletionDialogues(Dialogues, ABC):
-    """This class keeps track of all llm dialogues."""
+    """This class keeps track of all chat_completion dialogues."""
 
-    END_STATES = frozenset({ChatCompletionDialogue.EndState.SUCCESSFUL})
+    END_STATES = frozenset(
+        {
+            ChatCompletionDialogue.EndState.SUCCESSFUL,
+            ChatCompletionDialogue.EndState.FAILED,
+        }
+    )
 
-    _keep_terminal_state_dialogues = False
+    _keep_terminal_state_dialogues = True
 
     def __init__(
         self,

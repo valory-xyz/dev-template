@@ -7,11 +7,12 @@ description: The rabbitmq connection provides a connection to get and add items 
 license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
-  connection.py: bafybeicd6bmaol2bd32c25hxzd72auenn2vtxcm45hla65s5q335s5ed5a
+  __init__.py: bafybeiftu27piztiu5bfxbvhqsbppgtseykyfot6wtlrrzeuzya6zrgpky
+  connection.py: bafybeia3zuiu5o5ur4fnp4rwlgsks2b7shia5isvftb6krjpughb32jwte
 fingerprint_ignore_patterns: []
 connections: []
 protocols:
-- algovera/rabbitmq:1.0.0:bafybeiehdu5f4t5to4poh3fkofbfaomrhxlyxelkj7v7qoxkkpmjrtxlhu
+- algovera/rabbitmq:0.1.0:bafybeiaegj3ns4qjzjxu34fuqj6cj52t6uppxgr4pggjxdz2qbeu2qze5u
 class_name: RabbitMQConnection
 config:
   host: localhost

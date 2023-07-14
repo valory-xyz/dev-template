@@ -150,11 +150,13 @@ class ChatCompletionConnection(BaseSyncConnection):
             )
             return
 
+        self.logger.info("Processing LLM request...")
         response = self._get_response(
-            system_message=chat_completion_message.system_message,
-            user_message=chat_completion_message.user_message,
+            id=chat_completion_message.request["id"],
+            system_message=chat_completion_message.request["system_message"],
+            user_message=chat_completion_message.request["user_message"],
         )
-
+        
         response_message = cast(
             ChatCompletionMessage,
             dialogue.reply(
@@ -173,7 +175,7 @@ class ChatCompletionConnection(BaseSyncConnection):
 
         self.put_envelope(response_envelope)
 
-    def _get_response(self, system_message: str, user_message: str):
+    def _get_response(self, id:str, system_message: str, user_message: str):
         """
         Get response from OpenAI.
 
@@ -194,18 +196,21 @@ class ChatCompletionConnection(BaseSyncConnection):
                 response = self.chat(messages).content
 
             reponse = {
+                "id": id,
                 "system_message": system_message,
                 "user_message": user_message,
                 "response": response,
-                "total_tokens": cb.total_tokens,
-                "total_cost": cb.total_cost,
-                "error": False,
+                "total_tokens": str(cb.total_tokens),
+                "total_cost": str(cb.total_cost),
+                "error": "False",
+                "error_message": ""
             }
 
             return reponse
 
         except Exception as e:
             reponse = {
+                "id": id,
                 "error": True,
                 "error_class": str(e.__class__.__name__),
                 "error_message": str(e),

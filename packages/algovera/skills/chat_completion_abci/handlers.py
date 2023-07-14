@@ -18,10 +18,8 @@
 # ------------------------------------------------------------------------------
 
 """This module contains the handlers for the skill of LLMChatCompletionAbciApp."""
-import re
-import json
-import pika
-from typing import Dict, cast, Any, Optional
+
+from typing import Optional
 
 from aea.configurations.data_types import PublicId
 
@@ -50,20 +48,8 @@ from packages.valory.skills.abstract_round_abci.handlers import (
     AbstractResponseHandler
 )
 
-from packages.algovera.skills.chat_completion_abci.rounds import SynchronizedData
-from packages.algovera.protocols.rabbitmq.message import RabbitMQMessage
-from packages.algovera.protocols.rabbitmq.dialogues import RabbitMQDialogue, RabbitMQDialogues
+from packages.algovera.protocols.rabbitmq.message import RabbitmqMessage
 from packages.algovera.protocols.chat_completion.message import ChatCompletionMessage
-from packages.algovera.protocols.chat_completion.dialogues import ChatCompletionDialogue, ChatCompletionDialogues
-
-ABCIHandler = BaseABCIRoundHandler
-HttpHandler = BaseHttpHandler
-SigningHandler = BaseSigningHandler
-LedgerApiHandler = BaseLedgerApiHandler
-ContractApiHandler = BaseContractApiHandler
-TendermintHandler = BaseTendermintHandler
-IpfsHandler = BaseIpfsHandler
-
 
 class ChatCompletionHandler(AbstractResponseHandler):
     SUPPORTED_PROTOCOL: Optional[PublicId] = ChatCompletionMessage.protocol_id
@@ -74,14 +60,21 @@ class ChatCompletionHandler(AbstractResponseHandler):
         }
     )
 
-class RabbitMQHandler(AbstractResponseHandler):
-    SUPPORTED_PROTOCOL: Optional[PublicId] = RabbitMQMessage.protocol_id
+class RabbitmqHandler(AbstractResponseHandler):
+    SUPPORTED_PROTOCOL: Optional[PublicId] = RabbitmqMessage.protocol_id
     allowed_response_performatives = frozenset(
         {
-            RabbitMQMessage.Performative.CONSUME_REQUEST,
-            RabbitMQMessage.Performative.PUBLISH_REQUEST,
-            RabbitMQMessage.Performative.CONSUME_RESPONSE,
-            RabbitMQMessage.Performative.PUBLISH_RESPONSE,
+            RabbitmqMessage.Performative.CONSUME_REQUEST,
+            RabbitmqMessage.Performative.PUBLISH_REQUEST,
+            RabbitmqMessage.Performative.CONSUME_RESPONSE,
+            RabbitmqMessage.Performative.PUBLISH_RESPONSE,
         }
     )
-    
+
+ABCIHandler = BaseABCIRoundHandler
+HttpHandler = BaseHttpHandler
+SigningHandler = BaseSigningHandler
+LedgerApiHandler = BaseLedgerApiHandler
+ContractApiHandler = BaseContractApiHandler
+TendermintHandler = BaseTendermintHandler
+IpfsHandler = BaseIpfsHandler

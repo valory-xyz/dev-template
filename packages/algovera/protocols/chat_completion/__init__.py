@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
 #
-#   Copyright 2021-2023 Valory AG
+#   Copyright 2023 algovera
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -19,12 +18,15 @@
 # ------------------------------------------------------------------------------
 
 """
-This module contains the support resources for the llm protocol.
+This module contains the support resources for the chat_completion protocol.
 
-It was created with protocol buffer compiler version `libprotoc 3.19.4` and aea protocol generator version `1.0.0`.
+It was created with protocol buffer compiler version `libprotoc 3.0.0` and aea protocol generator version `1.0.0`.
 """
 
 from packages.algovera.protocols.chat_completion.message import ChatCompletionMessage
-from packages.algovera.protocols.chat_completion.serialization import ChatCompletionSerializer
+from packages.algovera.protocols.chat_completion.serialization import (
+    ChatCompletionSerializer,
+)
+
 
 ChatCompletionMessage.serializer = ChatCompletionSerializer

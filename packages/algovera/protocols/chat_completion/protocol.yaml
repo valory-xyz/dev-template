@@ -1,20 +1,20 @@
 name: chat_completion
 author: algovera
-version: 1.0.0
-protocol_specification_id: algovera/chat_completion:1.0.0
+version: 0.1.0
+protocol_specification_id: algovera/chat_completion:0.1.0
 type: protocol
-description: A protocol for ChatCompletion requests and responses.
+description: A protocol to interact with Chat Completion using LangChain.
 license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
-  __init__.py: bafybeiggrlmwrq2q5lfhqol4pohhqvlw3saweo4rhn773iaizze3ida5jy
-  chat_completion.proto: bafybeig2pr5hv7zp4vfs4hkvtatofw7qikokf6dsrq73rtkynyfcd4eob4
-  chat_completion_pb2.py: bafybeigcwiajvrxmaf2rooj3qceaiy6lk2atb2oyz53xm67jz4bfblvftq
-  dialogues.py: bafybeifwq52wolixbdo3dzymb7otbxe6fusyepkd56pdgmlhi2ljgcm4hu
-  message.py: bafybeicsgyarsrcziiz773j32h4tibrfw6x52ilh5v3dfxo26acnpcwnti
-  serialization.py: bafybeif4zklfnpx3344hnc5djyv4swd3lp4ol5gobcv4uakftooqtdyr2q
-  tests/test_chat_completion_dialogues.py: bafybeia3nkwag2gpgwtx3nhxryf6cjgljy6tsa7opprjlkjbbisb2u4mcm
-  tests/test_chat_completion_messages.py: bafybeib2jvblt3qswfjlyal34n5l7wrbaxbdyratb6p6yikayksg5o45k4
+  __init__.py: bafybeih4jg6brpiynf3r4mejjo5x24c77irprm7pnv5g5dqyxj46ida6vi
+  chat_completion.proto: bafybeiguvp7t7cal7kemxycwalj2kz46omxrg6cdolzarxqrfhobyvzj7m
+  chat_completion_pb2.py: bafybeihrmes35tirfu6ks5xqdjs5oujpeoprtddztaxamemr7rnrvr3wg4
+  dialogues.py: bafybeifudmcijmktp25lbyeoz3lu3s6f4cql4xgc6wzrcplt2adxriyilu
+  message.py: bafybeie4fkgfd4eqoaeg7nguajnbfi5q6ginipun35jhlbnnh37ksguxou
+  serialization.py: bafybeidlluixfbub4bv5wd7lvbnuitzx3qro3uasnhx6i5ddzuk6wduvaq
+  tests/test_chat_completion_dialogues.py: bafybeiaewfdxt2ukcodqd2xfkvkvddojbtlxgcn23f3hmqfsyptr3aaqru
+  tests/test_chat_completion_messages.py: bafybeiahskqsk7q5pwduyyjoovvupojjz7alyjy7g3m4fhnudtkadhqnli
 fingerprint_ignore_patterns: []
 dependencies:
   protobuf: {}
