@@ -18,9 +18,9 @@
 # ------------------------------------------------------------------------------
 
 """This module contains the transaction payloads of the LLMChatCompletionAbciApp."""
-from os import error
-from typing import Optional, Dict, Any
 from dataclasses import dataclass
+from os import error
+from typing import Any, Dict, Optional
 
 from packages.valory.skills.abstract_round_abci.base import BaseTxPayload
 
@@ -28,6 +28,7 @@ from packages.valory.skills.abstract_round_abci.base import BaseTxPayload
 @dataclass(frozen=True)
 class CollectRandomnessPayload(BaseTxPayload):
     """Represent a transaction payload for the CollectRandomnessRound."""
+
     round_id: int
     randomness: str
 
@@ -35,6 +36,7 @@ class CollectRandomnessPayload(BaseTxPayload):
 @dataclass(frozen=True)
 class ProcessRequestPayload(BaseTxPayload):
     """Represent a transaction payload for the ProcessRequestRound."""
+
     response_data: Optional[Dict[str, Any]] = None
     request_processed_at: Optional[str] = None
 
@@ -42,6 +44,7 @@ class ProcessRequestPayload(BaseTxPayload):
 @dataclass(frozen=True)
 class PublishResponsePayload(BaseTxPayload):
     """Represent a transaction payload for the PublishResponseRound."""
+
     published: bool
     error: Optional[bool] = None
     error_message: Optional[str] = None
@@ -51,18 +54,20 @@ class PublishResponsePayload(BaseTxPayload):
 @dataclass(frozen=True)
 class RegistrationPayload(BaseTxPayload):
     """Represent a transaction payload for the RegistrationRound."""
+
     sender: str
 
 
 @dataclass(frozen=True)
 class SelectKeeperPayload(BaseTxPayload):
     """Represent a transaction payload for the SelectKeeperRound."""
+
     keeper: str
 
 
 @dataclass(frozen=True)
 class WaitForRequestPayload(BaseTxPayload):
     """Represent a transaction payload for the WaitForRequestRound."""
+
     request_data: Optional[Dict[str, Any]] = None
     request_received_at: Optional[str] = None
-

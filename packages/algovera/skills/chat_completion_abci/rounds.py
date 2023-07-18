@@ -21,20 +21,7 @@
 from abc import ABC
 from enum import Enum
 from os import sync
-from typing import Dict, List, Optional, Set, Tuple, cast, Type, Any
-
-from packages.valory.skills.abstract_round_abci.base import (
-    AbciApp,
-    AbciAppTransitionFunction,
-    AbstractRound,
-    AppState,
-    BaseSynchronizedData,
-    EventToTimeout,
-    get_name,
-    CollectSameUntilThresholdRound,
-    CollectSameUntilAllRound,
-    OnlyKeeperSendsRound,
-)
+from typing import Any, Dict, List, Optional, Set, Tuple, Type, cast
 
 from packages.algovera.skills.chat_completion_abci.payloads import (
     CollectRandomnessPayload,
@@ -44,10 +31,23 @@ from packages.algovera.skills.chat_completion_abci.payloads import (
     SelectKeeperPayload,
     WaitForRequestPayload,
 )
+from packages.valory.skills.abstract_round_abci.base import (
+    AbciApp,
+    AbciAppTransitionFunction,
+    AbstractRound,
+    AppState,
+    BaseSynchronizedData,
+    CollectSameUntilAllRound,
+    CollectSameUntilThresholdRound,
+    EventToTimeout,
+    OnlyKeeperSendsRound,
+    get_name,
+)
 
 
 class Event(Enum):
     """LLMChatCompletionAbciApp Events"""
+
     ERROR = "error"
     ROUND_TIMEOUT = "round_timeout"
     NO_MAJORITY = "no_majority"
@@ -60,6 +60,7 @@ class SynchronizedData(BaseSynchronizedData):
 
     This data is replicated by the tendermint application.
     """
+
     @property
     def printed_messages(self) -> List[str]:
         """Get the printed messages list."""
@@ -94,8 +95,11 @@ class LLMChatCompletionABCIAbstractRound(AbstractRound, ABC):
         return cast(SynchronizedData, self._synchronized_data)
 
 
-class CollectRandomnessRound(CollectSameUntilThresholdRound, LLMChatCompletionABCIAbstractRound):
+class CollectRandomnessRound(
+    CollectSameUntilThresholdRound, LLMChatCompletionABCIAbstractRound
+):
     """CollectRandomnessRound"""
+
     payload_class = CollectRandomnessPayload
     synchronized_data_class = SynchronizedData
     done_event = Event.DONE
@@ -122,7 +126,7 @@ class ProcessRequestRound(OnlyKeeperSendsRound, LLMChatCompletionABCIAbstractRou
                 response_data=payload.response_data,
                 synchronized_data_class=SynchronizedData,
             )
-            
+
             return synchronized_data, Event.DONE
 
 
@@ -160,7 +164,9 @@ class RegistrationRound(CollectSameUntilAllRound, LLMChatCompletionABCIAbstractR
         return None
 
 
-class SelectKeeperRound(CollectSameUntilThresholdRound, LLMChatCompletionABCIAbstractRound):
+class SelectKeeperRound(
+    CollectSameUntilThresholdRound, LLMChatCompletionABCIAbstractRound
+):
     """SelectKeeperRound"""
 
     payload_class = SelectKeeperPayload
@@ -173,6 +179,7 @@ class SelectKeeperRound(CollectSameUntilThresholdRound, LLMChatCompletionABCIAbs
 
 class WaitForRequestRound(OnlyKeeperSendsRound, LLMChatCompletionABCIAbstractRound):
     """WaitForRequestRound"""
+
     payload_class = WaitForRequestPayload
     synchronized_data_class = SynchronizedData
     done_event = Event.DONE
@@ -198,32 +205,30 @@ class LLMChatCompletionAbciApp(AbciApp[Event]):
     initial_round_cls: AppState = RegistrationRound
     initial_states: Set[AppState] = {RegistrationRound}
     transition_function: AbciAppTransitionFunction = {
-        RegistrationRound: {
-            Event.DONE: CollectRandomnessRound
-        },
+        RegistrationRound: {Event.DONE: CollectRandomnessRound},
         CollectRandomnessRound: {
             Event.DONE: SelectKeeperRound,
             Event.NO_MAJORITY: CollectRandomnessRound,
-            Event.ROUND_TIMEOUT: CollectRandomnessRound
+            Event.ROUND_TIMEOUT: CollectRandomnessRound,
         },
         ProcessRequestRound: {
             Event.DONE: PublishResponseRound,
-            Event.ERROR: RegistrationRound
+            Event.ERROR: RegistrationRound,
         },
         PublishResponseRound: {
             Event.DONE: CollectRandomnessRound,
-            Event.ERROR: RegistrationRound
+            Event.ERROR: RegistrationRound,
         },
         SelectKeeperRound: {
             Event.DONE: WaitForRequestRound,
             Event.NO_MAJORITY: RegistrationRound,
-            Event.ROUND_TIMEOUT: RegistrationRound
+            Event.ROUND_TIMEOUT: RegistrationRound,
         },
         WaitForRequestRound: {
             Event.DONE: ProcessRequestRound,
             Event.ERROR: RegistrationRound,
-            Event.ROUND_TIMEOUT: WaitForRequestRound
-        }
+            Event.ROUND_TIMEOUT: WaitForRequestRound,
+        },
     }
     final_states: Set[AppState] = set()
     event_to_timeout: EventToTimeout = {}
@@ -231,6 +236,4 @@ class LLMChatCompletionAbciApp(AbciApp[Event]):
     db_pre_conditions: Dict[AppState, Set[str]] = {
         RegistrationRound: [],
     }
-    db_post_conditions: Dict[AppState, Set[str]] = {
-
-    }
+    db_post_conditions: Dict[AppState, Set[str]] = {}

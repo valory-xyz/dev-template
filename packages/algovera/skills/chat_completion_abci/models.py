@@ -19,9 +19,13 @@
 
 """This module contains the shared state for the abci skill of LLMChatCompletionAbciApp."""
 from typing import Any
+
 from aea.skills.base import SkillContext
 
-from packages.valory.skills.abstract_round_abci.models import BaseParams, ApiSpecs
+from packages.algovera.skills.chat_completion_abci.rounds import (
+    LLMChatCompletionAbciApp,
+)
+from packages.valory.skills.abstract_round_abci.models import ApiSpecs, BaseParams
 from packages.valory.skills.abstract_round_abci.models import (
     BenchmarkTool as BaseBenchmarkTool,
 )
@@ -29,7 +33,6 @@ from packages.valory.skills.abstract_round_abci.models import Requests as BaseRe
 from packages.valory.skills.abstract_round_abci.models import (
     SharedState as BaseSharedState,
 )
-from packages.algovera.skills.chat_completion_abci.rounds import LLMChatCompletionAbciApp
 
 
 class SharedState(BaseSharedState):
@@ -45,28 +48,18 @@ class SharedState(BaseSharedState):
 Requests = BaseRequests
 BenchmarkTool = BaseBenchmarkTool
 
+
 class RandomnessApi(ApiSpecs):
     """A model that wraps ApiSpecs for randomness api specifications."""
+
 
 class Params(BaseParams):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Init"""
-        self.rabbitmq_host = self._ensure(
-            "rabbitmq_host", kwargs, str
-        )
-        self.rabbitmq_port = self._ensure(
-            "rabbitmq_port", kwargs, int
-        )
-        self.rabbitmq_username = self._ensure(
-            "rabbitmq_username", kwargs, str
-        )
-        self.rabbitmq_password = self._ensure(
-            "rabbitmq_password", kwargs, str
-        )
-        self.consume_queue_name = self._ensure(
-            "consume_queue_name", kwargs, str
-        )
-        self.publish_queue_name = self._ensure(
-            "publish_queue_name", kwargs, str
-        )
+        self.rabbitmq_host = self._ensure("rabbitmq_host", kwargs, str)
+        self.rabbitmq_port = self._ensure("rabbitmq_port", kwargs, int)
+        self.rabbitmq_username = self._ensure("rabbitmq_username", kwargs, str)
+        self.rabbitmq_password = self._ensure("rabbitmq_password", kwargs, str)
+        self.consume_queue_name = self._ensure("consume_queue_name", kwargs, str)
+        self.publish_queue_name = self._ensure("publish_queue_name", kwargs, str)
         super().__init__(*args, **kwargs)

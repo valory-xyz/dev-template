@@ -24,6 +24,18 @@ from aea.protocols.base import Address, Message
 from aea.protocols.dialogue.base import Dialogue as BaseDialogue
 from aea.skills.base import Model
 
+from packages.algovera.protocols.chat_completion.dialogues import (
+    ChatCompletionDialogue as BaseChatCompletionDialogue,
+)
+from packages.algovera.protocols.chat_completion.dialogues import (
+    ChatCompletionDialogues as BaseChatCompletionDialogues,
+)
+from packages.algovera.protocols.rabbitmq.dialogues import (
+    RabbitmqDialogue as BaseRabbitmqDialogue,
+)
+from packages.algovera.protocols.rabbitmq.dialogues import (
+    RabbitmqDialogues as BaseRabbitmqDialogues,
+)
 from packages.valory.skills.abstract_round_abci.dialogues import (
     AbciDialogue as BaseAbciDialogue,
 )
@@ -66,18 +78,7 @@ from packages.valory.skills.abstract_round_abci.dialogues import (
 from packages.valory.skills.abstract_round_abci.dialogues import (
     TendermintDialogues as BaseTendermintDialogues,
 )
-from packages.algovera.protocols.chat_completion.dialogues import (
-    ChatCompletionDialogue as BaseChatCompletionDialogue
-)
-from packages.algovera.protocols.chat_completion.dialogues import (
-    ChatCompletionDialogues as BaseChatCompletionDialogues
-)
-from packages.algovera.protocols.rabbitmq.dialogues import (
-    RabbitmqDialogue as BaseRabbitmqDialogue
-)
-from packages.algovera.protocols.rabbitmq.dialogues import (
-    RabbitmqDialogues as BaseRabbitmqDialogues
-)
+
 
 AbciDialogue = BaseAbciDialogue
 AbciDialogues = BaseAbciDialogues
@@ -108,6 +109,7 @@ IpfsDialogues = BaseIpfsDialogues
 
 RabbitmqDialogue = BaseRabbitmqDialogue
 ChatCompletionDialogue = BaseChatCompletionDialogue
+
 
 class RabbitmqDialogues(Model, BaseRabbitmqDialogues):
     """A class to keep track of LLM dialogues."""

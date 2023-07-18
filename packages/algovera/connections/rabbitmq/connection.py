@@ -20,29 +20,27 @@
 
 """OpenAI connection and channel."""
 
-import pika
 import json
 from typing import Any, cast
 
+import pika
 from aea.configurations.base import PublicId
 from aea.connections.base import BaseSyncConnection
 from aea.mail.base import Envelope
 from aea.protocols.base import Address, Message
 from aea.protocols.dialogue.base import Dialogue
 
-from packages.algovera.protocols.rabbitmq.message import RabbitmqMessage
+from packages.algovera.protocols.rabbitmq.dialogues import RabbitmqDialogue
 from packages.algovera.protocols.rabbitmq.dialogues import (
-    RabbitmqDialogue,
     RabbitmqDialogues as BaseRabbitmqDialogues,
-)   
-
+)
+from packages.algovera.protocols.rabbitmq.message import RabbitmqMessage
 
 
 PUBLIC_ID = PublicId.from_str("algovera/rabbitmq:0.1.0")
 
 
 class RabbitmqDialogues(BaseRabbitmqDialogues):
-
     def __init__(self, **kwargs: Any) -> None:
         """
         Initialize dialogues.
@@ -96,10 +94,16 @@ class RabbitMQConnection(BaseSyncConnection):
         super().__init__(*args, **kwargs)
         self.rabbitmq_settings = {
             setting: self.configuration.config.get(setting)
-            for setting in ("host", "port", "username", "password", "consume_queue_name", "publish_queue_name")
+            for setting in (
+                "host",
+                "port",
+                "username",
+                "password",
+                "consume_queue_name",
+                "publish_queue_name",
+            )
         }
         self.dialogues = RabbitmqDialogues(connection_id=PUBLIC_ID)
-
 
     def main(self) -> None:
         """
@@ -145,7 +149,10 @@ class RabbitMQConnection(BaseSyncConnection):
             self.logger.error("Performative not recognized.")
             return
 
-        if rabbitmq_message.performative == RabbitmqMessage.Performative.CONSUME_REQUEST:
+        if (
+            rabbitmq_message.performative
+            == RabbitmqMessage.Performative.CONSUME_REQUEST
+        ):
             consume_response = self._get_consume_response(rabbitmq_message)
 
             consume_response_reply = cast(
@@ -156,7 +163,7 @@ class RabbitMQConnection(BaseSyncConnection):
                     consume_response=consume_response,
                 ),
             )
-            
+
             response_envelope = Envelope(
                 to=envelope.sender,
                 sender=envelope.to,
@@ -164,7 +171,10 @@ class RabbitMQConnection(BaseSyncConnection):
                 message=consume_response_reply,
             )
 
-        if rabbitmq_message.performative == RabbitmqMessage.Performative.PUBLISH_REQUEST:
+        if (
+            rabbitmq_message.performative
+            == RabbitmqMessage.Performative.PUBLISH_REQUEST
+        ):
 
             publish_response = self._get_publish_response(rabbitmq_message)
             publish_response_reply = cast(
@@ -181,49 +191,77 @@ class RabbitMQConnection(BaseSyncConnection):
                 context=envelope.context,
                 message=publish_response_reply,
             )
-        
+
         self.put_envelope(response_envelope)
 
     def _get_rabbitmq_details(self, rabbitmq_msg, consume=True):
-        rabbitmq_host = (rabbitmq_msg.rabbitmq_details["host"] 
-                if rabbitmq_msg.rabbitmq_details["host"] 
-                else self.rabbitmq_settings["host"])
-        rabbitmq_port = (rabbitmq_msg.rabbitmq_details["port"]
+        rabbitmq_host = (
+            rabbitmq_msg.rabbitmq_details["host"]
+            if rabbitmq_msg.rabbitmq_details["host"]
+            else self.rabbitmq_settings["host"]
+        )
+        rabbitmq_port = (
+            rabbitmq_msg.rabbitmq_details["port"]
             if rabbitmq_msg.rabbitmq_details["port"]
-            else self.rabbitmq_settings["port"])
-        rabbitmq_username = (rabbitmq_msg.rabbitmq_details["username"]
+            else self.rabbitmq_settings["port"]
+        )
+        rabbitmq_username = (
+            rabbitmq_msg.rabbitmq_details["username"]
             if rabbitmq_msg.rabbitmq_details["username"]
-            else self.rabbitmq_settings["username"])
-        rabbitmq_password = (rabbitmq_msg.rabbitmq_details["password"]
+            else self.rabbitmq_settings["username"]
+        )
+        rabbitmq_password = (
+            rabbitmq_msg.rabbitmq_details["password"]
             if rabbitmq_msg.rabbitmq_details["password"]
-            else self.rabbitmq_settings["password"])
+            else self.rabbitmq_settings["password"]
+        )
         if consume:
             rabbitmq_queue_name = rabbitmq_msg.consume_queue_name
         else:
             rabbitmq_queue_name = rabbitmq_msg.publish_queue_name
 
-        return rabbitmq_host, rabbitmq_port, rabbitmq_username, rabbitmq_password, rabbitmq_queue_name
+        return (
+            rabbitmq_host,
+            rabbitmq_port,
+            rabbitmq_username,
+            rabbitmq_password,
+            rabbitmq_queue_name,
+        )
 
     def _get_consume_response(self, rabbitmq_msg):
         try:
-            rabbitmq_host, rabbitmq_port, rabbitmq_username, rabbitmq_password, rabbitmq_queue_name = self._get_rabbitmq_details(rabbitmq_msg)
+            (
+                rabbitmq_host,
+                rabbitmq_port,
+                rabbitmq_username,
+                rabbitmq_password,
+                rabbitmq_queue_name,
+            ) = self._get_rabbitmq_details(rabbitmq_msg)
 
             # Connect to RabbitMQ
             credentials = pika.PlainCredentials(rabbitmq_username, rabbitmq_password)
             connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host=rabbitmq_host, port=rabbitmq_port, credentials=credentials)
+                pika.ConnectionParameters(
+                    host=rabbitmq_host, port=rabbitmq_port, credentials=credentials
+                )
             )
             channel = connection.channel()
             channel.queue_declare(queue=rabbitmq_queue_name, durable=True)
 
             # Get message from queue
-            method_frame, header_frame, body = channel.basic_get(queue=rabbitmq_queue_name)
+            method_frame, header_frame, body = channel.basic_get(
+                queue=rabbitmq_queue_name
+            )
 
             # Message not found
             if method_frame is None:
                 self.logger.info("Nothing in queue")
                 connection.close()
-                return {"received_request": "False", "error": "False", "error_message": ""}
+                return {
+                    "received_request": "False",
+                    "error": "False",
+                    "error_message": "",
+                }
 
             # Message found
             else:
@@ -234,7 +272,7 @@ class RabbitMQConnection(BaseSyncConnection):
                 data["received_request"] = "True"
                 data["error"] = "False"
                 data["error_message"] = ""
-                
+
                 # if not id in data raise exception
                 if not "id" in data:
                     raise Exception("No id in message")
@@ -249,29 +287,38 @@ class RabbitMQConnection(BaseSyncConnection):
 
         except Exception as e:
             self.logger.info(f"Exception: {e}")
-            return {"received_request": "False", "error": "True", "error_message": str(e)}
+            return {
+                "received_request": "False",
+                "error": "True",
+                "error_message": str(e),
+            }
 
     def _get_publish_response(self, rabbitmq_msg: RabbitmqMessage):
         try:
-            rabbitmq_host, rabbitmq_port, rabbitmq_username, rabbitmq_password, rabbitmq_queue_name = self._get_rabbitmq_details(rabbitmq_msg, consume=False)
-            
+            (
+                rabbitmq_host,
+                rabbitmq_port,
+                rabbitmq_username,
+                rabbitmq_password,
+                rabbitmq_queue_name,
+            ) = self._get_rabbitmq_details(rabbitmq_msg, consume=False)
+
             # Connect to RabbitMQ
-            credentials = pika.PlainCredentials(
-                rabbitmq_username, 
-                rabbitmq_password
-            )
+            credentials = pika.PlainCredentials(rabbitmq_username, rabbitmq_password)
             connection = pika.BlockingConnection(
                 pika.ConnectionParameters(
-                    host=rabbitmq_host, 
-                    port=rabbitmq_port, 
-                    credentials=credentials
+                    host=rabbitmq_host, port=rabbitmq_port, credentials=credentials
                 )
             )
             channel = connection.channel()
             channel.queue_declare(queue=rabbitmq_queue_name, durable=True)
 
             # Publish message to queue
-            channel.basic_publish(exchange="", routing_key=rabbitmq_queue_name, body=json.dumps(rabbitmq_msg.publish_message))
+            channel.basic_publish(
+                exchange="",
+                routing_key=rabbitmq_queue_name,
+                body=json.dumps(rabbitmq_msg.publish_message),
+            )
             self.logger.info(f"Message published: {rabbitmq_msg.publish_message}")
 
             # Close connection

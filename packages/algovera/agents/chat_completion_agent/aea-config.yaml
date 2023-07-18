@@ -7,8 +7,8 @@ aea_version: '>=1.0.0, <2.0.0'
 fingerprint: {}
 fingerprint_ignore_patterns: []
 connections:
-- algovera/chat_completion:0.1.0:bafybeid5wdv5ha4accwui62o2ca2vp53vzi2viifnly43bnekfyqek3iom
-- algovera/rabbitmq:0.1.0:bafybeid7y7rskum6tmq6mlubnywuqfvwheyd5drn6b2pkiqef7w5ov3ika
+- algovera/chat_completion:0.1.0:bafybeib5h4gp3yozckyy3tx6g2ujl3tgze4k2ivupflm6ugh33qqkoaveu
+- algovera/rabbitmq:0.1.0:bafybeic3fd6ypexksyzj2bjymlvafrvzjvtddyktjqbq363wngwm5x6s3a
 - valory/abci:0.1.0:bafybeie7fsmdzatyofhagfice7afbmyn7ht3zuzojdlu6cjaz7zncjspfq
 - valory/http_client:0.23.0:bafybeidykl4elwbcjkqn32wt5h4h7tlpeqovrcq3c5bcplt6nhpznhgczi
 - valory/ipfs:0.1.0:bafybeigr2cipad23aebjpnqtzpgymiwrwgmnior2fk4inbscdnqyl5epla
@@ -17,8 +17,8 @@ connections:
 contracts:
 - valory/service_registry:0.1.0:bafybeiatcuw6zeqok4spkkonui6likgdfwtp2dichzrlbjxnf76eg42sdq
 protocols:
-- algovera/chat_completion:0.1.0:bafybeie6xqeo5jold2rok5b2dlgd3twj3om3otfqvfqnzikz3toup3fadu
-- algovera/rabbitmq:0.1.0:bafybeiaegj3ns4qjzjxu34fuqj6cj52t6uppxgr4pggjxdz2qbeu2qze5u
+- algovera/chat_completion:0.1.0:bafybeiewd6pjwettzly2zfwtnqzaaiopuyy3n6xnc2biclzgcssdye4aqy
+- algovera/rabbitmq:0.1.0:bafybeigmfn5yq7lni5mk3gty62e6dusxfvllwngwdhxgn2x6a2rmtohod4
 - open_aea/signing:1.0.0:bafybeibqlfmikg5hk4phzak6gqzhpkt6akckx7xppbp53mvwt6r73h7tk4
 - valory/abci:0.1.0:bafybeig3dj5jhsowlvg3t73kgobf6xn4nka7rkttakdb2gwsg5bp7rt7q4
 - valory/acn:1.1.0:bafybeignmc5uh3vgpuckljcj2tgg7hdqyytkm6m5b6v6mxtazdcvubibva
@@ -28,7 +28,7 @@ protocols:
 - valory/ledger_api:1.0.0:bafybeibo4bdtcrxi2suyzldwoetjar6pqfzm6vt5xal22ravkkcvdmtksi
 - valory/tendermint:0.1.0:bafybeicusvezoqlmyt6iqomcbwaz3xkhk2qf3d56q5zprmj3xdxfy64k54
 skills:
-- algovera/chat_completion_abci:0.1.0:bafybeihn7smzzy7aqf7rpwd5nty4gamxkcnmimxhc7froobl3l4umf67zu
+- algovera/chat_completion_abci:0.1.0:bafybeicstcoy4s6vhfbuvodnlpoc7rzpltnwapkitimabdo4rsxuw5z3t4
 - valory/abstract_abci:0.1.0:bafybeifeqstiynx2n37k7lpdbcclylgg7tsmym7vtj4tanrukkvw4pp5nu
 - valory/abstract_round_abci:0.1.0:bafybeiarzpxsy7ulitk5obs4zajhll2m77motjn5st7mi6qvjtkoirfikq
 default_ledger: ethereum
@@ -84,12 +84,6 @@ models:
       tendermint_url: ${str:http://localhost:26657}
       tendermint_com_url: ${str:http://localhost:8080}
       tendermint_p2p_url: ${str:localhost:26656}
-      rabbitmq_host: localhost
-      rabbitmq_port: 5672
-      rabbitmq_username: guest
-      rabbitmq_password: guest
-      consume_queue_name: consume_queue
-      publish_queue_name: publish_queue
 ---
 public_id: valory/abci:0.1.0
 type: connection
@@ -137,17 +131,7 @@ is_abstract: true
 public_id: algovera/chat_completion:0.1.0
 type: connection
 config:
-  model: gpt-3.5-turbo
-  max_tokens: 256
   openai_api_key: ${OPENAI_API_KEY}
-  temperature: 0.7
 ---
 public_id: algovera/rabbitmq:0.1.0
 type: connection
-config:
-  host: localhost
-  port: 5672
-  username: guest
-  password: guest
-  consume_queue_name: consume_queue
-  publish_queue_name: publish_queue

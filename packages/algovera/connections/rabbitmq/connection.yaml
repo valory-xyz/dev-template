@@ -8,11 +8,11 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeiftu27piztiu5bfxbvhqsbppgtseykyfot6wtlrrzeuzya6zrgpky
-  connection.py: bafybeia3zuiu5o5ur4fnp4rwlgsks2b7shia5isvftb6krjpughb32jwte
+  connection.py: bafybeihd3ic3jorsr5uincu2xg4hdx6z4lmvdeambmsok5d5bi43hs4hcy
 fingerprint_ignore_patterns: []
 connections: []
 protocols:
-- algovera/rabbitmq:0.1.0:bafybeiaegj3ns4qjzjxu34fuqj6cj52t6uppxgr4pggjxdz2qbeu2qze5u
+- algovera/rabbitmq:0.1.0:bafybeigmfn5yq7lni5mk3gty62e6dusxfvllwngwdhxgn2x6a2rmtohod4
 class_name: RabbitMQConnection
 config:
   host: localhost

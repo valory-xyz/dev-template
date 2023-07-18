@@ -23,9 +23,12 @@ from typing import Optional
 
 from aea.configurations.data_types import PublicId
 
+from packages.algovera.protocols.chat_completion.message import ChatCompletionMessage
+from packages.algovera.protocols.rabbitmq.message import RabbitmqMessage
 from packages.valory.skills.abstract_round_abci.handlers import (
     ABCIRoundHandler as BaseABCIRoundHandler,
 )
+from packages.valory.skills.abstract_round_abci.handlers import AbstractResponseHandler
 from packages.valory.skills.abstract_round_abci.handlers import (
     ContractApiHandler as BaseContractApiHandler,
 )
@@ -44,12 +47,7 @@ from packages.valory.skills.abstract_round_abci.handlers import (
 from packages.valory.skills.abstract_round_abci.handlers import (
     TendermintHandler as BaseTendermintHandler,
 )
-from packages.valory.skills.abstract_round_abci.handlers import (
-    AbstractResponseHandler
-)
 
-from packages.algovera.protocols.rabbitmq.message import RabbitmqMessage
-from packages.algovera.protocols.chat_completion.message import ChatCompletionMessage
 
 class ChatCompletionHandler(AbstractResponseHandler):
     SUPPORTED_PROTOCOL: Optional[PublicId] = ChatCompletionMessage.protocol_id
@@ -59,6 +57,7 @@ class ChatCompletionHandler(AbstractResponseHandler):
             ChatCompletionMessage.Performative.RESPONSE,
         }
     )
+
 
 class RabbitmqHandler(AbstractResponseHandler):
     SUPPORTED_PROTOCOL: Optional[PublicId] = RabbitmqMessage.protocol_id
@@ -70,6 +69,7 @@ class RabbitmqHandler(AbstractResponseHandler):
             RabbitmqMessage.Performative.PUBLISH_RESPONSE,
         }
     )
+
 
 ABCIHandler = BaseABCIRoundHandler
 HttpHandler = BaseHttpHandler

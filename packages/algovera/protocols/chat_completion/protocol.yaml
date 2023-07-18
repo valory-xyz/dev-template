@@ -9,7 +9,7 @@ aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeih4jg6brpiynf3r4mejjo5x24c77irprm7pnv5g5dqyxj46ida6vi
   chat_completion.proto: bafybeiguvp7t7cal7kemxycwalj2kz46omxrg6cdolzarxqrfhobyvzj7m
-  chat_completion_pb2.py: bafybeihrmes35tirfu6ks5xqdjs5oujpeoprtddztaxamemr7rnrvr3wg4
+  chat_completion_pb2.py: bafybeiguglxoidwucxtahv7dhd4sbwkh2z3czuvuazzu2kh44c7qsvo6xa
   dialogues.py: bafybeifudmcijmktp25lbyeoz3lu3s6f4cql4xgc6wzrcplt2adxriyilu
   message.py: bafybeie4fkgfd4eqoaeg7nguajnbfi5q6ginipun35jhlbnnh37ksguxou
   serialization.py: bafybeidlluixfbub4bv5wd7lvbnuitzx3qro3uasnhx6i5ddzuk6wduvaq

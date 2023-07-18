@@ -6,29 +6,29 @@ description: The scaffold skill is a scaffold for your own skill implementation.
 license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
-  __init__.py: bafybeieonojdsyjar763yrp6wbtd2yrxllpso7l3hn6h4s4gclnaxyhmsm
-  behaviours.py: bafybeifcsfmjstdo7ebqs7lqmndcpbuoqmshqyossln4fvys7niunwlguq
-  dialogues.py: bafybeichvs3euzqzu36jllbu4hpc2dxklzmzpixvmbqojprg5mrejg5ica
+  __init__.py: bafybeih65b6zxkeux44suup4vnh4r5j2b5p7nij4of36fazditpjl2ulcu
+  behaviours.py: bafybeic5teaym5bwc35t2nfcznwsqjvlr6zdzk2e7ishf2epap75pytjwa
+  dialogues.py: bafybeiaqztan3jy3vurremf5i2c5cta6bqdmfs2pshrnpovtfhixy5cktu
   fsm_specs_chat_completion2.yaml: bafybeihvnul25dkftnk6htcgqiiwfebi4grxspaq7unkvysx5c44udymqu
-  handlers.py: bafybeihkgkzawi2yqump6odusrqixeibodwcy27hl22zo7pjwt2rftpnte
-  models.py: bafybeic6mv47p5extvf7tgawekaemrkuuk7pv4r5o5fuzfkj5so4lzqwhi
-  payloads.py: bafybeihgxwkaooxtntlxg42stg556uxrng64xovdyn6i6cdppy2ryvqusu
-  rounds.py: bafybeidfqiorafqe3s7riixw5nve232bnoujgtmgshcdz3fcpjxanp7twe
-  tests/__init__.py: bafybeic3534aro4pdtsdcuxywzlgkccczx2elhnwisiq3r6okvnrdu4aia
-  tests/test_behaviours.py: bafybeia6jyi4xb2pn5cauvv3srzvbnp5ryghlf4pdhgpvtgyen25dfczym
+  handlers.py: bafybeiebir4xezupk5zkx6rtc62di7qk7rtsc2svixdgihuphdobxucgv4
+  models.py: bafybeidzq3jjbgdhnjy3vhj2jpmsicykfyci5mur7fowo5v6hrawxlt3lm
+  payloads.py: bafybeiethbtcj3ucz2aejja2yynpsxupnogticmww5t75q4cl4novy654a
+  rounds.py: bafybeid5rc6t7k5ohx5l74xvtjknzzabbvldbiq6bkz5xc5dvwlvezu5sa
+  tests/__init__.py: bafybeic6evwhxdwtdjvz7xv3dqqhdhd7uxyr55xhymeiqfe4ga7mfdptxm
+  tests/test_behaviours.py: bafybeibdab6ijjx7aquzjduy6r3lm3snzguioiwpxsoztoxh3tanpfbvzi
   tests/test_dialogues.py: bafybeidxzli374onapcsafyumyduaccaqhi6sl5bncuanyal2kx2w4dsey
-  tests/test_handlers.py: bafybeihei7ruipicenknzjf7xaz4wrlmvhtdvrypiokjpolcnsfwuxnl5y
-  tests/test_models.py: bafybeiam4x7nx62fg7ibwojn3r5ycordcibtae724rykjxojfbu3tyx2ka
-  tests/test_payloads.py: bafybeidswechclzmfkpcz2vwfz74wzu3tv2p4fsyxxs6qbrvrnxge7q5pq
-  tests/test_rounds.py: bafybeihssfjmvyvy533z3dtehvm6sswr3xaiggei4va6mg3u4nog3nmzhi
+  tests/test_handlers.py: bafybeiflc7b2npjgxzna7x44oigh2nvavwn3uhjx5w3qjppajrecwv5nmq
+  tests/test_models.py: bafybeif42nybobsdh2m2qlw4ozhf4tolby3ljhzljdevx7f4jillufzaw4
+  tests/test_payloads.py: bafybeigilwnusjx4mhm5zxegoginf22xl2fyf7gpylelad7rcem5ck2sti
+  tests/test_rounds.py: bafybeibra6axz6om4u2d6evajma2rv4fd57zj5p2a4smjdlxxrcplnatnu
 fingerprint_ignore_patterns: []
 connections:
-- algovera/chat_completion:0.1.0:bafybeid5wdv5ha4accwui62o2ca2vp53vzi2viifnly43bnekfyqek3iom
-- algovera/rabbitmq:0.1.0:bafybeid7y7rskum6tmq6mlubnywuqfvwheyd5drn6b2pkiqef7w5ov3ika
+- algovera/chat_completion:0.1.0:bafybeib5h4gp3yozckyy3tx6g2ujl3tgze4k2ivupflm6ugh33qqkoaveu
+- algovera/rabbitmq:0.1.0:bafybeic3fd6ypexksyzj2bjymlvafrvzjvtddyktjqbq363wngwm5x6s3a
 contracts: []
 protocols:
-- algovera/chat_completion:0.1.0:bafybeie6xqeo5jold2rok5b2dlgd3twj3om3otfqvfqnzikz3toup3fadu
-- algovera/rabbitmq:0.1.0:bafybeiaegj3ns4qjzjxu34fuqj6cj52t6uppxgr4pggjxdz2qbeu2qze5u
+- algovera/chat_completion:0.1.0:bafybeiewd6pjwettzly2zfwtnqzaaiopuyy3n6xnc2biclzgcssdye4aqy
+- algovera/rabbitmq:0.1.0:bafybeigmfn5yq7lni5mk3gty62e6dusxfvllwngwdhxgn2x6a2rmtohod4
 skills:
 - valory/abstract_round_abci:0.1.0:bafybeiarzpxsy7ulitk5obs4zajhll2m77motjn5st7mi6qvjtkoirfikq
 behaviours:

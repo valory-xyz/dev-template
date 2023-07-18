@@ -1,0 +1,15 @@
+name: chat_completion_local
+author: algovera
+version: 0.1.0
+description: This is a chat_completion service.
+aea_version: '>=1.0.0, <2.0.0'
+license: Apache-2.0
+fingerprint: {}
+fingerprint_ignore_patterns: []
+agent: algovera/chat_completion_agent:0.1.0:bafybeiexg45nigomaerwpdumjmwjdyrv6qzbawu6ig5dzwqbrzek27b3ri
+number_of_agents: 1
+deployment:
+  agent:
+    ports:
+      0:
+        8000: 8000

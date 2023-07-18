@@ -8,11 +8,11 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeiftu27piztiu5bfxbvhqsbppgtseykyfot6wtlrrzeuzya6zrgpky
-  connection.py: bafybeibosn2x6p3cswwe23s6j4k5vbnyu7bjwipx5ruwj5f4j6g2sikrq4
+  connection.py: bafybeihti62e2mb352fvawgsonzpcttx5yvvadx74ob24vifi3zlr6xhiy
 fingerprint_ignore_patterns: []
 connections: []
 protocols:
-- algovera/chat_completion:0.1.0:bafybeie6xqeo5jold2rok5b2dlgd3twj3om3otfqvfqnzikz3toup3fadu
+- algovera/chat_completion:0.1.0:bafybeiewd6pjwettzly2zfwtnqzaaiopuyy3n6xnc2biclzgcssdye4aqy
 class_name: ChatCompletionConnection
 config:
   model: gpt-3.5-turbo

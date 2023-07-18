@@ -29,15 +29,16 @@ from aea.connections.base import BaseSyncConnection
 from aea.mail.base import Envelope
 from aea.protocols.base import Address, Message
 from aea.protocols.dialogue.base import Dialogue
-
-from packages.algovera.protocols.chat_completion.message import ChatCompletionMessage
-from packages.algovera.protocols.chat_completion.dialogues import (
-    ChatCompletionDialogue,
-    ChatCompletionDialogues as BaseChatCompletionDialogues,
-)   
-from langchain.chat_models import ChatOpenAI
 from langchain.callbacks import get_openai_callback
+from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage, SystemMessage
+
+from packages.algovera.protocols.chat_completion.dialogues import ChatCompletionDialogue
+from packages.algovera.protocols.chat_completion.dialogues import (
+    ChatCompletionDialogues as BaseChatCompletionDialogues,
+)
+from packages.algovera.protocols.chat_completion.message import ChatCompletionMessage
+
 
 PUBLIC_ID = PublicId.from_str("algovera/chat_completion:0.1.0")
 
@@ -104,9 +105,9 @@ class ChatCompletionConnection(BaseSyncConnection):
         self.dialogues = ChatCompletionDialogues(connection_id=PUBLIC_ID)
 
         self.chat = ChatOpenAI(
-            model=self.openai_settings["model"], 
-            temperature=self.openai_settings["temperature"], 
-            max_tokens=self.openai_settings["max_tokens"]
+            model=self.openai_settings["model"],
+            temperature=self.openai_settings["temperature"],
+            max_tokens=self.openai_settings["max_tokens"],
         )
 
     def main(self) -> None:
@@ -144,7 +145,10 @@ class ChatCompletionConnection(BaseSyncConnection):
 
         dialogue = self.dialogues.update(chat_completion_message)
 
-        if chat_completion_message.performative != ChatCompletionMessage.Performative.REQUEST:
+        if (
+            chat_completion_message.performative
+            != ChatCompletionMessage.Performative.REQUEST
+        ):
             self.logger.error(
                 f"Performative `{chat_completion_message.performative.value}` is not supported."
             )
@@ -156,7 +160,7 @@ class ChatCompletionConnection(BaseSyncConnection):
             system_message=chat_completion_message.request["system_message"],
             user_message=chat_completion_message.request["user_message"],
         )
-        
+
         response_message = cast(
             ChatCompletionMessage,
             dialogue.reply(
@@ -175,7 +179,7 @@ class ChatCompletionConnection(BaseSyncConnection):
 
         self.put_envelope(response_envelope)
 
-    def _get_response(self, id:str, system_message: str, user_message: str):
+    def _get_response(self, id: str, system_message: str, user_message: str):
         """
         Get response from OpenAI.
 
@@ -184,12 +188,8 @@ class ChatCompletionConnection(BaseSyncConnection):
         :return: response
         """
         messages = [
-            SystemMessage(
-                content=system_message
-            ),
-            HumanMessage(
-                content=user_message
-            ),
+            SystemMessage(content=system_message),
+            HumanMessage(content=user_message),
         ]
         try:
             with get_openai_callback() as cb:
@@ -203,7 +203,7 @@ class ChatCompletionConnection(BaseSyncConnection):
                 "total_tokens": str(cb.total_tokens),
                 "total_cost": str(cb.total_cost),
                 "error": "False",
-                "error_message": ""
+                "error_message": "",
             }
 
             return reponse

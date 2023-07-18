@@ -18,45 +18,51 @@
 # ------------------------------------------------------------------------------
 
 """This package contains round behaviours of LLMChatCompletionAbciApp."""
-from os import error
+import random
 import re
 import time
-import random
 from abc import ABC
-from typing import Generator, Type, cast, Optional, Set
+from os import error
+from typing import Generator, Optional, Set, Type, cast
 
+from packages.algovera.connections.chat_completion.connection import (
+    PUBLIC_ID as CHAT_COMPLETION_PUBLIC_ID,
+)
+from packages.algovera.connections.rabbitmq.connection import (
+    PUBLIC_ID as RABBITMQ_PUBLIC_ID,
+)
+from packages.algovera.protocols.chat_completion.dialogues import (
+    ChatCompletionDialogue,
+    ChatCompletionDialogues,
+)
+from packages.algovera.protocols.chat_completion.message import ChatCompletionMessage
+from packages.algovera.protocols.rabbitmq.dialogues import (
+    RabbitmqDialogue,
+    RabbitmqDialogues,
+)
+from packages.algovera.protocols.rabbitmq.message import RabbitmqMessage
+from packages.algovera.skills.chat_completion_abci.models import Params, Requests
+from packages.algovera.skills.chat_completion_abci.rounds import (
+    CollectRandomnessPayload,
+    CollectRandomnessRound,
+    LLMChatCompletionAbciApp,
+    ProcessRequestPayload,
+    ProcessRequestRound,
+    PublishResponsePayload,
+    PublishResponseRound,
+    RegistrationPayload,
+    RegistrationRound,
+    SelectKeeperPayload,
+    SelectKeeperRound,
+    SynchronizedData,
+    WaitForRequestPayload,
+    WaitForRequestRound,
+)
 from packages.valory.skills.abstract_round_abci.base import AbstractRound
 from packages.valory.skills.abstract_round_abci.behaviours import (
     AbstractRoundBehaviour,
     BaseBehaviour,
 )
-
-from packages.algovera.skills.chat_completion_abci.models import Params, Requests
-from packages.algovera.skills.chat_completion_abci.rounds import (
-    SynchronizedData,
-    LLMChatCompletionAbciApp,
-    CollectRandomnessRound,
-    ProcessRequestRound,
-    PublishResponseRound,
-    RegistrationRound,
-    SelectKeeperRound,
-    WaitForRequestRound,
-)
-from packages.algovera.skills.chat_completion_abci.rounds import (
-    CollectRandomnessPayload,
-    ProcessRequestPayload,
-    PublishResponsePayload,
-    RegistrationPayload,
-    SelectKeeperPayload,
-    WaitForRequestPayload,
-)
-
-from packages.algovera.protocols.rabbitmq.dialogues import RabbitmqDialogue, RabbitmqDialogues
-from packages.algovera.protocols.rabbitmq.message import RabbitmqMessage
-from packages.algovera.protocols.chat_completion.message import ChatCompletionMessage
-from packages.algovera.protocols.chat_completion.dialogues import ChatCompletionDialogue, ChatCompletionDialogues
-from packages.algovera.connections.chat_completion.connection import PUBLIC_ID as CHAT_COMPLETION_PUBLIC_ID
-from packages.algovera.connections.rabbitmq.connection import PUBLIC_ID as RABBITMQ_PUBLIC_ID
 
 
 class LLMChatCompletionBaseBehaviour(BaseBehaviour, ABC):
@@ -93,7 +99,7 @@ class CollectRandomnessBehaviour(LLMChatCompletionBaseBehaviour):
         )
         response = yield from self._do_request(http_message, http_dialogue)
         observation = self.context.randomness_api.process_response(response)
-        
+
         if observation:
             with self.context.benchmark_tool.measure(self.behaviour_id).local():
                 self.context.logger.info(f"Retrieved DRAND values: {observation}.")
@@ -108,7 +114,7 @@ class CollectRandomnessBehaviour(LLMChatCompletionBaseBehaviour):
                 yield from self.wait_until_round_end()
 
             self.set_done()
-        
+
         else:
             self.context.logger.error(
                 f"Could not get randomness from {self.context.randomness_api.api_id}"
@@ -136,12 +142,12 @@ class ProcessRequestBehaviour(LLMChatCompletionBaseBehaviour):
         # If the request was processed successfully, send the response to the next round
         if process_response["error"] == "False":
             # Add the response to the state
-            
+
             # Send the response to the next round
             with self.context.benchmark_tool.measure(self.behaviour_id).local():
                 sender = self.context.agent_address
                 payload = ProcessRequestPayload(
-                    sender=sender, 
+                    sender=sender,
                     response_data=process_response,
                     request_processed_at=str(time.time()),
                 )
@@ -153,9 +159,7 @@ class ProcessRequestBehaviour(LLMChatCompletionBaseBehaviour):
             self.set_done()
 
         else:
-            self.context.logger.error(
-                f"Could not process request: {request}"
-            )
+            self.context.logger.error(f"Could not process request: {request}")
             with self.context.benchmark_tool.measure(self.behaviour_id).local():
                 sender = self.context.agent_address
                 payload = ProcessRequestPayload(
@@ -165,27 +169,36 @@ class ProcessRequestBehaviour(LLMChatCompletionBaseBehaviour):
                     request_processed_at=str(time.time()),
                 )
 
-    def _process_request(self, request, timeout:Optional[float]=None):
+    def _process_request(self, request, timeout: Optional[float] = None):
         """Process the request and return the address of the keeper."""
         self.context.logger.info(
-                f"Sending LLM request...\nRequest ID: {request['id']}\nSystemMessage: {request['system_message']}\nUserMessage: {request['user_message']}"
-            )
-        chat_completion_dialogues = cast(ChatCompletionDialogues, self.context.chat_completion_dialogues)
-        
+            f"Sending LLM request...\nRequest ID: {request['id']}\nSystemMessage: {request['system_message']}\nUserMessage: {request['user_message']}"
+        )
+        chat_completion_dialogues = cast(
+            ChatCompletionDialogues, self.context.chat_completion_dialogues
+        )
+
         # chat completion request
-        request_chat_completion_message, chat_completion_dialogue = chat_completion_dialogues.create(
+        (
+            request_chat_completion_message,
+            chat_completion_dialogue,
+        ) = chat_completion_dialogues.create(
             counterparty=str(CHAT_COMPLETION_PUBLIC_ID),
             performative=ChatCompletionMessage.Performative.REQUEST,
             request={
                 "id": request["id"],
-                "system_message": request["system_message"], 
-                "user_message": request["user_message"]
-            }
+                "system_message": request["system_message"],
+                "user_message": request["user_message"],
+            },
         )
-        request_chat_completion_message = cast(ChatCompletionMessage, request_chat_completion_message)
-        chat_completion_dialogue = cast(ChatCompletionDialogue, chat_completion_dialogue)
+        request_chat_completion_message = cast(
+            ChatCompletionMessage, request_chat_completion_message
+        )
+        chat_completion_dialogue = cast(
+            ChatCompletionDialogue, chat_completion_dialogue
+        )
         self.context.outbox.put_message(message=request_chat_completion_message)
-        
+
         # wait for chat completion response
         request_nonce = self._get_request_nonce_from_dialogue(chat_completion_dialogue)
         cast(Requests, self.context.requests).request_id_to_callback[
@@ -214,7 +227,7 @@ class PublishResponseBehaviour(LLMChatCompletionBaseBehaviour):
             with self.context.benchmark_tool.measure(self.behaviour_id).local():
                 sender = self.context.agent_address
                 payload = PublishResponsePayload(
-                    sender=sender, 
+                    sender=sender,
                     published=True,
                     request_published_at=str(time.time()),
                 )
@@ -226,9 +239,7 @@ class PublishResponseBehaviour(LLMChatCompletionBaseBehaviour):
             self.set_done()
 
         else:
-            self.context.logger.error(
-                f"Could not publish response: {response_data}"
-            )
+            self.context.logger.error(f"Could not publish response: {response_data}")
             with self.context.benchmark_tool.measure(self.behaviour_id).local():
                 sender = self.context.agent_address
                 payload = PublishResponsePayload(
@@ -242,14 +253,14 @@ class PublishResponseBehaviour(LLMChatCompletionBaseBehaviour):
     def _publish_response(self, response_data, timeout: Optional[float] = None):
         """Publish the response."""
         rabbitmq_dialogues = cast(RabbitmqDialogues, self.context.rabbitmq_dialogues)
-        
+
         rabbitmq_details = {
-            "host":self.context.params.rabbitmq_host,
-            "port":str(self.context.params.rabbitmq_port),
-            "username":self.context.params.rabbitmq_username,
-            "password":self.context.params.rabbitmq_password,
+            "host": self.context.params.rabbitmq_host,
+            "port": str(self.context.params.rabbitmq_port),
+            "username": self.context.params.rabbitmq_username,
+            "password": self.context.params.rabbitmq_password,
         }
-        
+
         rabbitmq_messgae, rabbitmq_dialogue = rabbitmq_dialogues.create(
             counterparty=str(RABBITMQ_PUBLIC_ID),
             performative=RabbitmqMessage.Performative.PUBLISH_REQUEST,
@@ -278,6 +289,7 @@ class PublishResponseBehaviour(LLMChatCompletionBaseBehaviour):
         ] = self.get_callback_request()
         response = yield from self.wait_for_message(timeout=timeout)
         return response
+
 
 class RegistrationBehaviour(LLMChatCompletionBaseBehaviour):
     """RegistrationBehaviour"""
@@ -336,9 +348,11 @@ class WaitForRequestBehaviour(LLMChatCompletionBaseBehaviour):
         ):
             with self.context.benchmark_tool.measure(self.behaviour_id).local():
                 response = yield from self._consume_rabbitmq()
-                self.context.logger.info(f"Received request: {response.consume_response}")
+                self.context.logger.info(
+                    f"Received request: {response.consume_response}"
+                )
                 response_message = response.consume_response
-    
+
                 if response_message["received_request"] == "True":
                     sender = self.context.agent_address
                     payload = WaitForRequestPayload(
@@ -347,32 +361,33 @@ class WaitForRequestBehaviour(LLMChatCompletionBaseBehaviour):
                         request_received_at=str(time.time()),
                     )
 
-                    with self.context.benchmark_tool.measure(self.behaviour_id).consensus():
+                    with self.context.benchmark_tool.measure(
+                        self.behaviour_id
+                    ).consensus():
                         yield from self.send_a2a_transaction(payload)
                         yield from self.wait_until_round_end()
 
                     self.set_done()
-    
+
                 if response_message["error"] == "True":
                     sender = self.context.agent_address
                     payload = WaitForRequestPayload(
-                        sender=sender, 
+                        sender=sender,
                         received_request=False,
                         error=True,
-                        error_message=response_message['error_message'],
+                        error_message=response_message["error_message"],
                         request_received_at=str(time.time()),
                     )
 
-            
-    def _consume_rabbitmq(self, timeout: Optional[float]=None) -> Generator:
+    def _consume_rabbitmq(self, timeout: Optional[float] = None) -> Generator:
         """Consume a message from RabbitMQ."""
         self.context.logger.info("Waiting for request...")
         rabbitmq_dialogues = cast(RabbitmqDialogues, self.context.rabbitmq_dialogues)
         rabbitmq_details = {
-            "host":self.context.params.rabbitmq_host,
-            "port":str(self.context.params.rabbitmq_port),
-            "username":self.context.params.rabbitmq_username,
-            "password":self.context.params.rabbitmq_password,
+            "host": self.context.params.rabbitmq_host,
+            "port": str(self.context.params.rabbitmq_port),
+            "username": self.context.params.rabbitmq_username,
+            "password": self.context.params.rabbitmq_password,
         }
         rabbitmq_messgae, rabbitmq_dialogue = rabbitmq_dialogues.create(
             counterparty=str(RABBITMQ_PUBLIC_ID),
@@ -403,5 +418,5 @@ class LLMChatCompletionRoundBehaviour(AbstractRoundBehaviour):
         PublishResponseBehaviour,
         RegistrationBehaviour,
         SelectKeeperBehaviour,
-        WaitForRequestBehaviour
+        WaitForRequestBehaviour,
     ]
