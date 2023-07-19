@@ -8,5 +8,6 @@ htmlcov
 *.egg-info
 packages/open_aea
 packages/valory
+packages/fetchai
 leak_report
 /Pipfile.lock
