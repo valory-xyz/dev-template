@@ -17,7 +17,7 @@
 #
 # ------------------------------------------------------------------------------
 
-"""This package contains round behaviours of LLMChatCompletionAbciApp."""
+"""This package contains round behaviours of ChatCompletionAbciApp."""
 
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -26,25 +26,20 @@ from typing import Any, Dict, Hashable, Optional, Type
 import pytest
 
 from packages.algovera.skills.chat_completion_abci.behaviours import (
-    CollectRandomnessBehaviour,
-    LLMChatCompletionBaseBehaviour,
-    LLMChatCompletionRoundBehaviour,
+    ChatCompletionBaseBehaviour,
+    ChatCompletionRoundBehaviour,
     ProcessRequestBehaviour,
-    PublishResponseBehaviour,
     RegistrationBehaviour,
-    SelectKeeperBehaviour,
-    WaitForRequestBehaviour,
+    SynchronizeRequestsBehaviour,
 )
 from packages.algovera.skills.chat_completion_abci.rounds import (
-    CollectRandomnessRound,
+    ChatCompletionAbciApp,
+    DegenerateRound,
     Event,
-    LLMChatCompletionAbciApp,
     ProcessRequestRound,
-    PublishResponseRound,
     RegistrationRound,
-    SelectKeeperRound,
+    SynchronizeRequestsRound,
     SynchronizedData,
-    WaitForRequestRound,
 )
 from packages.valory.skills.abstract_round_abci.base import AbciAppDB
 from packages.valory.skills.abstract_round_abci.behaviours import (
@@ -67,14 +62,14 @@ class BehaviourTestCase:
     kwargs: Dict[str, Any] = field(default_factory=dict)
 
 
-class BaseLLMChatCompletionTest(FSMBehaviourBaseCase):
+class BaseChatCompletionTest(FSMBehaviourBaseCase):
     """Base test case."""
 
     path_to_skill = Path(__file__).parent.parent
 
-    behaviour: LLMChatCompletionRoundBehaviour
-    behaviour_class: Type[LLMChatCompletionBaseBehaviour]
-    next_behaviour_class: Type[LLMChatCompletionBaseBehaviour]
+    behaviour: ChatCompletionRoundBehaviour
+    behaviour_class: Type[ChatCompletionBaseBehaviour]
+    next_behaviour_class: Type[ChatCompletionBaseBehaviour]
     synchronized_data: SynchronizedData
     done_event = Event.DONE
 
@@ -105,25 +100,7 @@ class BaseLLMChatCompletionTest(FSMBehaviourBaseCase):
         assert self.current_behaviour_id == self.next_behaviour_class.behaviour_id
 
 
-class TestCollectRandomnessBehaviour(BaseLLMChatCompletionTest):
-    """Tests CollectRandomnessBehaviour"""
-
-    # TODO: set next_behaviour_class
-    behaviour_class: Type[BaseBehaviour] = CollectRandomnessBehaviour
-    next_behaviour_class: Type[BaseBehaviour] = ...
-
-    # TODO: provide test cases
-    @pytest.mark.parametrize("test_case", [])
-    def test_run(self, test_case: BehaviourTestCase) -> None:
-        """Run tests."""
-
-        self.fast_forward(test_case.initial_data)
-        # TODO: mock the necessary calls
-        # self.mock_ ...
-        self.complete(test_case.event)
-
-
-class TestProcessRequestBehaviour(BaseLLMChatCompletionTest):
+class TestProcessRequestBehaviour(BaseChatCompletionTest):
     """Tests ProcessRequestBehaviour"""
 
     # TODO: set next_behaviour_class
@@ -141,25 +118,7 @@ class TestProcessRequestBehaviour(BaseLLMChatCompletionTest):
         self.complete(test_case.event)
 
 
-class TestPublishResponseBehaviour(BaseLLMChatCompletionTest):
-    """Tests PublishResponseBehaviour"""
-
-    # TODO: set next_behaviour_class
-    behaviour_class: Type[BaseBehaviour] = PublishResponseBehaviour
-    next_behaviour_class: Type[BaseBehaviour] = ...
-
-    # TODO: provide test cases
-    @pytest.mark.parametrize("test_case", [])
-    def test_run(self, test_case: BehaviourTestCase) -> None:
-        """Run tests."""
-
-        self.fast_forward(test_case.initial_data)
-        # TODO: mock the necessary calls
-        # self.mock_ ...
-        self.complete(test_case.event)
-
-
-class TestRegistrationBehaviour(BaseLLMChatCompletionTest):
+class TestRegistrationBehaviour(BaseChatCompletionTest):
     """Tests RegistrationBehaviour"""
 
     # TODO: set next_behaviour_class
@@ -177,29 +136,11 @@ class TestRegistrationBehaviour(BaseLLMChatCompletionTest):
         self.complete(test_case.event)
 
 
-class TestSelectKeeperBehaviour(BaseLLMChatCompletionTest):
-    """Tests SelectKeeperBehaviour"""
+class TestSynchronizeRequestsBehaviour(BaseChatCompletionTest):
+    """Tests SynchronizeRequestsBehaviour"""
 
     # TODO: set next_behaviour_class
-    behaviour_class: Type[BaseBehaviour] = SelectKeeperBehaviour
-    next_behaviour_class: Type[BaseBehaviour] = ...
-
-    # TODO: provide test cases
-    @pytest.mark.parametrize("test_case", [])
-    def test_run(self, test_case: BehaviourTestCase) -> None:
-        """Run tests."""
-
-        self.fast_forward(test_case.initial_data)
-        # TODO: mock the necessary calls
-        # self.mock_ ...
-        self.complete(test_case.event)
-
-
-class TestWaitForRequestBehaviour(BaseLLMChatCompletionTest):
-    """Tests WaitForRequestBehaviour"""
-
-    # TODO: set next_behaviour_class
-    behaviour_class: Type[BaseBehaviour] = WaitForRequestBehaviour
+    behaviour_class: Type[BaseBehaviour] = SynchronizeRequestsBehaviour
     next_behaviour_class: Type[BaseBehaviour] = ...
 
     # TODO: provide test cases

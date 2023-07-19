@@ -17,7 +17,7 @@
 #
 # ------------------------------------------------------------------------------
 
-"""This package contains payload tests for the LLMChatCompletionAbciApp."""
+"""This package contains payload tests for the ChatCompletionAbciApp."""
 
 from dataclasses import dataclass
 from typing import Hashable, Type
@@ -26,12 +26,9 @@ import pytest
 
 from packages.algovera.skills.chat_completion_abci.payloads import (
     BaseTxPayload,
-    CollectRandomnessPayload,
     ProcessRequestPayload,
-    PublishResponsePayload,
     RegistrationPayload,
-    SelectKeeperPayload,
-    WaitForRequestPayload,
+    SynchronizeRequestsPayload,
 )
 
 
@@ -47,7 +44,7 @@ class PayloadTestCase:
 # TODO: provide test cases
 @pytest.mark.parametrize("test_case", [])
 def test_payloads(test_case: PayloadTestCase) -> None:
-    """Tests for LLMChatCompletionAbciApp payloads"""
+    """Tests for ChatCompletionAbciApp payloads"""
 
     payload = test_case.payload_cls(sender="sender", content=test_case.content)
     assert payload.sender == "sender"

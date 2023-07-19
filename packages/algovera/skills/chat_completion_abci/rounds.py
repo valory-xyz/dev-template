@@ -17,19 +17,18 @@
 #
 # ------------------------------------------------------------------------------
 
-"""This package contains the rounds of LLMChatCompletionAbciApp."""
+"""This package contains the rounds of ChatCompletionAbciApp."""
+
+import json
+import logging
 from abc import ABC
 from enum import Enum
-from os import sync
-from typing import Any, Dict, List, Optional, Set, Tuple, Type, cast
+from typing import Dict, List, Optional, Set, Tuple, Type, cast
 
 from packages.algovera.skills.chat_completion_abci.payloads import (
-    CollectRandomnessPayload,
     ProcessRequestPayload,
-    PublishResponsePayload,
     RegistrationPayload,
-    SelectKeeperPayload,
-    WaitForRequestPayload,
+    SynchronizeRequestsPayload,
 )
 from packages.valory.skills.abstract_round_abci.base import (
     AbciApp,
@@ -37,21 +36,19 @@ from packages.valory.skills.abstract_round_abci.base import (
     AbstractRound,
     AppState,
     BaseSynchronizedData,
+    CollectDifferentUntilAllRound,
     CollectSameUntilAllRound,
-    CollectSameUntilThresholdRound,
+    DegenerateRound,
     EventToTimeout,
-    OnlyKeeperSendsRound,
-    get_name,
 )
 
 
 class Event(Enum):
-    """LLMChatCompletionAbciApp Events"""
+    """ChatCompletionAbciApp Events"""
 
-    ERROR = "error"
-    ROUND_TIMEOUT = "round_timeout"
-    NO_MAJORITY = "no_majority"
     DONE = "done"
+    ROUND_TIMEOUT = "round_timeout"
+    ERROR = "error"
 
 
 class SynchronizedData(BaseSynchronizedData):
@@ -62,31 +59,17 @@ class SynchronizedData(BaseSynchronizedData):
     """
 
     @property
-    def printed_messages(self) -> List[str]:
-        """Get the printed messages list."""
-        return cast(
-            List[str],
-            self.db.get_strict("printed_messages"),
-        )
+    def responses(self) -> List:
+        """Return the responses."""
+        return cast(List, self.db.get("responses", []))
 
     @property
-    def request_data(self) -> Dict[str, str]:
-        """Get the request data."""
-        return cast(
-            Dict[str, str],
-            self.db.get_strict("request_data"),
-        )
-
-    @property
-    def response_data(self) -> Dict[str, Any]:
-        """Get the response data."""
-        return cast(
-            Dict[str, Any],
-            self.db.get_strict("response_data"),
-        )
+    def requests(self) -> List:
+        """Return the requests."""
+        return cast(List, self.db.get("requests", []))
 
 
-class LLMChatCompletionABCIAbstractRound(AbstractRound, ABC):
+class ChatCompletionABCIAbstractRound(AbstractRound, ABC):
     synchronized_data_class: Type[BaseSynchronizedData] = SynchronizedData
 
     @property
@@ -95,59 +78,65 @@ class LLMChatCompletionABCIAbstractRound(AbstractRound, ABC):
         return cast(SynchronizedData, self._synchronized_data)
 
 
-class CollectRandomnessRound(
-    CollectSameUntilThresholdRound, LLMChatCompletionABCIAbstractRound
+class ProcessRequestRound(
+    CollectDifferentUntilAllRound, ChatCompletionABCIAbstractRound
 ):
-    """CollectRandomnessRound"""
-
-    payload_class = CollectRandomnessPayload
-    synchronized_data_class = SynchronizedData
-    done_event = Event.DONE
-    no_majority_event = Event.NO_MAJORITY
-    collection_key = get_name(SynchronizedData.participant_to_randomness)
-    selection_key = get_name(SynchronizedData.most_voted_randomness)
-
-
-class ProcessRequestRound(OnlyKeeperSendsRound, LLMChatCompletionABCIAbstractRound):
     """ProcessRequestRound"""
 
     payload_class = ProcessRequestPayload
-
-    def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
-        """Process the end of the block."""
-        if self.keeper_payload:
-            payload = self.keeper_payload
-            error = payload.response_data["error"]
-            if error == "True":
-                return self.synchronized_data, Event.ERROR
-
-            synchronized_data = self.synchronized_data.update(
-                request_data={},
-                response_data=payload.response_data,
-                synchronized_data_class=SynchronizedData,
-            )
-
-            return synchronized_data, Event.DONE
-
-
-class PublishResponseRound(OnlyKeeperSendsRound, LLMChatCompletionABCIAbstractRound):
-    """PublishResponseRound"""
-
-    payload_class = PublishResponsePayload
     synchronized_data_class = SynchronizedData
 
     def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
         """Process the end of the block."""
-        if self.keeper_payload:
-            payload = self.keeper_payload
-            published = payload.published
-            if published:
-                return self.synchronized_data, Event.DONE
-            else:
-                return self.synchronized_data, Event.ERROR
+        if len(self.collection) == len(self.synchronized_data.all_participants):
+            # Get existing requests and responses
+            existing_requests = self.synchronized_data.requests
+            existing_responses = self.synchronized_data.responses
+
+            # Get new responses and failed requests
+            if self.collection.values():
+                new_responses = set()
+                failed_requests = set()
+                for payload in self.collection.values():
+                    res = json.loads(payload.json["response"])
+                    if payload.json["failed_request"]:
+                        fail = json.loads(payload.json["failed_request"])
+                        failed_requests.add(fail)
+                    if res:
+                        new_responses.add(tuple(res[0].items()))
+
+                new_responses = [dict(response) for response in new_responses]
+
+                # Update failed requests in existing_requests
+                failed_requests_ids = [request["id"] for request in failed_requests]
+                for request in existing_requests:
+                    if request["id"] in failed_requests_ids:
+                        request["failed"] = True
+                        request["processor"] = ""
+                        request["processed"] = False
+
+                # Remove processed requests from existing_requests and add to existing_responses
+                processed_request_ids = [response["id"] for response in new_responses]
+                existing_requests = [
+                    request
+                    for request in existing_requests
+                    if request["id"] not in processed_request_ids
+                ]
+                existing_responses.extend(new_responses)
+
+                # Update synchronized data with requests and responses
+                synchronized_data = self.synchronized_data.update(
+                    requests=existing_requests,
+                    responses=existing_responses,
+                    synchronized_data_class=SynchronizedData,
+                )
+
+                return synchronized_data, Event.DONE
+
+        return None
 
 
-class RegistrationRound(CollectSameUntilAllRound, LLMChatCompletionABCIAbstractRound):
+class RegistrationRound(CollectSameUntilAllRound, ChatCompletionABCIAbstractRound):
     """RegistrationRound"""
 
     payload_class = RegistrationPayload
@@ -164,70 +153,97 @@ class RegistrationRound(CollectSameUntilAllRound, LLMChatCompletionABCIAbstractR
         return None
 
 
-class SelectKeeperRound(
-    CollectSameUntilThresholdRound, LLMChatCompletionABCIAbstractRound
+class SynchronizeRequestsRound(
+    CollectDifferentUntilAllRound, ChatCompletionABCIAbstractRound
 ):
-    """SelectKeeperRound"""
+    """SynchronizeRequestsRound"""
 
-    payload_class = SelectKeeperPayload
+    payload_class = SynchronizeRequestsPayload
     synchronized_data_class = SynchronizedData
-    done_event = Event.DONE
-    no_majority_event = Event.NO_MAJORITY
-    collection_key = get_name(SynchronizedData.participant_to_selection)
-    selection_key = get_name(SynchronizedData.most_voted_keeper_address)
 
-
-class WaitForRequestRound(OnlyKeeperSendsRound, LLMChatCompletionABCIAbstractRound):
-    """WaitForRequestRound"""
-
-    payload_class = WaitForRequestPayload
-    synchronized_data_class = SynchronizedData
-    done_event = Event.DONE
-
-    def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Event]]:
+    def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
         """Process the end of the block."""
-        if self.keeper_payload:
-            payload = self.keeper_payload
-            error = payload.request_data["error"]
-            if error == "True":
-                return self.synchronized_data, Event.ERROR
+        if self.collection_threshold_reached:
+            # Get existing requests and responses
+            existing_requests = cast(SynchronizedData, self.synchronized_data).requests
+            existing_responses = cast(
+                SynchronizedData, self.synchronized_data
+            ).responses
 
+            # Get new requests
+            new_requests = set()
+            if self.collection.values():
+                for payload in self.collection.values():
+                    p = json.loads(payload.json["new_requests"])
+                    if p:
+                        for each in p:
+                            new_requests.add(tuple(each.items()))
+
+            new_requests = [dict(each) for each in new_requests]
+
+            # Convert set to list to be able to serialize it
+            new_requests = list(new_requests)
+            if new_requests:
+                # Get IDs already in requests and responses
+                existing_ids = set()
+                if existing_requests:
+                    for request in existing_requests:
+                        existing_ids.add(request["id"])
+                if existing_responses:
+                    for response in existing_responses:
+                        existing_ids.add(response["id"])
+
+                # Remove IDs already in requests and responses from new requests
+                new_requests = [
+                    request
+                    for request in new_requests
+                    if request["id"] not in list(existing_ids)
+                ]
+
+            # Add new requests to existing requests
+            existing_requests.extend(new_requests)
+
+            # Remove existing requests with more than 2 num_tries
+            existing_requests = [
+                request for request in existing_requests if request["num_tries"] < 3
+            ]
+
+            # Sort existing requests by request_time
+            existing_requests.sort(key=lambda x: x["request_time"])
+
+            if existing_requests:
+                # Assign a processor to requests
+                num_participants = len(self.synchronized_data.all_participants)
+                particiapnts = list(self.synchronized_data.all_participants)
+                for i, request in enumerate(existing_requests):
+                    if request["processor"] == "":
+                        request["processor"] = particiapnts[i % num_participants]
+
+            # Update synchronized data
             synchronized_data = self.synchronized_data.update(
-                request_data=payload.request_data,
+                requests=existing_requests,
                 synchronized_data_class=SynchronizedData,
             )
             return synchronized_data, Event.DONE
 
+        return None
 
-class LLMChatCompletionAbciApp(AbciApp[Event]):
-    """LLMChatCompletionAbciApp"""
+
+class ChatCompletionAbciApp(AbciApp[Event]):
+    """ChatCompletionAbciApp"""
 
     initial_round_cls: AppState = RegistrationRound
     initial_states: Set[AppState] = {RegistrationRound}
     transition_function: AbciAppTransitionFunction = {
-        RegistrationRound: {Event.DONE: CollectRandomnessRound},
-        CollectRandomnessRound: {
-            Event.DONE: SelectKeeperRound,
-            Event.NO_MAJORITY: CollectRandomnessRound,
-            Event.ROUND_TIMEOUT: CollectRandomnessRound,
+        RegistrationRound: {Event.DONE: SynchronizeRequestsRound},
+        SynchronizeRequestsRound: {
+            Event.DONE: ProcessRequestRound,
+            Event.ERROR: SynchronizeRequestsRound,
         },
         ProcessRequestRound: {
-            Event.DONE: PublishResponseRound,
-            Event.ERROR: RegistrationRound,
-        },
-        PublishResponseRound: {
-            Event.DONE: CollectRandomnessRound,
-            Event.ERROR: RegistrationRound,
-        },
-        SelectKeeperRound: {
-            Event.DONE: WaitForRequestRound,
-            Event.NO_MAJORITY: RegistrationRound,
-            Event.ROUND_TIMEOUT: RegistrationRound,
-        },
-        WaitForRequestRound: {
-            Event.DONE: ProcessRequestRound,
-            Event.ERROR: RegistrationRound,
-            Event.ROUND_TIMEOUT: WaitForRequestRound,
+            Event.DONE: SynchronizeRequestsRound,
+            Event.ERROR: SynchronizeRequestsRound,
+            Event.ROUND_TIMEOUT: SynchronizeRequestsRound,
         },
     }
     final_states: Set[AppState] = set()

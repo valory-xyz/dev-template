@@ -7,8 +7,8 @@ description: The chat_completion connection provides a wrapper around LangChain'
 license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
-  __init__.py: bafybeiftu27piztiu5bfxbvhqsbppgtseykyfot6wtlrrzeuzya6zrgpky
-  connection.py: bafybeihti62e2mb352fvawgsonzpcttx5yvvadx74ob24vifi3zlr6xhiy
+  __init__.py: bafybeievqqc6qz2qijl6vhpleoaq7xd3trnjdino5yonsuqwdhked4v4pi
+  connection.py: bafybeibshmtthksxrbye6ytekzhjfp66nhiwkgiytkhpkgxc3ox44o5uv4
 fingerprint_ignore_patterns: []
 connections: []
 protocols:

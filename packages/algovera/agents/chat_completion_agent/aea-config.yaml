@@ -7,8 +7,8 @@ aea_version: '>=1.0.0, <2.0.0'
 fingerprint: {}
 fingerprint_ignore_patterns: []
 connections:
-- algovera/chat_completion:0.1.0:bafybeib5h4gp3yozckyy3tx6g2ujl3tgze4k2ivupflm6ugh33qqkoaveu
-- algovera/rabbitmq:0.1.0:bafybeic3fd6ypexksyzj2bjymlvafrvzjvtddyktjqbq363wngwm5x6s3a
+- algovera/chat_completion:0.1.0:bafybeiccgvsqkwczoktu3q3upzn3z2r664ykt7u7djtazmsjfpfapif2bm
+- fetchai/http_server:0.22.0:bafybeibd5nq3rt3xkjbnl3akshj4h2ijv7fviegr56zkpvjr6k2l47hb5q
 - valory/abci:0.1.0:bafybeie7fsmdzatyofhagfice7afbmyn7ht3zuzojdlu6cjaz7zncjspfq
 - valory/http_client:0.23.0:bafybeidykl4elwbcjkqn32wt5h4h7tlpeqovrcq3c5bcplt6nhpznhgczi
 - valory/ipfs:0.1.0:bafybeigr2cipad23aebjpnqtzpgymiwrwgmnior2fk4inbscdnqyl5epla
@@ -18,7 +18,6 @@ contracts:
 - valory/service_registry:0.1.0:bafybeiatcuw6zeqok4spkkonui6likgdfwtp2dichzrlbjxnf76eg42sdq
 protocols:
 - algovera/chat_completion:0.1.0:bafybeiewd6pjwettzly2zfwtnqzaaiopuyy3n6xnc2biclzgcssdye4aqy
-- algovera/rabbitmq:0.1.0:bafybeigmfn5yq7lni5mk3gty62e6dusxfvllwngwdhxgn2x6a2rmtohod4
 - open_aea/signing:1.0.0:bafybeibqlfmikg5hk4phzak6gqzhpkt6akckx7xppbp53mvwt6r73h7tk4
 - valory/abci:0.1.0:bafybeig3dj5jhsowlvg3t73kgobf6xn4nka7rkttakdb2gwsg5bp7rt7q4
 - valory/acn:1.1.0:bafybeignmc5uh3vgpuckljcj2tgg7hdqyytkm6m5b6v6mxtazdcvubibva
@@ -28,7 +27,7 @@ protocols:
 - valory/ledger_api:1.0.0:bafybeibo4bdtcrxi2suyzldwoetjar6pqfzm6vt5xal22ravkkcvdmtksi
 - valory/tendermint:0.1.0:bafybeicusvezoqlmyt6iqomcbwaz3xkhk2qf3d56q5zprmj3xdxfy64k54
 skills:
-- algovera/chat_completion_abci:0.1.0:bafybeicstcoy4s6vhfbuvodnlpoc7rzpltnwapkitimabdo4rsxuw5z3t4
+- algovera/chat_completion_abci:0.1.0:bafybeia7lx3maqkkg6didovhb5v7qjcveojo6fh76pafcuxizjtdxgmyly
 - valory/abstract_abci:0.1.0:bafybeifeqstiynx2n37k7lpdbcclylgg7tsmym7vtj4tanrukkvw4pp5nu
 - valory/abstract_round_abci:0.1.0:bafybeiarzpxsy7ulitk5obs4zajhll2m77motjn5st7mi6qvjtkoirfikq
 default_ledger: ethereum
@@ -133,5 +132,8 @@ type: connection
 config:
   openai_api_key: ${OPENAI_API_KEY}
 ---
-public_id: algovera/rabbitmq:0.1.0
+public_id: fetchai/http_server:0.22.0:bafybeicblltx7ha3ulthg7bzfccuqqyjmihhrvfeztlgrlcoxhr7kf6nbq
 type: connection
+config:
+  host: ${str:0.0.0.0}
+  target_skill_id: str:algovera/chat_completion_abci:0.1.0

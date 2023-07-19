@@ -17,10 +17,10 @@
 #
 # ------------------------------------------------------------------------------
 
-"""Test the handlers.py module of the LLMChatCompletion."""
+"""Test the handlers.py module of the ChatCompletion."""
 
 import packages.algovera.skills.chat_completion_abci.handlers  # noqa
 
 
 def test_import() -> None:
-    """Test that the 'handlers.py' of the LLMChatCompletion can be imported."""
+    """Test that the 'handlers.py' of the ChatCompletion can be imported."""

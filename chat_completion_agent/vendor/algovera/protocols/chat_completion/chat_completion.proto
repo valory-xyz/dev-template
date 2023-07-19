@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package aea.algovera.chat_completion.v0_1_0;
+
+message ChatCompletionMessage{
+
+  // Performatives and contents
+  message Request_Performative{
+    map<string, string> request = 1;
+  }
+
+  message Response_Performative{
+    map<string, string> response = 1;
+  }
+
+
+  oneof performative{
+    Request_Performative request = 5;
+    Response_Performative response = 6;
+  }
+}

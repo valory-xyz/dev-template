@@ -17,14 +17,14 @@
 #
 # ------------------------------------------------------------------------------
 
-"""Test the models.py module of the LLMChatCompletion."""
+"""Test the models.py module of the ChatCompletion."""
 
 from packages.algovera.skills.chat_completion_abci.models import SharedState
 from packages.valory.skills.abstract_round_abci.test_tools.base import DummyContext
 
 
 class TestSharedState:
-    """Test SharedState of LLMChatCompletion."""
+    """Test SharedState of ChatCompletion."""
 
     def test_initialization(self) -> None:
         """Test initialization."""

@@ -17,7 +17,7 @@
 #
 # ------------------------------------------------------------------------------
 
-"""This package contains the tests for rounds of LLMChatCompletion."""
+"""This package contains the tests for rounds of ChatCompletion."""
 
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, Hashable, List, Mapping, Type
@@ -25,23 +25,17 @@ from typing import Any, Callable, Dict, Hashable, List, Mapping, Type
 import pytest
 
 from packages.algovera.skills.chat_completion_abci.payloads import (
-    CollectRandomnessPayload,
     ProcessRequestPayload,
-    PublishResponsePayload,
     RegistrationPayload,
-    SelectKeeperPayload,
-    WaitForRequestPayload,
+    SynchronizeRequestsPayload,
 )
 from packages.algovera.skills.chat_completion_abci.rounds import (
     AbstractRound,
-    CollectRandomnessRound,
     Event,
     ProcessRequestRound,
-    PublishResponseRound,
     RegistrationRound,
-    SelectKeeperRound,
+    SynchronizeRequestsRound,
     SynchronizedData,
-    WaitForRequestRound,
 )
 from packages.valory.skills.abstract_round_abci.base import BaseTxPayload
 from packages.valory.skills.abstract_round_abci.test_tools.rounds import (
@@ -68,8 +62,8 @@ class RoundTestCase:
 MAX_PARTICIPANTS: int = 4
 
 
-class BaseLLMChatCompletionRoundTest(BaseRoundTestClass):
-    """Base test class for LLMChatCompletion rounds."""
+class BaseChatCompletionRoundTest(BaseRoundTestClass):
+    """Base test class for ChatCompletion rounds."""
 
     round_cls: Type[AbstractRound]
     synchronized_data: SynchronizedData
@@ -99,20 +93,7 @@ class BaseLLMChatCompletionRoundTest(BaseRoundTestClass):
         )
 
 
-class TestCollectRandomnessRound(BaseLLMChatCompletionRoundTest):
-    """Tests for CollectRandomnessRound."""
-
-    round_class = CollectRandomnessRound
-
-    # TODO: provide test cases
-    @pytest.mark.parametrize("test_case", [])
-    def test_run(self, test_case: RoundTestCase) -> None:
-        """Run tests."""
-
-        self.run_test(test_case)
-
-
-class TestProcessRequestRound(BaseLLMChatCompletionRoundTest):
+class TestProcessRequestRound(BaseChatCompletionRoundTest):
     """Tests for ProcessRequestRound."""
 
     round_class = ProcessRequestRound
@@ -125,20 +106,7 @@ class TestProcessRequestRound(BaseLLMChatCompletionRoundTest):
         self.run_test(test_case)
 
 
-class TestPublishResponseRound(BaseLLMChatCompletionRoundTest):
-    """Tests for PublishResponseRound."""
-
-    round_class = PublishResponseRound
-
-    # TODO: provide test cases
-    @pytest.mark.parametrize("test_case", [])
-    def test_run(self, test_case: RoundTestCase) -> None:
-        """Run tests."""
-
-        self.run_test(test_case)
-
-
-class TestRegistrationRound(BaseLLMChatCompletionRoundTest):
+class TestRegistrationRound(BaseChatCompletionRoundTest):
     """Tests for RegistrationRound."""
 
     round_class = RegistrationRound
@@ -151,23 +119,10 @@ class TestRegistrationRound(BaseLLMChatCompletionRoundTest):
         self.run_test(test_case)
 
 
-class TestSelectKeeperRound(BaseLLMChatCompletionRoundTest):
-    """Tests for SelectKeeperRound."""
+class TestSynchronizeRequestsRound(BaseChatCompletionRoundTest):
+    """Tests for SynchronizeRequestsRound."""
 
-    round_class = SelectKeeperRound
-
-    # TODO: provide test cases
-    @pytest.mark.parametrize("test_case", [])
-    def test_run(self, test_case: RoundTestCase) -> None:
-        """Run tests."""
-
-        self.run_test(test_case)
-
-
-class TestWaitForRequestRound(BaseLLMChatCompletionRoundTest):
-    """Tests for WaitForRequestRound."""
-
-    round_class = WaitForRequestRound
+    round_class = SynchronizeRequestsRound
 
     # TODO: provide test cases
     @pytest.mark.parametrize("test_case", [])
