@@ -12,3 +12,7 @@ packages/fetchai
 leak_report
 /Pipfile.lock
 .env
+
+chat_completion_agent/
+
+ethereum_private_key.txt
