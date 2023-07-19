@@ -6,7 +6,7 @@ aea_version: '>=1.0.0, <2.0.0'
 license: Apache-2.0
 fingerprint: {}
 fingerprint_ignore_patterns: []
-agent: algovera/chat_completion_agent:0.1.0:bafybeiapaa54gonjt7d6uhcmipzjefybggtn2clbdux5nkvcqmnjtu6wqa
+agent: algovera/chat_completion_agent:0.1.0:bafybeiee6srlte3kaidh3nlg5uqi3jgfuxvt7fomjnypvg5qrq6sz47nqa
 number_of_agents: 1
 deployment:
   agent:

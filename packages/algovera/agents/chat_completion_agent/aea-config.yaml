@@ -126,7 +126,7 @@ is_abstract: true
 public_id: algovera/chat_completion:0.1.0
 type: connection
 config:
-  openai_api_key: ${OPENAI_API_KEY}
+  openai_api_key: ${str:null}
 ---
 public_id: fetchai/http_server:0.22.0:bafybeicblltx7ha3ulthg7bzfccuqqyjmihhrvfeztlgrlcoxhr7kf6nbq
 type: connection
