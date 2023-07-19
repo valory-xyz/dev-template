@@ -20,8 +20,9 @@
 
 """OpenAI connection and channel."""
 
-import re
-from typing import Any, Dict, cast
+import random
+import time
+from typing import Any, cast
 
 import openai
 from aea.configurations.base import PublicId
@@ -29,9 +30,6 @@ from aea.connections.base import BaseSyncConnection
 from aea.mail.base import Envelope
 from aea.protocols.base import Address, Message
 from aea.protocols.dialogue.base import Dialogue
-from langchain.callbacks import get_openai_callback
-from langchain.chat_models import ChatOpenAI
-from langchain.schema import HumanMessage, SystemMessage
 
 from packages.algovera.protocols.chat_completion.dialogues import ChatCompletionDialogue
 from packages.algovera.protocols.chat_completion.dialogues import (
@@ -72,6 +70,55 @@ class ChatCompletionDialogues(BaseChatCompletionDialogues):
         )
 
 
+def retry_with_exponential_backoff(
+    func,
+    initial_delay: float = 1,
+    exponential_base: float = 2,
+    jitter: bool = True,
+    max_retries: int = 10,
+    errors: tuple = (openai.error.RateLimitError,),
+):
+    """Retry a function with exponential backoff."""
+
+    def wrapper(*args, **kwargs):
+        # Initialize variables
+        num_retries = 0
+        delay = initial_delay
+
+        # Loop until a successful response or max_retries is hit or an exception is raised
+        while True:
+            try:
+                return func(*args, **kwargs)
+
+            # Retry on specified errors
+            except errors as e:
+                # Increment retries
+                num_retries += 1
+
+                # Check if max retries has been reached
+                if num_retries > max_retries:
+                    raise Exception(
+                        f"Maximum number of retries ({max_retries}) exceeded."
+                    )
+
+                # Increment the delay
+                delay *= exponential_base * (1 + jitter * random.random())
+
+                # Sleep for the delay
+                time.sleep(delay)
+
+            # Raise exceptions for any errors not specified
+            except Exception as e:
+                raise e
+
+    return wrapper
+
+
+@retry_with_exponential_backoff
+def completions_with_backoff(**kwargs):
+    return openai.ChatCompletion.create(**kwargs)
+
+
 class ChatCompletionConnection(BaseSyncConnection):
     """Proxy to the functionality of the openai SDK."""
 
@@ -103,12 +150,6 @@ class ChatCompletionConnection(BaseSyncConnection):
         }
         openai.api_key = self.openai_settings["openai_api_key"]
         self.dialogues = ChatCompletionDialogues(connection_id=PUBLIC_ID)
-
-        self.chat = ChatOpenAI(
-            model=self.openai_settings["model"],
-            temperature=self.openai_settings["temperature"],
-            max_tokens=self.openai_settings["max_tokens"],
-        )
 
     def main(self) -> None:
         """
@@ -187,21 +228,27 @@ class ChatCompletionConnection(BaseSyncConnection):
         :param user_template: user template
         :return: response
         """
-        messages = [
-            SystemMessage(content=system_message),
-            HumanMessage(content=user_message),
-        ]
+
         try:
-            with get_openai_callback() as cb:
-                response = self.chat(messages).content
+            messages = [
+                {"role": "system", "content": system_message},
+                {"role": "user", "content": user_message},
+            ]
+            raw_response = completions_with_backoff(
+                model=self.openai_settings["model"],
+                messages=messages,
+                temperature=self.openai_settings["temperature"],
+            )
+
+            response = raw_response.choices[0]["message"]["content"]
 
             reponse = {
                 "id": id,
                 "system_message": system_message,
                 "user_message": user_message,
                 "response": response,
-                "total_tokens": str(cb.total_tokens),
-                "total_cost": str(cb.total_cost),
+                "total_tokens": "",
+                "total_cost": "",
                 "error": "False",
                 "error_class": "",
                 "error_message": "",

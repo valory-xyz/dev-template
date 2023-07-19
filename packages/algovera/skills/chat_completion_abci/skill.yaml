@@ -23,8 +23,8 @@ fingerprint:
   tests/test_rounds.py: bafybeihxhpyty3cgu7j6a4ri3nebdbuu4zqejjqfu37eizi4rlhju7fpci
 fingerprint_ignore_patterns: []
 connections:
-- algovera/chat_completion:0.1.0:bafybeiccgvsqkwczoktu3q3upzn3z2r664ykt7u7djtazmsjfpfapif2bm
-- fetchai/http_server:0.22.0:bafybeibd5nq3rt3xkjbnl3akshj4h2ijv7fviegr56zkpvjr6k2l47hb5q
+- algovera/chat_completion:0.1.0:bafybeibra3hpestf5rbcw3qzhydyp2ywqbuv5ssp4j4vbpsn7ebqxsafpy
+- fetchai/http_server:0.22.0:bafybeihaax5od5zo5jk2l62hv4jwuwtxloh5mijozudpsjombqc4ncmi6i
 contracts: []
 protocols:
 - algovera/chat_completion:0.1.0:bafybeiewd6pjwettzly2zfwtnqzaaiopuyy3n6xnc2biclzgcssdye4aqy
@@ -151,7 +151,5 @@ models:
   tendermint_dialogues:
     args: {}
     class_name: TendermintDialogues
-dependencies:
-  langchain:
-    version: ==0.0.209
+dependencies: {}
 is_abstract: false

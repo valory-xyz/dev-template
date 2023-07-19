@@ -1,12 +1,12 @@
 {
     "dev": {
-        "skill/algovera/chat_completion_abci/0.1.0": "bafybeia7lx3maqkkg6didovhb5v7qjcveojo6fh76pafcuxizjtdxgmyly",
-        "connection/algovera/chat_completion/0.1.0": "bafybeiccgvsqkwczoktu3q3upzn3z2r664ykt7u7djtazmsjfpfapif2bm",
+        "skill/algovera/chat_completion_abci/0.1.0": "bafybeicybxtq4cw6w6743opsxwhmtiqjfo2slq5dkxl7uvpvg3gjaiy2gm",
+        "connection/algovera/chat_completion/0.1.0": "bafybeibra3hpestf5rbcw3qzhydyp2ywqbuv5ssp4j4vbpsn7ebqxsafpy",
         "connection/algovera/rabbitmq/0.1.0": "bafybeic3fd6ypexksyzj2bjymlvafrvzjvtddyktjqbq363wngwm5x6s3a",
-        "agent/algovera/chat_completion_agent/0.1.0": "bafybeic5yrxvavfxkrxabgzdwa4oyh2tzuech4zy7fdfjbz2d5rvclvuj4",
+        "agent/algovera/chat_completion_agent/0.1.0": "bafybeiapaa54gonjt7d6uhcmipzjefybggtn2clbdux5nkvcqmnjtu6wqa",
         "protocol/algovera/rabbitmq/0.1.0": "bafybeigmfn5yq7lni5mk3gty62e6dusxfvllwngwdhxgn2x6a2rmtohod4",
         "protocol/algovera/chat_completion/0.1.0": "bafybeiewd6pjwettzly2zfwtnqzaaiopuyy3n6xnc2biclzgcssdye4aqy",
-        "service/algovera/chat_completion_local/0.1.0": "bafybeif54c3efzlavtpptnfjxjlpt5tjxrewd4gser45o5ux64inf3ruhm"
+        "service/algovera/chat_completion_local/0.1.0": "bafybeidfmu7nrtz7lpxytst2txxe3l4nyvmqbnt75jjrjpnqalpuiipnwm"
     },
     "third_party": {
         "service/valory/hello_world/0.1.0": "bafybeida3m3b3m5pnf7xlewzz7zfj24dynn6rqr4t3cr6ljfps47745cqu",
@@ -15,7 +15,7 @@
         "connection/valory/http_client/0.23.0": "bafybeidykl4elwbcjkqn32wt5h4h7tlpeqovrcq3c5bcplt6nhpznhgczi",
         "connection/valory/ipfs/0.1.0": "bafybeigr2cipad23aebjpnqtzpgymiwrwgmnior2fk4inbscdnqyl5epla",
         "connection/valory/ledger/0.19.0": "bafybeicgfupeudtmvehbwziqfxiz6ztsxr5rxzvalzvsdsspzz73o5fzfi",
-        "connection/fetchai/http_server/0.22.0": "bafybeibd5nq3rt3xkjbnl3akshj4h2ijv7fviegr56zkpvjr6k2l47hb5q",
+        "connection/fetchai/http_server/0.22.0": "bafybeihaax5od5zo5jk2l62hv4jwuwtxloh5mijozudpsjombqc4ncmi6i",
         "contract/valory/service_registry/0.1.0": "bafybeiatcuw6zeqok4spkkonui6likgdfwtp2dichzrlbjxnf76eg42sdq",
         "protocol/open_aea/signing/1.0.0": "bafybeibqlfmikg5hk4phzak6gqzhpkt6akckx7xppbp53mvwt6r73h7tk4",
         "protocol/valory/abci/0.1.0": "bafybeig3dj5jhsowlvg3t73kgobf6xn4nka7rkttakdb2gwsg5bp7rt7q4",

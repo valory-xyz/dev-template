@@ -7,8 +7,8 @@ aea_version: '>=1.0.0, <2.0.0'
 fingerprint: {}
 fingerprint_ignore_patterns: []
 connections:
-- algovera/chat_completion:0.1.0:bafybeiccgvsqkwczoktu3q3upzn3z2r664ykt7u7djtazmsjfpfapif2bm
-- fetchai/http_server:0.22.0:bafybeibd5nq3rt3xkjbnl3akshj4h2ijv7fviegr56zkpvjr6k2l47hb5q
+- algovera/chat_completion:0.1.0:bafybeibra3hpestf5rbcw3qzhydyp2ywqbuv5ssp4j4vbpsn7ebqxsafpy
+- fetchai/http_server:0.22.0:bafybeihaax5od5zo5jk2l62hv4jwuwtxloh5mijozudpsjombqc4ncmi6i
 - valory/abci:0.1.0:bafybeie7fsmdzatyofhagfice7afbmyn7ht3zuzojdlu6cjaz7zncjspfq
 - valory/http_client:0.23.0:bafybeidykl4elwbcjkqn32wt5h4h7tlpeqovrcq3c5bcplt6nhpznhgczi
 - valory/ipfs:0.1.0:bafybeigr2cipad23aebjpnqtzpgymiwrwgmnior2fk4inbscdnqyl5epla
@@ -27,7 +27,7 @@ protocols:
 - valory/ledger_api:1.0.0:bafybeibo4bdtcrxi2suyzldwoetjar6pqfzm6vt5xal22ravkkcvdmtksi
 - valory/tendermint:0.1.0:bafybeicusvezoqlmyt6iqomcbwaz3xkhk2qf3d56q5zprmj3xdxfy64k54
 skills:
-- algovera/chat_completion_abci:0.1.0:bafybeia7lx3maqkkg6didovhb5v7qjcveojo6fh76pafcuxizjtdxgmyly
+- algovera/chat_completion_abci:0.1.0:bafybeicybxtq4cw6w6743opsxwhmtiqjfo2slq5dkxl7uvpvg3gjaiy2gm
 - valory/abstract_abci:0.1.0:bafybeifeqstiynx2n37k7lpdbcclylgg7tsmym7vtj4tanrukkvw4pp5nu
 - valory/abstract_round_abci:0.1.0:bafybeiarzpxsy7ulitk5obs4zajhll2m77motjn5st7mi6qvjtkoirfikq
 default_ledger: ethereum
@@ -58,11 +58,7 @@ logging_config:
       - logfile
       - console
       propagate: true
-dependencies:
-  open-aea-ledger-ethereum:
-    version: ==1.35.0
-  open-aea-test-autonomy:
-    version: ==0.10.7
+dependencies: {}
 default_connection: null
 ---
 public_id: algovera/chat_completion_abci:0.1.0
@@ -136,4 +132,4 @@ public_id: fetchai/http_server:0.22.0:bafybeicblltx7ha3ulthg7bzfccuqqyjmihhrvfez
 type: connection
 config:
   host: ${str:0.0.0.0}
-  target_skill_id: str:algovera/chat_completion_abci:0.1.0
+  target_skill_id: algovera/chat_completion_abci:0.1.0

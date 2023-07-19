@@ -8,7 +8,7 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeievqqc6qz2qijl6vhpleoaq7xd3trnjdino5yonsuqwdhked4v4pi
-  connection.py: bafybeibshmtthksxrbye6ytekzhjfp66nhiwkgiytkhpkgxc3ox44o5uv4
+  connection.py: bafybeia5323r6ubruizjvbgj5yjadzeb526szgyano2w6wwf2x5ntu6cdi
 fingerprint_ignore_patterns: []
 connections: []
 protocols:
@@ -22,7 +22,7 @@ config:
 excluded_protocols: []
 restricted_to_protocols: []
 dependencies:
-  langchain:
-    version: ==0.0.209
+  openai:
+    version: ==0.27.8
 is_abstract: false
 cert_requests: []
