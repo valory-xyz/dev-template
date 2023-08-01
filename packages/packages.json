@@ -1,12 +1,12 @@
 {
     "dev": {
-        "skill/algovera/chat_completion_abci/0.1.0": "bafybeiai6pthzed4gi6hdkuhrnncaaob2axaxhu3xh5gxysnsfuqi2zsvu",
-        "connection/algovera/chat_completion/0.1.0": "bafybeideqicgvtrikcmt3pokzxrysvurnfd3t4newvp6gsllb24yafgi5i",
+        "skill/algovera/chat_completion_abci/0.1.0": "bafybeiak6xtykavzml2z62yce5u7bncr2ctolwmucguy2z5zu7w3zb34fa",
+        "connection/algovera/chat_completion/0.1.0": "bafybeiceafe2giaf4yduneqjwsgvfia4cpx4x2v7t6jalvatmaml6ietru",
         "connection/algovera/rabbitmq/0.1.0": "bafybeic3fd6ypexksyzj2bjymlvafrvzjvtddyktjqbq363wngwm5x6s3a",
-        "agent/algovera/chat_completion_agent/0.1.0": "bafybeia7avc4f5bv73rwnwmgxrhrq54ecfpje6fq6fdxa77jmkjx5l7zsm",
+        "agent/algovera/chat_completion_agent/0.1.0": "bafybeiftx2g2ccz5srkt5wzeu2wzr3npuwy7hbklacawsuzmc2z34b2lnq",
         "protocol/algovera/rabbitmq/0.1.0": "bafybeigmfn5yq7lni5mk3gty62e6dusxfvllwngwdhxgn2x6a2rmtohod4",
         "protocol/algovera/chat_completion/0.1.0": "bafybeiewd6pjwettzly2zfwtnqzaaiopuyy3n6xnc2biclzgcssdye4aqy",
-        "service/algovera/chat_completion_local/0.1.0": "bafybeihwq2iwm5goiyhrzwvhrgiodew5jio2gtoozwayqikqglnmf3i62m"
+        "service/algovera/chat_completion_local/0.1.0": "bafybeief3wbzjldqkoyypde5cnnzder6qfstuui5kcq427ltzmgk7laqom"
     },
     "third_party": {
         "service/valory/hello_world/0.1.0": "bafybeifbyghd5robjp3vklbaaa2gsawly27hfgtscjnhbwzcxbau6cuwoa",

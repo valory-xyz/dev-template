@@ -24,5 +24,9 @@ restricted_to_protocols: []
 dependencies:
   openai:
     version: ==0.27.8
+  faiss-cpu:
+    version: ==1.7.4
+  numpy:
+    version: ==1.21.0
 is_abstract: false
 cert_requests: []
