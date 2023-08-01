@@ -18,3 +18,7 @@ chat_completion_agent/
 ethereum_private_key.txt
 
 chat_completion_local/
+
+.hypothesis/
+
+__pycache__/
