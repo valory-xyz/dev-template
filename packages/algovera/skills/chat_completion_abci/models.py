@@ -41,7 +41,8 @@ class SharedState(BaseSharedState):
     def __init__(self, *args: Any, skill_context: SkillContext, **kwargs: Any) -> None:
         """Init"""
         super().__init__(*args, skill_context=skill_context, **kwargs)
-        self.new_requests: List = []
+        self.new_embedding_requests: List = []
+        self.new_chat_requests: List = []
 
 
 class Params(BaseParams):

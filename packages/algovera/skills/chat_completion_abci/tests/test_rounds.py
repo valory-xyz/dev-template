@@ -25,15 +25,19 @@ from typing import Any, Callable, Dict, Hashable, List, Mapping, Type
 import pytest
 
 from packages.algovera.skills.chat_completion_abci.payloads import (
-    ProcessRequestPayload,
+    ChatPayload,
+    EmbeddingPayload,
     RegistrationPayload,
+    SynchronizeEmbeddingsPayload,
     SynchronizeRequestsPayload,
 )
 from packages.algovera.skills.chat_completion_abci.rounds import (
     AbstractRound,
+    ChatRound,
+    EmbeddingRound,
     Event,
-    ProcessRequestRound,
     RegistrationRound,
+    SynchronizeEmbeddingsRound,
     SynchronizeRequestsRound,
     SynchronizedData,
 )
@@ -93,10 +97,23 @@ class BaseChatCompletionRoundTest(BaseRoundTestClass):
         )
 
 
-class TestProcessRequestRound(BaseChatCompletionRoundTest):
-    """Tests for ProcessRequestRound."""
+class TestChatRound(BaseChatCompletionRoundTest):
+    """Tests for ChatRound."""
 
-    round_class = ProcessRequestRound
+    round_class = ChatRound
+
+    # TODO: provide test cases
+    @pytest.mark.parametrize("test_case", [])
+    def test_run(self, test_case: RoundTestCase) -> None:
+        """Run tests."""
+
+        self.run_test(test_case)
+
+
+class TestEmbeddingRound(BaseChatCompletionRoundTest):
+    """Tests for EmbeddingRound."""
+
+    round_class = EmbeddingRound
 
     # TODO: provide test cases
     @pytest.mark.parametrize("test_case", [])
@@ -110,6 +127,19 @@ class TestRegistrationRound(BaseChatCompletionRoundTest):
     """Tests for RegistrationRound."""
 
     round_class = RegistrationRound
+
+    # TODO: provide test cases
+    @pytest.mark.parametrize("test_case", [])
+    def test_run(self, test_case: RoundTestCase) -> None:
+        """Run tests."""
+
+        self.run_test(test_case)
+
+
+class TestSynchronizeEmbeddingsRound(BaseChatCompletionRoundTest):
+    """Tests for SynchronizeEmbeddingsRound."""
+
+    round_class = SynchronizeEmbeddingsRound
 
     # TODO: provide test cases
     @pytest.mark.parametrize("test_case", [])

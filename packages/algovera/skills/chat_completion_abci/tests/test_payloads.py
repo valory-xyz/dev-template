@@ -26,8 +26,10 @@ import pytest
 
 from packages.algovera.skills.chat_completion_abci.payloads import (
     BaseTxPayload,
-    ProcessRequestPayload,
+    ChatPayload,
+    EmbeddingPayload,
     RegistrationPayload,
+    SynchronizeEmbeddingsPayload,
     SynchronizeRequestsPayload,
 )
 

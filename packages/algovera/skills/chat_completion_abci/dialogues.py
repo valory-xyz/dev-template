@@ -18,6 +18,7 @@
 # ------------------------------------------------------------------------------
 
 """This module contains the dialogues of the ChatCompletionAbciApp."""
+
 from typing import Any
 
 from aea.protocols.base import Address, Message

@@ -11,3 +11,5 @@ packages/valory
 packages/fetchai
 leak_report
 /Pipfile.lock
+.env
+*.env
