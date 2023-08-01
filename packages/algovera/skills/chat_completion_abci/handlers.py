@@ -18,9 +18,9 @@
 # ------------------------------------------------------------------------------
 
 """This module contains the handlers for the skill of ChatCompletionAbciApp."""
+
 import json
 import re
-import time
 import uuid
 from enum import Enum
 from typing import Callable, Dict, List, Optional, Tuple, Union, cast
@@ -35,6 +35,11 @@ from packages.algovera.skills.chat_completion_abci.dialogues import (
     HttpDialogues,
 )
 from packages.algovera.skills.chat_completion_abci.rounds import SynchronizedData
+from packages.algovera.skills.chat_completion_abci.schemas import (
+    Chat,
+    ChatCompletion,
+    Embedding,
+)
 from packages.fetchai.connections.http_server.connection import (
     PUBLIC_ID as HTTP_SERVER_PUBLIC_ID,
 )
@@ -81,7 +86,6 @@ class HttpMethod(Enum):
     """Http methods"""
 
     GET = "get"
-    HEAD = "head"
     POST = "post"
 
 
@@ -104,17 +108,24 @@ class HttpHandler(BaseHttpHandler):
         self.handler_url_regex = rf"{hostname_regex}\/.*"
 
         # Endpoint regexes
-        post_url_regex = rf"{hostname_regex}\/chat_completion\/?$"
-        chat_id_regex = r"(?P<chat_id>[a-fA-F0-9]{32})"
-        get_url_regex = rf"{hostname_regex}\/chat_completion\/{chat_id_regex}"
+        post_cc_url_regex = rf"{hostname_regex}\/chat_completion\/?$"
+        post_embedding_url_regex = rf"{hostname_regex}\/embedding\/?$"
+        post_chat_url_regex = rf"{hostname_regex}\/chat\/?$"
+        # post_qanda_url_regex = rf"{hostname_regex}\/qanda\/?$"
+
+        cc_id_regex = r"(?P<chat_id>[a-fA-F0-9]{32})"
+        get_cc_url_regex = rf"{hostname_regex}\/get\/{cc_id_regex}"
 
         # Routes
         self.routes = {
             (HttpMethod.POST.value,): [
-                (post_url_regex, self._handle_post_chat_completion),
+                (post_cc_url_regex, self._handle_post_chat_completion),
+                (post_embedding_url_regex, self._handle_post_embedding),
+                (post_chat_url_regex, self._handle_post_chat),
+                # (post_qanda_url_regex, self._handle_post_qanda),
             ],
             (HttpMethod.GET.value,): [
-                (get_url_regex, self._handle_get_chat_completion),
+                (get_cc_url_regex, self._handle_get_request),
             ],
         }
 
@@ -211,7 +222,10 @@ class HttpHandler(BaseHttpHandler):
         handler(http_msg, http_dialogue, **kwargs)
 
     def _handle_bad_request(
-        self, http_msg: HttpMessage, http_dialogue: HttpDialogue
+        self,
+        http_msg: HttpMessage,
+        http_dialogue: HttpDialogue,
+        status_txt: str = "Bad request",
     ) -> None:
         """
         Handle a Http bad request.
@@ -224,7 +238,7 @@ class HttpHandler(BaseHttpHandler):
             target_message=http_msg,
             version=http_msg.version,
             status_code=BAD_REQUEST_CODE,
-            status_text="Bad request",
+            status_text=status_txt,
             headers=http_msg.headers,
             body=b"",
         )
@@ -236,6 +250,104 @@ class HttpHandler(BaseHttpHandler):
     def _handle_post_chat_completion(
         self, http_msg: HttpMessage, http_dialogue: HttpDialogue
     ) -> None:
+        """Handle a POST chat completion request."""
+        self.context.logger.info("Received chat completion request")
+
+        request_data = json.loads(http_msg.body)
+
+        # Add the new request to the list of requests on state
+        # Generate a new id if one is not provided
+        id_ = request_data["id"] if "id" in request_data else uuid.uuid4().hex
+
+        # Check if data meets schema
+        try:
+            cc_request = ChatCompletion.parse_obj(request_data)
+        except Exception as e:
+            self.context.logger.error(f"Request data does not meet schema: {e}")
+            self._handle_bad_request(http_msg, http_dialogue)
+            return
+
+        # Add the new request to the list of requests on state
+        self.context.state.new_chat_requests.append(
+            cc_request.dict(),
+        )
+
+        response_body_data = {"id": id_}
+
+        self._send_ok_response(http_msg, http_dialogue, response_body_data)
+
+    def _handle_post_embedding(
+        self, http_msg: HttpMessage, http_dialogue: HttpDialogue
+    ) -> None:
+        """Handle a POST embedding request."""
+
+        self.context.logger.info("Received embedding request")
+
+        # Parse headers
+        header = http_msg.headers
+        header_info = {}
+        header1 = header.split("; ")[0]
+        header2 = header.split("; ")[1]
+
+        for line in header1.split("\n"):
+            if line:
+                key, value = line.split(": ")
+                header_info[key.strip()] = value.strip()
+
+        header2 = header2.split("--")[0]
+        k, v = header2.split("=")
+        header_info[k.strip()] = v.strip()
+
+        # Parse body
+        body = http_msg.body.decode()
+        parts = body.split(header_info["boundary"])
+
+        all_ = {}
+        for part in parts:
+            part = part.strip()
+            if not part:
+                continue
+            if part.startswith('Content-Disposition: form-data; name="data"'):
+                # This part contains the 'data' field
+                data_field = part.split("\r\n\r\n", 1)[1]
+                all_["data"] = json.loads(data_field.split("\r\n")[0])
+            elif part.startswith(
+                'Content-Disposition: form-data; name="file"; filename='
+            ):
+                # This part contains the 'file' field
+                file_info, file_content = part.split("\r\n\r\n", 1)
+                filename = file_info.split('"')[-2]
+                all_["filename"] = filename
+                all_["file_content"] = file_content.split("\r\n")[0]
+
+        # Add the new request to the list of requests on state
+        # Generate a new id if one is not provided
+        if "id" not in all_["data"]:
+            all_["data"]["id"] = uuid.uuid4().hex
+
+        data = all_["data"]
+        data["file"] = {"filename": all_["filename"], "content": all_["file_content"]}
+
+        # Check if data meets schema
+        try:
+            embedding_request = Embedding.parse_obj(data)
+        except Exception as e:
+            self.context.logger.error(f"Request data does not meet schema: {e}")
+            self._handle_bad_request(http_msg, http_dialogue)
+            return
+
+        self.context.state.new_embedding_requests.append(
+            embedding_request.dict(),
+        )
+
+        response_body_data = {"id": data["id"]}
+
+        self._send_ok_response(http_msg, http_dialogue, response_body_data)
+
+    def _handle_post_chat(
+        self, http_msg: HttpMessage, http_dialogue: HttpDialogue
+    ) -> None:
+        """Handle a POST chat request."""
 
         self.context.logger.info("Received request")
 
@@ -244,25 +356,65 @@ class HttpHandler(BaseHttpHandler):
         # Add the new request to the list of requests on state
         # Generate a new id if one is not provided
         id_ = request_data["id"] if "id" in request_data else uuid.uuid4().hex
-        self.context.state.new_requests.append(
-            {
-                "system_message": request_data["system_message"],
-                "user_message": request_data["user_message"],
-                "id": id_,
-                "request_time": str(time.time()),
-                "processed": False,
-                "processor": "",
-                "error": False,
-                "error_message": "",
-                "num_tries": 0,
-            }
+
+        # Check if context_id is provided and it exists
+        if not request_data["context_id"]:
+            self.context.logger.error("context_id not provided")
+            self._handle_bad_request(
+                http_msg, http_dialogue, "Please provide a context_id"
+            )
+            return
+
+        else:
+            embeddings = self.synchronized_data.embeddings
+            context_ids = [e["id"] for e in embeddings]
+
+            if not request_data["context_id"] in context_ids:
+                self.context.logger.error(
+                    f"context_id {request_data['context_id']} does not exist"
+                )
+                self._handle_bad_request(
+                    http_msg,
+                    http_dialogue,
+                    f"context_id {request_data['context_id']} does not exist",
+                )
+                return
+
+        # Check memory_id exists if provided
+        if "memory_id" in request_data:
+            memories = self.synchronized_data.chat_histories
+            memory_ids = list(memories.keys())
+            if not request_data["memory_id"] in memory_ids:
+                self.context.logger.error(
+                    f"memory_id {request_data['memory_id']} does not exist"
+                )
+                self._handle_bad_request(
+                    http_msg,
+                    http_dialogue,
+                    f"memory_id {request_data['memory_id']} does not exist",
+                )
+                return
+        else:
+            # Assume new conversation
+            request_data["memory_id"] = uuid.uuid4().hex
+
+        # Check if data meets schema
+        try:
+            chat_request = Chat.parse_obj(request_data)
+        except Exception as e:
+            self.context.logger.error(f"Request data does not meet schema: {e}")
+            self._handle_bad_request(http_msg, http_dialogue)
+            return
+
+        self.context.state.new_chat_requests.append(
+            chat_request.dict(),
         )
 
-        response_body_data = {"id": id_}
+        response_body_data = {"id": id_, "memory_id": request_data["memory_id"]}
 
         self._send_ok_response(http_msg, http_dialogue, response_body_data)
 
-    def _handle_get_chat_completion(
+    def _handle_get_request(
         self, http_msg: HttpMessage, http_dialogue: HttpDialogue, chat_id: str
     ) -> None:
 
@@ -272,7 +424,7 @@ class HttpHandler(BaseHttpHandler):
         self.context.logger.info(f"Received request for id {id_}")
         self.context.logger.info(f"Chat id {chat_id}")
 
-        response = [d for d in self.synchronized_data.responses if d["id"] == id_]
+        response = [d for d in self.synchronized_data.chats if d["id"] == id_]
 
         response_body_data = response
 

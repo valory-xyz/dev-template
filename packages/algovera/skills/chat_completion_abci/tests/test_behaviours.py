@@ -26,18 +26,22 @@ from typing import Any, Dict, Hashable, Optional, Type
 import pytest
 
 from packages.algovera.skills.chat_completion_abci.behaviours import (
+    ChatBehaviour,
     ChatCompletionBaseBehaviour,
     ChatCompletionRoundBehaviour,
-    ProcessRequestBehaviour,
+    EmbeddingBehaviour,
     RegistrationBehaviour,
+    SynchronizeEmbeddingsBehaviour,
     SynchronizeRequestsBehaviour,
 )
 from packages.algovera.skills.chat_completion_abci.rounds import (
     ChatCompletionAbciApp,
+    ChatRound,
     DegenerateRound,
+    EmbeddingRound,
     Event,
-    ProcessRequestRound,
     RegistrationRound,
+    SynchronizeEmbeddingsRound,
     SynchronizeRequestsRound,
     SynchronizedData,
 )
@@ -100,11 +104,29 @@ class BaseChatCompletionTest(FSMBehaviourBaseCase):
         assert self.current_behaviour_id == self.next_behaviour_class.behaviour_id
 
 
-class TestProcessRequestBehaviour(BaseChatCompletionTest):
-    """Tests ProcessRequestBehaviour"""
+class TestChatBehaviour(BaseChatCompletionTest):
+    """Tests ChatBehaviour"""
 
     # TODO: set next_behaviour_class
-    behaviour_class: Type[BaseBehaviour] = ProcessRequestBehaviour
+    behaviour_class: Type[BaseBehaviour] = ChatBehaviour
+    next_behaviour_class: Type[BaseBehaviour] = ...
+
+    # TODO: provide test cases
+    @pytest.mark.parametrize("test_case", [])
+    def test_run(self, test_case: BehaviourTestCase) -> None:
+        """Run tests."""
+
+        self.fast_forward(test_case.initial_data)
+        # TODO: mock the necessary calls
+        # self.mock_ ...
+        self.complete(test_case.event)
+
+
+class TestEmbeddingBehaviour(BaseChatCompletionTest):
+    """Tests EmbeddingBehaviour"""
+
+    # TODO: set next_behaviour_class
+    behaviour_class: Type[BaseBehaviour] = EmbeddingBehaviour
     next_behaviour_class: Type[BaseBehaviour] = ...
 
     # TODO: provide test cases
@@ -123,6 +145,24 @@ class TestRegistrationBehaviour(BaseChatCompletionTest):
 
     # TODO: set next_behaviour_class
     behaviour_class: Type[BaseBehaviour] = RegistrationBehaviour
+    next_behaviour_class: Type[BaseBehaviour] = ...
+
+    # TODO: provide test cases
+    @pytest.mark.parametrize("test_case", [])
+    def test_run(self, test_case: BehaviourTestCase) -> None:
+        """Run tests."""
+
+        self.fast_forward(test_case.initial_data)
+        # TODO: mock the necessary calls
+        # self.mock_ ...
+        self.complete(test_case.event)
+
+
+class TestSynchronizeEmbeddingsBehaviour(BaseChatCompletionTest):
+    """Tests SynchronizeEmbeddingsBehaviour"""
+
+    # TODO: set next_behaviour_class
+    behaviour_class: Type[BaseBehaviour] = SynchronizeEmbeddingsBehaviour
     next_behaviour_class: Type[BaseBehaviour] = ...
 
     # TODO: provide test cases

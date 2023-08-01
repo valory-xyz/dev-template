@@ -20,15 +20,21 @@
 """This package contains the rounds of ChatCompletionAbciApp."""
 
 import json
-import logging
 from abc import ABC
 from enum import Enum
 from typing import Dict, List, Optional, Set, Tuple, Type, cast
 
 from packages.algovera.skills.chat_completion_abci.payloads import (
-    ProcessRequestPayload,
+    ChatPayload,
+    EmbeddingPayload,
     RegistrationPayload,
+    SynchronizeEmbeddingsPayload,
     SynchronizeRequestsPayload,
+)
+from packages.algovera.skills.chat_completion_abci.schemas import (
+    Chat,
+    ChatCompletion,
+    Embedding,
 )
 from packages.valory.skills.abstract_round_abci.base import (
     AbciApp,
@@ -46,9 +52,12 @@ from packages.valory.skills.abstract_round_abci.base import (
 class Event(Enum):
     """ChatCompletionAbciApp Events"""
 
-    DONE = "done"
     ROUND_TIMEOUT = "round_timeout"
+    DONE = "done"
+    EMBEDDING = "embedding"
+    NO_REQUEST = "no_request"
     ERROR = "error"
+    CHAT = "chat"
 
 
 class SynchronizedData(BaseSynchronizedData):
@@ -59,14 +68,19 @@ class SynchronizedData(BaseSynchronizedData):
     """
 
     @property
-    def responses(self) -> List:
-        """Return the responses."""
-        return cast(List, self.db.get("responses", []))
+    def embeddings(self) -> List:
+        """Return the embeddings."""
+        return cast(List, self.db.get("embeddings", []))
 
     @property
-    def requests(self) -> List:
-        """Return the requests."""
-        return cast(List, self.db.get("requests", []))
+    def chats(self) -> List:
+        """Return the chat."""
+        return cast(List, self.db.get("chats", []))
+
+    @property
+    def chat_histories(self) -> Dict:
+        """Return the memories."""
+        return cast(Dict, self.db.get("chat_histories", {}))
 
 
 class ChatCompletionABCIAbstractRound(AbstractRound, ABC):
@@ -78,62 +92,92 @@ class ChatCompletionABCIAbstractRound(AbstractRound, ABC):
         return cast(SynchronizedData, self._synchronized_data)
 
 
-class ProcessRequestRound(
-    CollectDifferentUntilAllRound, ChatCompletionABCIAbstractRound
-):
-    """ProcessRequestRound"""
+class ChatRound(CollectDifferentUntilAllRound, ChatCompletionABCIAbstractRound):
+    """ChatRound"""
 
-    payload_class = ProcessRequestPayload
+    payload_class = ChatPayload
     synchronized_data_class = SynchronizedData
 
     def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
         """Process the end of the block."""
+
         if len(self.collection) == len(self.synchronized_data.all_participants):
-            # Get existing requests and responses
-            existing_requests = self.synchronized_data.requests
-            existing_responses = self.synchronized_data.responses
+            if self.collection.values:
+                all_chats = cast(SynchronizedData, self.synchronized_data).chats
+                all_chat_histories = cast(
+                    SynchronizedData, self.synchronized_data
+                ).chat_histories
+                print(f"All chat_histories: {all_chat_histories}")
 
-            # Get new responses and failed requests
-            if self.collection.values():
-                new_responses = set()
-                failed_requests = set()
+                processed_chat = []
                 for payload in self.collection.values():
-                    res = json.loads(payload.json["response"])
-                    if payload.json["failed_request"]:
-                        fail = json.loads(payload.json["failed_request"])
-                        failed_requests.add(fail)
-                    if res:
-                        new_responses.add(tuple(res[0].items()))
+                    if payload.json["processed_chat"] != "":
+                        chat = json.loads(payload.json["processed_chat"])
+                        processed_chat.append(chat)
 
-                new_responses = [dict(response) for response in new_responses]
+                # remove duplicates
+                processed_chat = remove_duplicates(processed_chat)
+                print("processed_chat", processed_chat)
 
-                # Update failed requests in existing_requests
-                failed_requests_ids = [request["id"] for request in failed_requests]
-                for request in existing_requests:
-                    if request["id"] in failed_requests_ids:
-                        request["failed"] = True
-                        request["processor"] = ""
-                        request["processed"] = False
+                # Processed chat to chats by replacing the old chat with the new one
+                for each in processed_chat:
+                    for i, chat in enumerate(all_chats):
+                        if chat["id"] == each["id"]:
+                            all_chats[i] = each
 
-                # Remove processed requests from existing_requests and add to existing_responses
-                processed_request_ids = [response["id"] for response in new_responses]
-                existing_requests = [
-                    request
-                    for request in existing_requests
-                    if request["id"] not in processed_request_ids
-                ]
-                existing_responses.extend(new_responses)
+                # If chat, add/replace to chat_histories
+                for each in processed_chat:
+                    if each["request_type"] == "chat":
+                        all_chat_histories[each["memory_id"]] = each["chat_history"]
 
-                # Update synchronized data with requests and responses
+                all_chats = remove_duplicates(all_chats)
+                print("all_chats", all_chats)
+
                 synchronized_data = self.synchronized_data.update(
-                    requests=existing_requests,
-                    responses=existing_responses,
+                    chats=all_chats,
+                    chat_histories=all_chat_histories,
                     synchronized_data_class=SynchronizedData,
                 )
-
+                print("synchronized_data chat", synchronized_data.chats)
                 return synchronized_data, Event.DONE
 
-        return None
+
+class EmbeddingRound(CollectDifferentUntilAllRound, ChatCompletionABCIAbstractRound):
+    """EmbeddingRound"""
+
+    payload_class = EmbeddingPayload
+    synchronized_data_class = SynchronizedData
+
+    def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
+        """Process the end of the block."""
+
+        if len(self.collection) == len(self.synchronized_data.all_participants):
+            if self.collection.values:
+                all_embeddings = cast(
+                    SynchronizedData, self.synchronized_data
+                ).embeddings
+
+                processed_embeddings = []
+                for payload in self.collection.values():
+                    if payload.json["processed_embedding"] != "":
+                        chat = json.loads(payload.json["processed_embedding"])
+                        processed_embeddings.append(chat)
+
+                # Convert set to list to be able to serialize it
+                processed_chats = [dict(each) for each in processed_embeddings]
+                processed_chats = list(processed_embeddings)
+
+                # Processed chat to chats by replacing the old chat with the new one
+                for each in processed_chats:
+                    for i, chat in enumerate(all_embeddings):
+                        if chat["id"] == each["id"]:
+                            all_embeddings[i] = each
+
+                synchronized_data = self.synchronized_data.update(
+                    embeddings=all_embeddings,
+                    synchronized_data_class=SynchronizedData,
+                )
+                return synchronized_data, Event.DONE
 
 
 class RegistrationRound(CollectSameUntilAllRound, ChatCompletionABCIAbstractRound):
@@ -153,6 +197,100 @@ class RegistrationRound(CollectSameUntilAllRound, ChatCompletionABCIAbstractRoun
         return None
 
 
+def remove_duplicates(lst):
+    unique_items = {}
+    result = []
+
+    for item in lst:
+        item_id = item.get("id")
+
+        if item_id is not None and item_id not in unique_items:
+            # If the 'id' is not in the set, it's a new unique item
+            # Add it to the result list and also to the set to track duplicates
+            result.append(item)
+            unique_items[item_id] = True
+
+    return result
+
+
+class SynchronizeEmbeddingsRound(
+    CollectDifferentUntilAllRound, ChatCompletionABCIAbstractRound
+):
+    """SynchronizeEmbeddingsRound"""
+
+    payload_class = SynchronizeEmbeddingsPayload
+    synchronized_data_class = SynchronizedData
+
+    def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
+        """Process the end of the block."""
+        if self.collection_threshold_reached:
+            # Get all embedding requests
+            all_embedding_requests = cast(
+                SynchronizedData, self.synchronized_data
+            ).embeddings
+
+            # Get unprocessed embedding requests
+            unprocessed_embedding_requests = [
+                each for each in all_embedding_requests if not each["processed"]
+            ]
+
+            # Get new embedding requests
+            new_embedding_requests = []
+            if self.collection.values():
+                for payload in self.collection.values():
+                    try:
+                        emb = json.loads(payload.json["new_embedding_requests"])
+                        if emb:
+                            for each in emb:
+                                new_embedding_requests.append(each)
+                    except:
+                        pass
+
+            # Make sure there are no duplicates
+            new_embedding_requests = remove_duplicates(new_embedding_requests)
+
+            # Add new requests to unprocessed requests
+            if new_embedding_requests:
+                unprocessed_embedding_requests.extend(new_embedding_requests)
+
+            # if there are unprocessed requests, set processor
+            if unprocessed_embedding_requests:
+                # Sort existing requests by request_time
+                unprocessed_embedding_requests.sort(key=lambda x: x["request_time"])
+
+                num_participants = len(self.synchronized_data.all_participants)
+                participants = list(self.synchronized_data.all_participants)
+                for participant in range(num_participants):
+                    try:
+                        # Get the next request
+                        next_request = unprocessed_embedding_requests[participant]
+                        # Set the processor
+                        next_request["processor"] = participants[participant]
+                    except IndexError:
+                        break
+
+                # Merge unprocessed requests with all requests
+                all_embedding_requests.extend(unprocessed_embedding_requests)
+
+                # Convert set to list to be able to serialize it
+                all_embedding_requests = [dict(each) for each in all_embedding_requests]
+
+                # Update synchronized data
+                synchronized_data = self.synchronized_data.update(
+                    embeddings=all_embedding_requests,
+                    synchronized_data_class=SynchronizedData,
+                )
+                return synchronized_data, Event.EMBEDDING
+
+            else:
+                # Update synchronized data
+                synchronized_data = self.synchronized_data.update(
+                    embeddings=all_embedding_requests,
+                    synchronized_data_class=SynchronizedData,
+                )
+                return synchronized_data, Event.NO_REQUEST
+
+
 class SynchronizeRequestsRound(
     CollectDifferentUntilAllRound, ChatCompletionABCIAbstractRound
 ):
@@ -164,69 +302,70 @@ class SynchronizeRequestsRound(
     def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
         """Process the end of the block."""
         if self.collection_threshold_reached:
-            # Get existing requests and responses
-            existing_requests = cast(SynchronizedData, self.synchronized_data).requests
-            existing_responses = cast(
-                SynchronizedData, self.synchronized_data
-            ).responses
+            # Get al chats
+            all_chat_requests = cast(SynchronizedData, self.synchronized_data).chats
 
-            # Get new requests
-            new_requests = set()
-            if self.collection.values():
-                for payload in self.collection.values():
-                    p = json.loads(payload.json["new_requests"])
-                    if p:
-                        for each in p:
-                            new_requests.add(tuple(each.items()))
-
-            new_requests = [dict(each) for each in new_requests]
-
-            # Convert set to list to be able to serialize it
-            new_requests = list(new_requests)
-            if new_requests:
-                # Get IDs already in requests and responses
-                existing_ids = set()
-                if existing_requests:
-                    for request in existing_requests:
-                        existing_ids.add(request["id"])
-                if existing_responses:
-                    for response in existing_responses:
-                        existing_ids.add(response["id"])
-
-                # Remove IDs already in requests and responses from new requests
-                new_requests = [
-                    request
-                    for request in new_requests
-                    if request["id"] not in list(existing_ids)
-                ]
-
-            # Add new requests to existing requests
-            existing_requests.extend(new_requests)
-
-            # Remove existing requests with more than 2 num_tries
-            existing_requests = [
-                request for request in existing_requests if request["num_tries"] < 3
+            # Get unprocessed chat requests
+            unprocessed_chat_requests = [
+                each for each in all_chat_requests if each["processed"] == False
             ]
 
-            # Sort existing requests by request_time
-            existing_requests.sort(key=lambda x: x["request_time"])
+            # Get new chat requests
+            new_chat_requests = []
+            if self.collection.values():
+                for payload in self.collection.values():
+                    try:
+                        emb = json.loads(payload.json["new_chat_requests"])
+                        if emb:
+                            for each in emb:
+                                new_chat_requests.append(each)
+                    except:
+                        pass
 
-            if existing_requests:
-                # Assign a processor to requests
+            # Make sure there are no duplicates
+            new_chat_requests = remove_duplicates(new_chat_requests)
+
+            # Add new requests to unprocessed requests
+            if new_chat_requests:
+                unprocessed_chat_requests.extend(new_chat_requests)
+
+            # if there are unprocessed requests, set processor
+            if unprocessed_chat_requests:
+                # Sort existing requests by request_time
+                unprocessed_chat_requests.sort(key=lambda x: x["request_time"])
+
                 num_participants = len(self.synchronized_data.all_participants)
-                particiapnts = list(self.synchronized_data.all_participants)
-                for i, request in enumerate(existing_requests):
-                    if request["processor"] == "":
-                        request["processor"] = particiapnts[i % num_participants]
+                participants = list(self.synchronized_data.all_participants)
 
-            # Update synchronized data
-            synchronized_data = self.synchronized_data.update(
-                requests=existing_requests,
-                synchronized_data_class=SynchronizedData,
-            )
-            return synchronized_data, Event.DONE
+                for participant in range(num_participants):
+                    try:
+                        # Get the next request
+                        next_request = unprocessed_chat_requests[participant]
+                        # Set the processor
+                        next_request["processor"] = participants[participant]
+                    except IndexError:
+                        break
 
-        return None
+                # Merge unprocessed requests with all requests
+                all_chat_requests.extend(unprocessed_chat_requests)
+
+                # Convert set to list to be able to serialize it
+                all_chat_requests = [dict(each) for each in all_chat_requests]
+
+                # Update synchronized data
+                synchronized_data = self.synchronized_data.update(
+                    chats=all_chat_requests,
+                    synchronized_data_class=SynchronizedData,
+                )
+                return synchronized_data, Event.CHAT
+
+            else:
+                # Update synchronized data
+                synchronized_data = self.synchronized_data.update(
+                    chat_requests=all_chat_requests,
+                    synchronized_data_class=SynchronizedData,
+                )
+                return synchronized_data, Event.NO_REQUEST
 
 
 class ChatCompletionAbciApp(AbciApp[Event]):
@@ -235,15 +374,24 @@ class ChatCompletionAbciApp(AbciApp[Event]):
     initial_round_cls: AppState = RegistrationRound
     initial_states: Set[AppState] = {RegistrationRound}
     transition_function: AbciAppTransitionFunction = {
-        RegistrationRound: {Event.DONE: SynchronizeRequestsRound},
-        SynchronizeRequestsRound: {
-            Event.DONE: ProcessRequestRound,
-            Event.ERROR: SynchronizeRequestsRound,
+        RegistrationRound: {Event.DONE: SynchronizeEmbeddingsRound},
+        SynchronizeEmbeddingsRound: {
+            Event.EMBEDDING: EmbeddingRound,
+            Event.NO_REQUEST: SynchronizeRequestsRound,
+            Event.ROUND_TIMEOUT: SynchronizeRequestsRound,
         },
-        ProcessRequestRound: {
+        EmbeddingRound: {
             Event.DONE: SynchronizeRequestsRound,
             Event.ERROR: SynchronizeRequestsRound,
-            Event.ROUND_TIMEOUT: SynchronizeRequestsRound,
+        },
+        SynchronizeRequestsRound: {
+            Event.CHAT: ChatRound,
+            Event.NO_REQUEST: SynchronizeEmbeddingsRound,
+            Event.ROUND_TIMEOUT: SynchronizeEmbeddingsRound,
+        },
+        ChatRound: {
+            Event.DONE: SynchronizeEmbeddingsRound,
+            Event.ERROR: SynchronizeEmbeddingsRound,
         },
     }
     final_states: Set[AppState] = set()

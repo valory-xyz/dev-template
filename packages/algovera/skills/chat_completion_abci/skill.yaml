@@ -7,23 +7,24 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeih65b6zxkeux44suup4vnh4r5j2b5p7nij4of36fazditpjl2ulcu
-  behaviours.py: bafybeib7ouxrbskpvajb2oha5ak6vjut3kjsm7lmyhgaccc75dcr3zav64
-  dialogues.py: bafybeibhrc5r74uhheu3mgk52isqouyafd3hpyam3pgailhgo6tzf747xa
-  fsm_specs_chat_completion_v2.yaml: bafybeigyeiuuatgpdkxssjymctlyolhaiz7tp3zpvcrhfcgq4dnjtyvr5e
-  handlers.py: bafybeih7lzcvnrgtgbi2hpwvul42tfqsjme3bic7uhltv6j5bd52glgpva
-  models.py: bafybeidl7civxviukerp3kbonluqkpsqlp5embkqmuue3azrlpn5uwksdu
-  payloads.py: bafybeifabla75hlief6qci33xvf2xa523wecas44ucxkzwtyzossxhq75e
-  rounds.py: bafybeicaums56sjsodsgwret6bvfnkcvcpge6achouuz6bgderitfcp6qu
+  behaviours.py: bafybeibwdt6bixzpxcxqhkt3rmjvugualuui43az4m5x676ju7pa5zzugm
+  dialogues.py: bafybeidbq2qgz7nocxfivxoh5eeu4axf3qfhur4tbektfshxnml5y4uq4i
+  fsm_specs_chat_completion_v3.yaml: bafybeicd7kd72lyrw24d2im4nfneklnwkquwffnolgr6qpl54asojr7nza
+  handlers.py: bafybeiemot6gs33sfhzf7dlopghqkjqdppv4efk3c7omgh5fi3dclfk2xi
+  models.py: bafybeianoma3ivn2srsijwcab5tjjpdyaqxzcfsv5o2cebwpv56kmz4tiq
+  payloads.py: bafybeiceyyzazx2n2fls5ek6aizavgqgjwab7ydveaafy46jol4xmlsaqu
+  rounds.py: bafybeidqxwgpzm5lpxp2by7n2moiqqs5d6wiqzuxzz36d63q3cat57hope
+  schemas.py: bafybeih62mzdpoviaw3tbxafehvcrlhjzs6hiu5aydwhjwqm6mosouruj4
   tests/__init__.py: bafybeic6evwhxdwtdjvz7xv3dqqhdhd7uxyr55xhymeiqfe4ga7mfdptxm
-  tests/test_behaviours.py: bafybeihmyp4mjnhi3qxt4zyefai7hg5qyw5kt4cqiy3wu4aic6gdenfrly
+  tests/test_behaviours.py: bafybeig4h7kuovmmz33fzn3pertuyavaokuewhbgck6e2d674htbz74ysm
   tests/test_dialogues.py: bafybeidh45bgzutym5aax5f53zc3hreq7p3r44pflillepqpvmyu6u7ie4
   tests/test_handlers.py: bafybeifq4r4tt3amzmbndzdcjx7xichisrwevpcrilod33cf26bcdcaxti
   tests/test_models.py: bafybeicydisdnfibebtronb7igqfe6shv76rf5yg52uzzoufc5e6oabq5m
-  tests/test_payloads.py: bafybeia6rrwdmfnby577qg5mvrfzwcmnnnjbesifgi2lfww75kmobedely
-  tests/test_rounds.py: bafybeihxhpyty3cgu7j6a4ri3nebdbuu4zqejjqfu37eizi4rlhju7fpci
+  tests/test_payloads.py: bafybeigl36p5yhda2ngzytj6nzeg5lupzxhuq76pi5bbu3jn2ofdsynoea
+  tests/test_rounds.py: bafybeig6ivs5sxshfb2rah2mxe4niv75q3fgxl25bkfpq6lmnc7cqvxtii
 fingerprint_ignore_patterns: []
 connections:
-- algovera/chat_completion:0.1.0:bafybeibra3hpestf5rbcw3qzhydyp2ywqbuv5ssp4j4vbpsn7ebqxsafpy
+- algovera/chat_completion:0.1.0:bafybeideqicgvtrikcmt3pokzxrysvurnfd3t4newvp6gsllb24yafgi5i
 - fetchai/http_server:0.22.0:bafybeihaax5od5zo5jk2l62hv4jwuwtxloh5mijozudpsjombqc4ncmi6i
 contracts: []
 protocols:

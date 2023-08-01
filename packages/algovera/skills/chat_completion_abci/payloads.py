@@ -20,18 +20,25 @@
 """This module contains the transaction payloads of the ChatCompletionAbciApp."""
 
 from dataclasses import dataclass
-from typing import Any, Dict, Optional
+from typing import Optional
 
 from packages.valory.skills.abstract_round_abci.base import BaseTxPayload
 
 
 @dataclass(frozen=True)
-class ProcessRequestPayload(BaseTxPayload):
-    """Represent a transaction payload for the ProcessRequestRound."""
+class ChatPayload(BaseTxPayload):
+    """Represent a transaction payload for the ChatRound."""
 
     sender: str
-    response: str
-    failed_request: Optional[str] = None
+    processed_chat: str
+
+
+@dataclass(frozen=True)
+class EmbeddingPayload(BaseTxPayload):
+    """Represent a transaction payload for the EmbeddingRound."""
+
+    sender: str
+    processed_embedding: str
 
 
 @dataclass(frozen=True)
@@ -42,8 +49,16 @@ class RegistrationPayload(BaseTxPayload):
 
 
 @dataclass(frozen=True)
+class SynchronizeEmbeddingsPayload(BaseTxPayload):
+    """Represent a transaction payload for the SynchronizeEmbeddingsRound."""
+
+    sender: str
+    new_embedding_requests: Optional[str] = None
+
+
+@dataclass(frozen=True)
 class SynchronizeRequestsPayload(BaseTxPayload):
     """Represent a transaction payload for the SynchronizeRequestsRound."""
 
     sender: str
-    new_requests: str
+    new_chat_requests: Optional[str] = None
