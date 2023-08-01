@@ -6,7 +6,7 @@
         "agent/algovera/chat_completion_agent/0.1.0": "bafybeia7avc4f5bv73rwnwmgxrhrq54ecfpje6fq6fdxa77jmkjx5l7zsm",
         "protocol/algovera/rabbitmq/0.1.0": "bafybeigmfn5yq7lni5mk3gty62e6dusxfvllwngwdhxgn2x6a2rmtohod4",
         "protocol/algovera/chat_completion/0.1.0": "bafybeiewd6pjwettzly2zfwtnqzaaiopuyy3n6xnc2biclzgcssdye4aqy",
-        "service/algovera/chat_completion_local/0.1.0": "bafybeiacix7emhjw72ybxfe55rx63bgyjte24erl5hr3vkxbegg4vqwtsm"
+        "service/algovera/chat_completion_local/0.1.0": "bafybeihwq2iwm5goiyhrzwvhrgiodew5jio2gtoozwayqikqglnmf3i62m"
     },
     "third_party": {
         "service/valory/hello_world/0.1.0": "bafybeifbyghd5robjp3vklbaaa2gsawly27hfgtscjnhbwzcxbau6cuwoa",
