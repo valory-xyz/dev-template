@@ -6,7 +6,7 @@ aea_version: '>=1.0.0, <2.0.0'
 license: Apache-2.0
 fingerprint: {}
 fingerprint_ignore_patterns: []
-agent: algovera/chat_completion_agent:0.1.0:bafybeifmolimpqdd72ojru32cmnyia5zvst6wbg3kvsa7kgmhbr42ke3dy
+agent: algovera/chat_completion_agent:0.1.0:bafybeiftx2g2ccz5srkt5wzeu2wzr3npuwy7hbklacawsuzmc2z34b2lnq
 number_of_agents: 1
 deployment:
   agent:
@@ -14,37 +14,7 @@ deployment:
       0:
         8000: 8000
 ---
-public_id: algovera/chat_completion:0.1.0
-type: connection
-config:
-  openai_api_key: ${str:null}
----
-public_id: valory/p2p_libp2p_client:0.1.0
-type: connection
-config:
-  nodes:
-  - uri: ${ACN_URI:str:acn.staging.autonolas.tech:9005}
-    public_key: ${ACN_NODE_PUBLIC_KEY:str:02d3a830c9d6ea1ae91936951430dee11f4662f33118b02190693be835359a9d77}
-cert_requests:
-- identifier: acn
-  ledger_id: ethereum
-  message_format: '{public_key}'
-  not_after: '2023-01-01'
-  not_before: '2022-01-01'
-  public_key: ${ACN_NODE_PUBLIC_KEY:str:02d3a830c9d6ea1ae91936951430dee11f4662f33118b02190693be835359a9d77}
-  save_path: .certs/acn_cosmos_11000.txt
----
-public_id: valory/ledger:0.19.0
-type: connection
-config:
-  ledger_apis:
-    ethereum:
-      address: ${ETHEREUM_LEDGER_RPC:str:http://host.docker.internal:8545}
-      chain_id: ${ETHEREUM_LEDGER_CHAIN_ID:int:1}
-      poa_chain: ${ETHEREUM_LEDGER_IS_POA_CHAIN:bool:false}
-      default_gas_price_strategy: ${ETHEREUM_LEDGER_PRICING:str:eip1559}
----
-public_id: algovera/chat_completion_abci:0.1.0
+public_id: valory/chat_completion_abci:0.1.0
 type: skill
 models:
   benchmark_tool:
@@ -90,9 +60,8 @@ models:
       service_id: chat_completion_local
       service_registry_address: null
       setup:
-        all_participants:
-        - '0xBfE475AF374AB552ff22F995b8732DFee25694ea'
-        safe_contract_address: '0x7b2a08Fae878E88efE0aa82599C167E9B0e9BdC4'
+        all_participants: ${ALL_PARTICIPANTS:list:[]}
+        safe_contract_address: ${SAFE_CONTRACT_ADDRESS:str:0x0000000000000000000000000000000000000000}
         consensus_threshold: null
       share_tm_config_on_startup: ${USE_ACN:bool:false}
       sleep_time: 1
@@ -103,3 +72,34 @@ models:
       tendermint_p2p_url: localhost:26656
       tx_timeout: 10.0
       use_termination: ${USE_TERMINATION:bool:false}
+      validate_timeout: 1205
+---
+public_id: valory/ledger:0.19.0
+type: connection
+config:
+  ledger_apis:
+    ethereum:
+      address: ${ETHEREUM_LEDGER_RPC:str:http://host.docker.internal:8545}
+      chain_id: ${ETHEREUM_LEDGER_CHAIN_ID:int:1}
+      poa_chain: ${ETHEREUM_LEDGER_IS_POA_CHAIN:bool:false}
+      default_gas_price_strategy: ${ETHEREUM_LEDGER_PRICING:str:eip1559}
+---
+public_id: algovera/chat_completion:0.1.0
+type: connection
+config:
+  openai_api_key: ${str:null}
+---
+public_id: valory/p2p_libp2p_client:0.1.0
+type: connection
+config:
+  nodes:
+  - uri: ${ACN_URI:str:acn.staging.autonolas.tech:9005}
+    public_key: ${ACN_NODE_PUBLIC_KEY:str:02d3a830c9d6ea1ae91936951430dee11f4662f33118b02190693be835359a9d77}
+cert_requests:
+- identifier: acn
+  ledger_id: ethereum
+  message_format: '{public_key}'
+  not_after: '2023-01-01'
+  not_before: '2022-01-01'
+  public_key: ${ACN_NODE_PUBLIC_KEY:str:02d3a830c9d6ea1ae91936951430dee11f4662f33118b02190693be835359a9d77}
+  save_path: .certs/acn_cosmos_11000.txt
