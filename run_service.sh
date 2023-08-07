@@ -3,6 +3,8 @@
 # Load env vars
 export $(grep -v '^#' .env | xargs)
 
+echo "OPENAI_API_KEY = $OPENAI_API_KEY"
+
 make clean
 
 autonomy push-all
@@ -13,7 +15,7 @@ autonomy fetch --local --service algovera/chat_completion_local && cd chat_compl
 autonomy build-image
 
 # Copy keys and build the deployment
-cp /home/david/Cloud/env/governatooorr/governatooorr_1_key.json ./keys.json
+cp /path/to/your/keys.json ./keys.json
 
 autonomy deploy build -ltm
 

@@ -6,7 +6,7 @@ aea_version: '>=1.0.0, <2.0.0'
 license: Apache-2.0
 fingerprint: {}
 fingerprint_ignore_patterns: []
-agent: algovera/chat_completion_agent:0.1.0:bafybeiftx2g2ccz5srkt5wzeu2wzr3npuwy7hbklacawsuzmc2z34b2lnq
+agent: algovera/chat_completion_agent:0.1.0:bafybeierxefdr54uo3ja362ldlb2gvn6e5j5gp635ntkbeomowqnqasovy
 number_of_agents: 1
 deployment:
   agent:
@@ -87,7 +87,7 @@ config:
 public_id: algovera/chat_completion:0.1.0
 type: connection
 config:
-  openai_api_key: ${str:null}
+  openai_api_key: ${OPENAI_API_KEY:str:null}
 ---
 public_id: valory/p2p_libp2p_client:0.1.0
 type: connection

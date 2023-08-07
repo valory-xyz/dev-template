@@ -103,7 +103,7 @@ def retry_with_exponential_backoff(
     initial_delay: float = 1,
     exponential_base: float = 2,
     jitter: bool = True,
-    max_retries: int = 10,
+    max_retries: int = 3,
     errors: tuple = (
         openai.error.APIError,
         openai.error.Timeout,
@@ -145,6 +145,7 @@ def retry_with_exponential_backoff(
 
             # Raise exceptions for any errors not specified
             except Exception as e:
+                print(f"Exception: {e}")
                 raise e
 
     return wrapper

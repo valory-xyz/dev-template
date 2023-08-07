@@ -24,7 +24,7 @@ fingerprint:
   tests/test_rounds.py: bafybeig6ivs5sxshfb2rah2mxe4niv75q3fgxl25bkfpq6lmnc7cqvxtii
 fingerprint_ignore_patterns: []
 connections:
-- algovera/chat_completion:0.1.0:bafybeiceafe2giaf4yduneqjwsgvfia4cpx4x2v7t6jalvatmaml6ietru
+- algovera/chat_completion:0.1.0:bafybeie46l2tbdc5hspg5khxab46jx74uogr6xs6z25kshaxwbqhrpf6pa
 - fetchai/http_server:0.22.0:bafybeihp5umafxzx45aad5pj7s3343se2wjkgnbirt4pybrape22swm6de
 contracts: []
 protocols:
