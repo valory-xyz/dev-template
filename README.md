@@ -36,23 +36,50 @@ docker container run -it valory/open-autonomy-user:latest
 ```
 
 ## This repository contains:
+Connections
+- `chat_completion`: connection betweeen OpenAI API calls and the agent
 
-- Empty directory `packages` which acts as the local registry
+Skills
+- `chat_completion_abci`: A skill that adds `embedding` given a file, `chat` over the created embedding, maintains `chat_history` of the chat
 
-- .env file with Python path updated to include packages directory
+Agent
+- `chat_completion_agent`: An agent that runs on top of the `chat_completion_abci` skill
+
+Service
+- `chat_completion_local`: A service built on top of `chat_completion_agent` 
 
 ## How to use
 
-Create a virtual environment with all development dependencies:
+##### The agent
+1. Git clone the repository
+`git clone git@github.com:AlgoveraAI/daios.git`
 
-```bash
-poetry shell
-poetry install
-```
+2. Sync the third-party packages needed for this project
+`autonomy packages sync --update-packages`
+`autonomy packages lock`
 
-Get developing...
+3. Install requirements for the project and activate the virtual environment
+`poetry install`
+`poetry shell`
 
-## Useful commands:
+4. Update `run_agent.sh` with appropriate location of ethereum key and openai_api_key
 
-Check out the `Makefile` for useful commands, e.g. `make formatters`, `make generators`, `make code-checks`, as well
-as `make common-checks-1`. To run tests use the `autonomy test` command. Run `autonomy test --help` for help about its usage.
+5. Run the agent
+`sh run_agent.sh`
+
+6. Test the agent
+Check `./testing/chat_completion_agent/test_chat_completion_agent.ipynb` notebook
+
+##### The service
+1. Git clone the repository
+`git clone git@github.com:AlgoveraAI/daios.git`
+
+2. Sync the third-party packages needed for this project
+`autonomy packages sync --update-packages`
+
+3. Update `run_service.sh` with appropriate location of keys.json
+
+4. Update `.env.sample` with appropriate credentials
+
+5. Run the service
+`sh run_service.sh`
