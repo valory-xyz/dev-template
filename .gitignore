@@ -22,3 +22,5 @@ chat_completion_local/
 .hypothesis/
 
 __pycache__/
+valory_chat_agent/
+!packages/algovera/agents/valory_chat_agent
