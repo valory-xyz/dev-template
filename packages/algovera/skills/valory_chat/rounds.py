@@ -164,16 +164,19 @@ class EmbeddingRound(CollectDifferentUntilAllRound, ValoryChatABCIAbstractRound)
         if len(self.collection) == len(self.synchronized_data.all_participants):
             if self.collection.values:
                 embedding = cast(SynchronizedData, self.synchronized_data).embedding
+                print(f"All embedding: {embedding}")
 
                 processed_embeddings = []
                 for payload in self.collection.values():
                     if payload.json["processed_embedding"] != "":
                         chat = json.loads(payload.json["processed_embedding"])
                         processed_embeddings.append(chat)
+                print("processed_embeddings", processed_embeddings)
 
                 # Convert set to list to be able to serialize it
                 processed_embeddings = [dict(each) for each in processed_embeddings]
                 processed_embeddings = list(processed_embeddings)
+                print("processed_embeddings", processed_embeddings)
 
                 # Processed chat to chats by replacing the old chat with the new one
                 for each in processed_embeddings:
@@ -181,9 +184,10 @@ class EmbeddingRound(CollectDifferentUntilAllRound, ValoryChatABCIAbstractRound)
                         embedding[i] = each
 
                 synchronized_data = self.synchronized_data.update(
-                    embeddings=embedding,
+                    embedding=embedding,
                     synchronized_data_class=SynchronizedData,
                 )
+                print("synchronized_data embedding", synchronized_data)
                 return synchronized_data, Event.DONE
 
 

@@ -286,6 +286,7 @@ class EmbeddingBehaviour(ValoryChatBaseBehaviour):
                     # Add the IPFS hash to the processed request
                     processed_response.c2e_ipfs_hash = ipfs_hash
                     self.context.logger.info(f"IPFS hash {ipfs_hash}")
+                    self.context.logger.info(f"Processed response {processed_response}")
 
                 # Create payload
                 payload = EmbeddingPayload(
@@ -435,7 +436,7 @@ class EmbeddingBehaviour(ValoryChatBaseBehaviour):
         return embedding_request, chunks_to_embeddings
 
     def split_text_overlap(
-        self, documents: List, max_chunk_size=1200, chunk_overlap=100
+        self, documents: List, max_chunk_size=1200, chunk_overlap=10
     ):
         chunks = []
         for doc, url in documents:
@@ -455,6 +456,8 @@ class EmbeddingBehaviour(ValoryChatBaseBehaviour):
             # Add the last chunk
             current_chunk += " Source: " + url
             chunks.append(current_chunk)
+
+        self.context.logger.info(f"Split {len(documents)} documents into {len(chunks)} chunks")
         return chunks
 
 

@@ -134,7 +134,7 @@ def retry_with_exponential_backoff(
                 # Check if max retries has been reached
                 if num_retries > max_retries:
                     raise Exception(
-                        f"Maximum number of retries ({max_retries}) exceeded."
+                        f"Maximum number of retries ({max_retries}) exceeded. Last exception: {e}"
                     )
 
                 # Increment the delay
@@ -196,6 +196,7 @@ class ChatCompletionConnection(BaseSyncConnection):
         }
         openai.api_key = self.openai_settings["openai_api_key"]
         self.dialogues = ChatCompletionDialogues(connection_id=PUBLIC_ID)
+        self.logger.info("OpenAI API Key: {}".format(openai.api_key))
 
     def main(self) -> None:
         """

@@ -29,7 +29,6 @@ class Embedding(BaseModel):
 
 class Chat(BaseModel):
     id: str = Field(..., description="Request job id")
-    context_id: str = Field(..., description="Context id")
     memory_id: str = Field(..., description="Memory id")
     question: str = Field(..., description="Question")
     modified_question: Optional[str] = Field(
