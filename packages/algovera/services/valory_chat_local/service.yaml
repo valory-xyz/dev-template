@@ -1,12 +1,12 @@
-name: chat_completion_local
+name: valory_chat_local
 author: algovera
 version: 0.1.0
-description: This is a chat_completion service.
+description: This is a chat_completion service for valory technical documentation.
 aea_version: '>=1.0.0, <2.0.0'
 license: Apache-2.0
 fingerprint: {}
 fingerprint_ignore_patterns: []
-agent: algovera/chat_completion_agent:0.1.0:bafybeigpoguosj43bvqn6fve5go4n2g4lcm2zjng2uejopjtlyg7olc75q
+agent: algovera/valory_chat_agent:0.1.0:bafybeigj4agmfbbxsz2nkxor52v6ta37j2w6dsyc3dntowptxf237zxchi
 number_of_agents: 1
 deployment:
   agent:
@@ -14,7 +14,7 @@ deployment:
       0:
         8000: 8000
 ---
-public_id: valory/chat_completion_abci:0.1.0
+public_id: algovera/valory_chat:0.1.0
 type: skill
 models:
   benchmark_tool:

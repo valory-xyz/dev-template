@@ -23,4 +23,6 @@ chat_completion_local/
 
 __pycache__/
 valory_chat_agent/
+valory_chat_local/
 !packages/algovera/agents/valory_chat_agent
+!packages/algovera/services/valory_chat_local

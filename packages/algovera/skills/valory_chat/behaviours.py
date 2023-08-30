@@ -457,7 +457,9 @@ class EmbeddingBehaviour(ValoryChatBaseBehaviour):
             current_chunk += " Source: " + url
             chunks.append(current_chunk)
 
-        self.context.logger.info(f"Split {len(documents)} documents into {len(chunks)} chunks")
+        self.context.logger.info(
+            f"Split {len(documents)} documents into {len(chunks)} chunks"
+        )
         return chunks
 
 

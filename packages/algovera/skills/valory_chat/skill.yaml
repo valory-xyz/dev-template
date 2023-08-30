@@ -7,14 +7,14 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeiekbdqmid6vbxbazklzrhnffggvcu2cwn6ym3fxaikfubjnmkvxja
-  behaviours.py: bafybeif7mc3khvycp7xcksje2c5ipxw3lofsxqz4mw5wec4km3eogx3wny
+  behaviours.py: bafybeicreepins6scyeckat3j6c7membn2is3ymtbfrw4ahtooh63xqnva
   dialogues.py: bafybeidbq2qgz7nocxfivxoh5eeu4axf3qfhur4tbektfshxnml5y4uq4i
   fsm_specs_valory_chat.yaml: bafybeibttf5ssb6gyjewlm5pkqywcsfmolrqli32pvozdocns4lylmcmyq
   handlers.py: bafybeihmils25jqmcgmauxobuvndqgjd233geheraxcbhpxwohbaoulfsu
   models.py: bafybeiey4hsac5qnnv3tiwqx4q4ui5iudltfcfa2ifdheof5bboknzc2vi
   payloads.py: bafybeih7thm5osh5tfg536dxa7oo72suz7l7nhvcqlzcvjlwd7hdu3nqyi
-  rounds.py: bafybeiddr6nuu4ezyka7khr4h6cnpn7navubunogvq6vsxmwde6r4ejtxa
-  schemas.py: bafybeibnyh6dik65diqrb5w2jo2ow5rpzanzpb3uu2f5u4a5tuvlfvwoju
+  rounds.py: bafybeidu5s627cldpyemozpvhf33ek3vlzev53cegzezm2hf5mg5dkxwou
+  schemas.py: bafybeia3qzj3c7qmne3dxehpdsordimg26krzyfjjf2luo4qcjbyvkhdam
   tests/__init__.py: bafybeic6evwhxdwtdjvz7xv3dqqhdhd7uxyr55xhymeiqfe4ga7mfdptxm
   tests/test_behaviours.py: bafybeiccgmpqqjjq4ffy6hnpluu7bjqqbag64v67baesaomuppitlncaoq
   tests/test_dialogues.py: bafybeidb3xuwx2rdid4x7y2m2blibj54rehd4ptgeknia7g2by5gmy2tka
@@ -24,7 +24,7 @@ fingerprint:
   tests/test_rounds.py: bafybeids7pis5v7arzdlru5pxgjwexu5jlh3ldrouhwxzenjtqa4kcr7zq
 fingerprint_ignore_patterns: []
 connections:
-- algovera/chat_completion:0.1.0:bafybeie46l2tbdc5hspg5khxab46jx74uogr6xs6z25kshaxwbqhrpf6pa
+- algovera/chat_completion:0.1.0:bafybeihjc4aiogtvy3vwtzl4amlgypcr5iqunlikwxyfwoetkegulvesy4
 - fetchai/http_server:0.22.0:bafybeihp5umafxzx45aad5pj7s3343se2wjkgnbirt4pybrape22swm6de
 contracts: []
 protocols:
