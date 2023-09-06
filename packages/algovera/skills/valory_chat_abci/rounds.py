@@ -391,8 +391,8 @@ class ValoryChatAbciApp(AbciApp[Event]):
     }
     final_states: Set[AppState] = set()
     event_to_timeout: EventToTimeout = {}
-    cross_period_persisted_keys: Set[str] = []
+    cross_period_persisted_keys: Set[str] = set()
     db_pre_conditions: Dict[AppState, Set[str]] = {
-        RegistrationRound: [],
+        RegistrationRound: set(),
     }
     db_post_conditions: Dict[AppState, Set[str]] = {}
