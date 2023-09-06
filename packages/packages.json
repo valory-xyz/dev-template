@@ -1,15 +1,15 @@
 {
     "dev": {
-        "skill/algovera/chat_completion_abci/0.1.0": "bafybeid66bkjuhmihc4ypt2qcvz5qrtf3fnyigti3tzvl7mzxh7o4ytini",
+        "skill/algovera/chat_completion_abci/0.1.0": "bafybeigytvw3ac7upt2c77f3phhaz7jgbgzcy5sgovarzymj5ivfrp7e4y",
         "connection/algovera/chat_completion/0.1.0": "bafybeihjc4aiogtvy3vwtzl4amlgypcr5iqunlikwxyfwoetkegulvesy4",
         "connection/algovera/rabbitmq/0.1.0": "bafybeic3fd6ypexksyzj2bjymlvafrvzjvtddyktjqbq363wngwm5x6s3a",
-        "agent/algovera/chat_completion_agent/0.1.0": "bafybeigpoguosj43bvqn6fve5go4n2g4lcm2zjng2uejopjtlyg7olc75q",
+        "agent/algovera/chat_completion_agent/0.1.0": "bafybeichtlzfdhurh5neilq4wplhnbfi2ns3g4h47gobakf56slemk6j5m",
         "protocol/algovera/rabbitmq/0.1.0": "bafybeigmfn5yq7lni5mk3gty62e6dusxfvllwngwdhxgn2x6a2rmtohod4",
         "protocol/algovera/chat_completion/0.1.0": "bafybeiewd6pjwettzly2zfwtnqzaaiopuyy3n6xnc2biclzgcssdye4aqy",
-        "service/algovera/chat_completion_local/0.1.0": "bafybeicczqi3wifedupvfkpxn4xk4wy7h4dvcqtflcuxgof2wszohd6du4",
-        "agent/algovera/valory_chat_agent/0.1.0": "bafybeiejrpzk6qowu4ls7cj47vyfzshiqrwheemx22o6mhld5cochgi4bu",
-        "service/algovera/valory_chat_local/0.1.0": "bafybeieekzg2whav6c77g5l6ptelyeqsirwjy6e7jupan4m35ggn4yqm44",
-        "skill/algovera/valory_chat_abci/0.1.0": "bafybeid2nzlgxzanaay2osfg24eqpcrp5li2phhem3vgcmiqb4nbfj5fbm"
+        "service/algovera/chat_completion_local/0.1.0": "bafybeie75e3ab7cz5ruamkto7biibml6mzmr6ecz73wmhaegimzkzkwiya",
+        "agent/algovera/valory_chat_agent/0.1.0": "bafybeidedgwkbbocr245bmly2boz33hhj35jxrsxm27txqa226ndlyy24q",
+        "service/algovera/valory_chat_local/0.1.0": "bafybeiesl6urx35yo53yinmxzengsyhku526f6i3odd4twqerhv2rs34ne",
+        "skill/algovera/valory_chat_abci/0.1.0": "bafybeiau7mtnap36ladfpailqxiuu4qnlbfti3bktixwuvn5aonqjtjahy"
     },
     "third_party": {
         "service/valory/hello_world/0.1.0": "bafybeihkkak6becsdrto5uciopjokilsvxjwrzurwsr4mfcwteqrl6quiy",

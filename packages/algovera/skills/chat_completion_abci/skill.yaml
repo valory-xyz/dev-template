@@ -31,7 +31,7 @@ protocols:
 - algovera/chat_completion:0.1.0:bafybeiewd6pjwettzly2zfwtnqzaaiopuyy3n6xnc2biclzgcssdye4aqy
 - valory/http:1.0.0:bafybeia5bxdua2i6chw6pg47bvoljzcpuqxzy4rdrorbdmcbnwmnfdobtu
 skills:
-- valory/abstract_round_abci:0.1.0:bafybeibqpzbklnljvtc67yon4ciijxj75d7vazm7rurcvbbfnk6jtudukm
+- valory/abstract_round_abci:0.1.0:bafybeif3cqkks5qx3lqi6nwwhebcirhazt2vidw3sueeqsyxvjeszjt3om
 behaviours:
   main:
     args: {}
