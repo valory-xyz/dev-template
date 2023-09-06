@@ -50,6 +50,8 @@ toml = "^0.10.2"
 openapi-core = "0.13.8"
 numpy = "1.25.2"
 
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.25.2"
 [tool.poetry.group.dev.dependencies.tomte]
 version = "==0.2.12"
 extras = ["cli", "tests"]
