@@ -24,14 +24,14 @@ from typing import Any, Callable, Dict, Hashable, List, Mapping, Type
 
 import pytest
 
-from packages.algovera.skills.valory_chat.payloads import (
+from packages.algovera.skills.valory_chat_abci.payloads import (
     ChatPayload,
     EmbeddingPayload,
     RegistrationPayload,
     SynchronizeEmbeddingsPayload,
     SynchronizeRequestsPayload,
 )
-from packages.algovera.skills.valory_chat.rounds import (
+from packages.algovera.skills.valory_chat_abci.rounds import (
     AbstractRound,
     ChatRound,
     EmbeddingRound,

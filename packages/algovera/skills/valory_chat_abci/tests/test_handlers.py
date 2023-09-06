@@ -17,15 +17,10 @@
 #
 # ------------------------------------------------------------------------------
 
-"""Test the models.py module of the ValoryChat."""
+"""Test the handlers.py module of the ValoryChat."""
 
-from packages.algovera.skills.valory_chat.models import SharedState
-from packages.valory.skills.abstract_round_abci.test_tools.base import DummyContext
+import packages.algovera.skills.valory_chat_abci.handlers  # noqa
 
 
-class TestSharedState:
-    """Test SharedState of ValoryChat."""
-
-    def test_initialization(self) -> None:
-        """Test initialization."""
-        SharedState(name="", skill_context=DummyContext())
+def test_import() -> None:
+    """Test that the 'handlers.py' of the ValoryChat can be imported."""

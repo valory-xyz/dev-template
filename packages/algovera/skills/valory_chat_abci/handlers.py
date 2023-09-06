@@ -34,9 +34,9 @@ from aea.configurations.data_types import PublicId
 from aea.protocols.base import Message
 
 from packages.algovera.protocols.chat_completion.message import ChatCompletionMessage
-from packages.algovera.skills.valory_chat.dialogues import HttpDialogue, HttpDialogues
-from packages.algovera.skills.valory_chat.rounds import SynchronizedData
-from packages.algovera.skills.valory_chat.schemas import Chat, Embedding
+from packages.algovera.skills.valory_chat_abci.dialogues import HttpDialogue, HttpDialogues
+from packages.algovera.skills.valory_chat_abci.rounds import SynchronizedData
+from packages.algovera.skills.valory_chat_abci.schemas import Chat, Embedding
 from packages.fetchai.connections.http_server.connection import (
     PUBLIC_ID as HTTP_SERVER_PUBLIC_ID,
 )

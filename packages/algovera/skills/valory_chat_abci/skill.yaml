@@ -1,4 +1,4 @@
-name: valory_chat
+name: valory_chat_abci
 author: algovera
 version: 0.1.0
 type: skill
@@ -6,22 +6,22 @@ description: The scaffold skill is a scaffold for your own skill implementation.
 license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
-  __init__.py: bafybeiekbdqmid6vbxbazklzrhnffggvcu2cwn6ym3fxaikfubjnmkvxja
-  behaviours.py: bafybeicreepins6scyeckat3j6c7membn2is3ymtbfrw4ahtooh63xqnva
+  __init__.py: bafybeicxkfzpty7ulppggno5q7druhpb3qz467sf4byxb5bro5o4eoiz2a
+  behaviours.py: bafybeic7vgdaqr33ssckpglbexnb7ukvjnegsrj7tkttqab7y6itmd4frq
   dialogues.py: bafybeidbq2qgz7nocxfivxoh5eeu4axf3qfhur4tbektfshxnml5y4uq4i
   fsm_specs_valory_chat.yaml: bafybeibttf5ssb6gyjewlm5pkqywcsfmolrqli32pvozdocns4lylmcmyq
-  handlers.py: bafybeihmils25jqmcgmauxobuvndqgjd233geheraxcbhpxwohbaoulfsu
-  models.py: bafybeiey4hsac5qnnv3tiwqx4q4ui5iudltfcfa2ifdheof5bboknzc2vi
+  handlers.py: bafybeiclqkheqal6hubssgifcs62itg7tgzbti75ubaopeozbml4rmzm5e
+  models.py: bafybeiahascxnkeubiivtgogkc5ef5g3txj36dt47ek4t2i4l2edjquq3u
   payloads.py: bafybeih7thm5osh5tfg536dxa7oo72suz7l7nhvcqlzcvjlwd7hdu3nqyi
-  rounds.py: bafybeidu5s627cldpyemozpvhf33ek3vlzev53cegzezm2hf5mg5dkxwou
+  rounds.py: bafybeigb6ps3zbtrvv4upbasvdu3wimo2iyiksa34apzacqrtmrk7gd2fy
   schemas.py: bafybeia3qzj3c7qmne3dxehpdsordimg26krzyfjjf2luo4qcjbyvkhdam
   tests/__init__.py: bafybeic6evwhxdwtdjvz7xv3dqqhdhd7uxyr55xhymeiqfe4ga7mfdptxm
-  tests/test_behaviours.py: bafybeiccgmpqqjjq4ffy6hnpluu7bjqqbag64v67baesaomuppitlncaoq
-  tests/test_dialogues.py: bafybeidb3xuwx2rdid4x7y2m2blibj54rehd4ptgeknia7g2by5gmy2tka
-  tests/test_handlers.py: bafybeia23exovuikhsbp7gl6uhwign5zpvktqbteyxqlzv7v6hhadtb4ge
-  tests/test_models.py: bafybeiheril4i2yt3vzq5cefkeny6l33agbx3uhrxvlbcczuxujxrmvkfe
-  tests/test_payloads.py: bafybeiau45jxcp4ri6srswieoxvxjfmabslhbo7gpdnpd5xj2c5k75vmwq
-  tests/test_rounds.py: bafybeids7pis5v7arzdlru5pxgjwexu5jlh3ldrouhwxzenjtqa4kcr7zq
+  tests/test_behaviours.py: bafybeicm7rrrmv4bekgh7gir5zmtvoykcykzfhvswtluysqbjqkh5lj54q
+  tests/test_dialogues.py: bafybeie6eufqlrnkunsglxpp3umdmxevj25bsgryusjug4dvqezsnsybjq
+  tests/test_handlers.py: bafybeien6zoi5ronh66bszcwd2jiiguz7uookha6y3wki3afrk4hokxsea
+  tests/test_models.py: bafybeibxpf46znpqueuklaaye3om5hqzpywwzid47cyknwgvphqdaoecnm
+  tests/test_payloads.py: bafybeiffa67qtq6c7pcnii3skrbuzjimk23kzvrtu3sctstppylhshct5a
+  tests/test_rounds.py: bafybeiffkrecrwx5paztbqpsg275tyni5mjnfpmfjo2aflb5ahpzh23bpe
 fingerprint_ignore_patterns: []
 connections:
 - algovera/chat_completion:0.1.0:bafybeihjc4aiogtvy3vwtzl4amlgypcr5iqunlikwxyfwoetkegulvesy4
@@ -122,7 +122,7 @@ models:
       retry_timeout: 3
       round_timeout_seconds: 30.0
       service_endpoint_base: http://localhost:8000
-      service_id: valory_chat
+      service_id: valory_chat_abci
       service_registry_address: null
       setup:
         all_participants:

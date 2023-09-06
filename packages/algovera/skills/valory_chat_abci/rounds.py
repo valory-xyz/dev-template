@@ -23,7 +23,7 @@ from abc import ABC
 from enum import Enum
 from typing import Dict, List, Optional, Set, Tuple, Type, cast
 
-from packages.algovera.skills.valory_chat.payloads import (
+from packages.algovera.skills.valory_chat_abci.payloads import (
     ChatPayload,
     EmbeddingPayload,
     RegistrationPayload,

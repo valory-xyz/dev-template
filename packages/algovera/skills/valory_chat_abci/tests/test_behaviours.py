@@ -25,7 +25,7 @@ from typing import Any, Dict, Hashable, Optional, Type
 
 import pytest
 
-from packages.algovera.skills.valory_chat.behaviours import (
+from packages.algovera.skills.valory_chat_abci.behaviours import (
     ChatBehaviour,
     EmbeddingBehaviour,
     RegistrationBehaviour,
@@ -34,7 +34,7 @@ from packages.algovera.skills.valory_chat.behaviours import (
     ValoryChatBaseBehaviour,
     ValoryChatRoundBehaviour,
 )
-from packages.algovera.skills.valory_chat.rounds import (
+from packages.algovera.skills.valory_chat_abci.rounds import (
     ChatRound,
     DegenerateRound,
     EmbeddingRound,

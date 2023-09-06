@@ -24,7 +24,7 @@ from typing import Hashable, Type
 
 import pytest
 
-from packages.algovera.skills.valory_chat.payloads import (
+from packages.algovera.skills.valory_chat_abci.payloads import (
     BaseTxPayload,
     ChatPayload,
     EmbeddingPayload,

@@ -19,7 +19,7 @@
 
 """Test the dialogues.py module of the ValoryChat."""
 
-import packages.algovera.skills.valory_chat.dialogues  # noqa
+import packages.algovera.skills.valory_chat_abci.dialogues  # noqa
 
 
 def test_import() -> None:

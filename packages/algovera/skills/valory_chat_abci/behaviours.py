@@ -35,8 +35,8 @@ from packages.algovera.protocols.chat_completion.dialogues import (
     ChatCompletionDialogues,
 )
 from packages.algovera.protocols.chat_completion.message import ChatCompletionMessage
-from packages.algovera.skills.valory_chat.models import Params, Requests
-from packages.algovera.skills.valory_chat.rounds import (
+from packages.algovera.skills.valory_chat_abci.models import Params, Requests
+from packages.algovera.skills.valory_chat_abci.rounds import (
     ChatPayload,
     ChatRound,
     EmbeddingPayload,
@@ -50,7 +50,7 @@ from packages.algovera.skills.valory_chat.rounds import (
     SynchronizedData,
     ValoryChatAbciApp,
 )
-from packages.algovera.skills.valory_chat.schemas import Chat, Embedding
+from packages.algovera.skills.valory_chat_abci.schemas import Chat, Embedding
 from packages.valory.skills.abstract_round_abci.base import AbstractRound
 from packages.valory.skills.abstract_round_abci.behaviours import (
     AbstractRoundBehaviour,

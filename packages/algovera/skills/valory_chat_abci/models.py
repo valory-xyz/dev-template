@@ -22,7 +22,7 @@ from typing import Any, List
 
 from aea.skills.base import SkillContext
 
-from packages.algovera.skills.valory_chat.rounds import ValoryChatAbciApp
+from packages.algovera.skills.valory_chat_abci.rounds import ValoryChatAbciApp
 from packages.valory.skills.abstract_round_abci.models import BaseParams
 from packages.valory.skills.abstract_round_abci.models import (
     BenchmarkTool as BaseBenchmarkTool,
