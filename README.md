@@ -1,6 +1,6 @@
 # Dev-template
 
-A template for development with the open-autonomy framework. Find the documentation [here](docs.autonolas.network).
+A template for development with the open-autonomy framework. Find the documentation [here](https://docs.autonolas.network).
 
 ## System requirements
 
