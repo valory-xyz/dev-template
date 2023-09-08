@@ -4,7 +4,7 @@ A template for development with the open-autonomy framework. Find the documentat
 
 ## System requirements
 
-- Python `>=3.7`
+- Python `>=3.10`
 - [Tendermint](https://docs.tendermint.com/v0.34/introduction/install.html) `==0.34.19`
 - [IPFS node](https://docs.ipfs.io/install/command-line/#official-distributions) `==0.6.0`
 - [Pip](https://pip.pypa.io/en/stable/installation/)
