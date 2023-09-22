@@ -1,12 +1,13 @@
 name: chat_completion_local
 author: algovera
 version: 0.1.0
-description: This is a chat_completion service.
+description: A service that uses chat_completion_agent & chat_completion_abci to do
+  RAG-based chat.
 aea_version: '>=1.0.0, <2.0.0'
 license: Apache-2.0
 fingerprint: {}
 fingerprint_ignore_patterns: []
-agent: algovera/chat_completion_agent:0.1.0:bafybeig2au3rzhqkfu45du6byyp4aj46i3aetnl6dv6gy6mmsom4yl7z5a
+agent: algovera/chat_completion_agent:0.1.0:bafybeihvyv23suny2f42pm4a67rhjbsxmwqabm3sr4xdsqyenjif75wpwu
 number_of_agents: 1
 deployment:
   agent:

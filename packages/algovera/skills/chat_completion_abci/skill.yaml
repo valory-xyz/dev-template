@@ -2,7 +2,7 @@ name: chat_completion_abci
 author: algovera
 version: 0.1.0
 type: skill
-description: The scaffold skill is a scaffold for your own skill implementation.
+description: Abci that implements creation of embedding and chatting over the embeddings.
 license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
@@ -13,7 +13,7 @@ fingerprint:
   handlers.py: bafybeiemot6gs33sfhzf7dlopghqkjqdppv4efk3c7omgh5fi3dclfk2xi
   models.py: bafybeianoma3ivn2srsijwcab5tjjpdyaqxzcfsv5o2cebwpv56kmz4tiq
   payloads.py: bafybeiceyyzazx2n2fls5ek6aizavgqgjwab7ydveaafy46jol4xmlsaqu
-  rounds.py: bafybeidqxwgpzm5lpxp2by7n2moiqqs5d6wiqzuxzz36d63q3cat57hope
+  rounds.py: bafybeiaxhklwbubcuv5wlmohwjx4yrzjdh52r3kyfbftqmb42mudo2qxxa
   schemas.py: bafybeih62mzdpoviaw3tbxafehvcrlhjzs6hiu5aydwhjwqm6mosouruj4
   tests/__init__.py: bafybeic6evwhxdwtdjvz7xv3dqqhdhd7uxyr55xhymeiqfe4ga7mfdptxm
   tests/test_behaviours.py: bafybeig4h7kuovmmz33fzn3pertuyavaokuewhbgck6e2d674htbz74ysm
@@ -24,11 +24,11 @@ fingerprint:
   tests/test_rounds.py: bafybeig6ivs5sxshfb2rah2mxe4niv75q3fgxl25bkfpq6lmnc7cqvxtii
 fingerprint_ignore_patterns: []
 connections:
-- algovera/chat_completion:0.1.0:bafybeihjc4aiogtvy3vwtzl4amlgypcr5iqunlikwxyfwoetkegulvesy4
+- algovera/chat_completion:0.1.0:bafybeia46nkwsxbknc4ykucbc433zzkgf2cm3zbgxfmvnco2wzwretcqoy
 - fetchai/http_server:0.22.0:bafybeihp5umafxzx45aad5pj7s3343se2wjkgnbirt4pybrape22swm6de
 contracts: []
 protocols:
-- algovera/chat_completion:0.1.0:bafybeiewd6pjwettzly2zfwtnqzaaiopuyy3n6xnc2biclzgcssdye4aqy
+- algovera/chat_completion:0.1.0:bafybeihiizt26kxxvew27n33wwubgi3cyhfvhvqxptpvm3omzloy6ch44a
 - valory/http:1.0.0:bafybeia5bxdua2i6chw6pg47bvoljzcpuqxzy4rdrorbdmcbnwmnfdobtu
 skills:
 - valory/abstract_round_abci:0.1.0:bafybeif3cqkks5qx3lqi6nwwhebcirhazt2vidw3sueeqsyxvjeszjt3om

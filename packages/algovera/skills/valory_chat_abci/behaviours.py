@@ -271,8 +271,8 @@ class EmbeddingBehaviour(ValoryChatBaseBehaviour):
                 processed_response, c2e = self.process_response(
                     processed_request.response, request
                 )
-                self.context.logger.info(f"Response {processed_response}")
-                self.context.logger.info(f"c2e {c2e}")
+                # self.context.logger.info(f"Response {processed_response}")
+                # self.context.logger.info(f"c2e {c2e}")
 
                 # Add c2e to IPFS
                 if c2e:
