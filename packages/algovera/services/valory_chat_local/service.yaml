@@ -1,13 +1,13 @@
-name: chat_completion_local
+name: valory_chat_local
 author: algovera
 version: 0.1.0
-description: A service that uses chat_completion_agent & chat_completion_abci to do
-  RAG-based chat.
+description: A service that uses valory_chat_agent & valory_chat_abci to do RAG-based
+  chat.
 aea_version: '>=1.0.0, <2.0.0'
 license: Apache-2.0
 fingerprint: {}
 fingerprint_ignore_patterns: []
-agent: algovera/chat_completion_agent:0.1.0:bafybeihvyv23suny2f42pm4a67rhjbsxmwqabm3sr4xdsqyenjif75wpwu
+agent: algovera/valory_chat_agent:0.1.0:bafybeibhcvhwmjgqbnyvl2a7wvdahjjayloxym6s3zt7kfpkzfk3i3lbni
 number_of_agents: 1
 deployment:
   agent:
@@ -15,7 +15,7 @@ deployment:
       0:
         8000: 8000
 ---
-public_id: valory/chat_completion_abci:0.1.0
+public_id: algovera/valory_chat_abci:0.1.0
 type: skill
 models:
   benchmark_tool:

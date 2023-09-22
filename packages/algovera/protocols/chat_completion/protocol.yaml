@@ -3,7 +3,7 @@ author: algovera
 version: 0.1.0
 protocol_specification_id: algovera/chat_completion:0.1.0
 type: protocol
-description: A protocol to interact with Chat Completion using LangChain.
+description: A protocol to interact with Chat Completion.
 license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:

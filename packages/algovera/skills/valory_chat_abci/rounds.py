@@ -17,24 +17,18 @@
 #
 # ------------------------------------------------------------------------------
 
-"""This package contains the rounds of ChatCompletionAbciApp."""
-
+"""This package contains the rounds of ValoryChatAbciApp."""
 import json
 from abc import ABC
 from enum import Enum
 from typing import Dict, List, Optional, Set, Tuple, Type, cast
 
-from packages.algovera.skills.chat_completion_abci.payloads import (
+from packages.algovera.skills.valory_chat_abci.payloads import (
     ChatPayload,
     EmbeddingPayload,
     RegistrationPayload,
     SynchronizeEmbeddingsPayload,
     SynchronizeRequestsPayload,
-)
-from packages.algovera.skills.chat_completion_abci.schemas import (
-    Chat,
-    ChatCompletion,
-    Embedding,
 )
 from packages.valory.skills.abstract_round_abci.base import (
     AbciApp,
@@ -42,6 +36,7 @@ from packages.valory.skills.abstract_round_abci.base import (
     AbstractRound,
     AppState,
     BaseSynchronizedData,
+    CollectDifferentUntilAllRound,
     CollectSameUntilAllRound,
     CollectionRound,
     DegenerateRound,
@@ -50,14 +45,14 @@ from packages.valory.skills.abstract_round_abci.base import (
 
 
 class Event(Enum):
-    """ChatCompletionAbciApp Events"""
+    """ValoryChatAbciApp Events"""
 
-    ROUND_TIMEOUT = "round_timeout"
-    DONE = "done"
-    EMBEDDING = "embedding"
     NO_REQUEST = "no_request"
-    ERROR = "error"
+    ROUND_TIMEOUT = "round_timeout"
     CHAT = "chat"
+    ERROR = "error"
+    EMBEDDING = "embedding"
+    DONE = "done"
 
 
 class SynchronizedData(BaseSynchronizedData):
@@ -68,9 +63,9 @@ class SynchronizedData(BaseSynchronizedData):
     """
 
     @property
-    def embeddings(self) -> List:
+    def embedding(self) -> List:
         """Return the embeddings."""
-        return cast(List, self.db.get("embeddings", []))
+        return cast(List, self.db.get("embedding", []))
 
     @property
     def chats(self) -> List:
@@ -83,7 +78,7 @@ class SynchronizedData(BaseSynchronizedData):
         return cast(Dict, self.db.get("chat_histories", {}))
 
 
-class ChatCompletionABCIAbstractRound(AbstractRound, ABC):
+class ValoryChatABCIAbstractRound(AbstractRound, ABC):
     synchronized_data_class: Type[BaseSynchronizedData] = SynchronizedData
 
     @property
@@ -92,7 +87,23 @@ class ChatCompletionABCIAbstractRound(AbstractRound, ABC):
         return cast(SynchronizedData, self._synchronized_data)
 
 
-class ChatRound(CollectionRound, ChatCompletionABCIAbstractRound):
+def remove_duplicates(lst):
+    unique_items = {}
+    result = []
+
+    for item in lst:
+        item_id = item.get("id")
+
+        if item_id is not None and item_id not in unique_items:
+            # If the 'id' is not in the set, it's a new unique item
+            # Add it to the result list and also to the set to track duplicates
+            result.append(item)
+            unique_items[item_id] = True
+
+    return result
+
+
+class ChatRound(CollectionRound, ValoryChatABCIAbstractRound):
     """ChatRound"""
 
     payload_class = ChatPayload
@@ -142,7 +153,7 @@ class ChatRound(CollectionRound, ChatCompletionABCIAbstractRound):
                 return synchronized_data, Event.DONE
 
 
-class EmbeddingRound(CollectionRound, ChatCompletionABCIAbstractRound):
+class EmbeddingRound(CollectionRound, ValoryChatABCIAbstractRound):
     """EmbeddingRound"""
 
     payload_class = EmbeddingPayload
@@ -153,34 +164,35 @@ class EmbeddingRound(CollectionRound, ChatCompletionABCIAbstractRound):
 
         if len(self.collection) == len(self.synchronized_data.all_participants):
             if self.collection.values:
-                all_embeddings = cast(
-                    SynchronizedData, self.synchronized_data
-                ).embeddings
+                embedding = cast(SynchronizedData, self.synchronized_data).embedding
+                print(f"All embedding: {embedding}")
 
                 processed_embeddings = []
                 for payload in self.collection.values():
                     if payload.json["processed_embedding"] != "":
                         chat = json.loads(payload.json["processed_embedding"])
                         processed_embeddings.append(chat)
+                print("processed_embeddings", processed_embeddings)
 
                 # Convert set to list to be able to serialize it
-                processed_chats = [dict(each) for each in processed_embeddings]
-                processed_chats = list(processed_embeddings)
+                processed_embeddings = [dict(each) for each in processed_embeddings]
+                processed_embeddings = list(processed_embeddings)
+                print("processed_embeddings", processed_embeddings)
 
                 # Processed chat to chats by replacing the old chat with the new one
-                for each in processed_chats:
-                    for i, chat in enumerate(all_embeddings):
-                        if chat["id"] == each["id"]:
-                            all_embeddings[i] = each
+                for each in processed_embeddings:
+                    for i, embed in enumerate(embedding):
+                        embedding[i] = each
 
                 synchronized_data = self.synchronized_data.update(
-                    embeddings=all_embeddings,
+                    embedding=embedding,
                     synchronized_data_class=SynchronizedData,
                 )
+                print("synchronized_data embedding", synchronized_data)
                 return synchronized_data, Event.DONE
 
 
-class RegistrationRound(CollectSameUntilAllRound, ChatCompletionABCIAbstractRound):
+class RegistrationRound(CollectSameUntilAllRound, ValoryChatABCIAbstractRound):
     """RegistrationRound"""
 
     payload_class = RegistrationPayload
@@ -197,24 +209,8 @@ class RegistrationRound(CollectSameUntilAllRound, ChatCompletionABCIAbstractRoun
         return None
 
 
-def remove_duplicates(lst):
-    unique_items = {}
-    result = []
-
-    for item in lst:
-        item_id = item.get("id")
-
-        if item_id is not None and item_id not in unique_items:
-            # If the 'id' is not in the set, it's a new unique item
-            # Add it to the result list and also to the set to track duplicates
-            result.append(item)
-            unique_items[item_id] = True
-
-    return result
-
-
 class SynchronizeEmbeddingsRound(
-        CollectionRound, ChatCompletionABCIAbstractRound
+    CollectionRound, ValoryChatABCIAbstractRound
 ):
     """SynchronizeEmbeddingsRound"""
 
@@ -227,12 +223,13 @@ class SynchronizeEmbeddingsRound(
             # Get all embedding requests
             all_embedding_requests = cast(
                 SynchronizedData, self.synchronized_data
-            ).embeddings
+            ).embedding
 
             # Get unprocessed embedding requests
             unprocessed_embedding_requests = [
                 each for each in all_embedding_requests if not each["processed"]
             ]
+            print("unprocessed_embedding_requests", unprocessed_embedding_requests)
 
             # Get new embedding requests
             new_embedding_requests = []
@@ -246,13 +243,12 @@ class SynchronizeEmbeddingsRound(
                     except:
                         pass
 
-            # Make sure there are no duplicates
-            new_embedding_requests = remove_duplicates(new_embedding_requests)
-
+            print("new_embedding_requests", new_embedding_requests)
             # Add new requests to unprocessed requests
             if new_embedding_requests:
                 unprocessed_embedding_requests.extend(new_embedding_requests)
 
+            print("unprocessed_embedding_requests", unprocessed_embedding_requests)
             # if there are unprocessed requests, set processor
             if unprocessed_embedding_requests:
                 # Sort existing requests by request_time
@@ -277,7 +273,7 @@ class SynchronizeEmbeddingsRound(
 
                 # Update synchronized data
                 synchronized_data = self.synchronized_data.update(
-                    embeddings=all_embedding_requests,
+                    embedding=all_embedding_requests,
                     synchronized_data_class=SynchronizedData,
                 )
                 return synchronized_data, Event.EMBEDDING
@@ -285,14 +281,14 @@ class SynchronizeEmbeddingsRound(
             else:
                 # Update synchronized data
                 synchronized_data = self.synchronized_data.update(
-                    embeddings=all_embedding_requests,
+                    embedding=all_embedding_requests,
                     synchronized_data_class=SynchronizedData,
                 )
                 return synchronized_data, Event.NO_REQUEST
 
 
 class SynchronizeRequestsRound(
-    CollectionRound, ChatCompletionABCIAbstractRound
+    CollectionRound, ValoryChatABCIAbstractRound
 ):
     """SynchronizeRequestsRound"""
 
@@ -368,8 +364,8 @@ class SynchronizeRequestsRound(
                 return synchronized_data, Event.NO_REQUEST
 
 
-class ChatCompletionAbciApp(AbciApp[Event]):
-    """ChatCompletionAbciApp"""
+class ValoryChatAbciApp(AbciApp[Event]):
+    """ValoryChatAbciApp"""
 
     initial_round_cls: AppState = RegistrationRound
     initial_states: Set[AppState] = {RegistrationRound}
@@ -396,8 +392,8 @@ class ChatCompletionAbciApp(AbciApp[Event]):
     }
     final_states: Set[AppState] = set()
     event_to_timeout: EventToTimeout = {}
-    cross_period_persisted_keys: Set[str] = []
+    cross_period_persisted_keys: Set[str] = set()
     db_pre_conditions: Dict[AppState, Set[str]] = {
-        RegistrationRound: [],
+        RegistrationRound: set(),
     }
     db_post_conditions: Dict[AppState, Set[str]] = {}
