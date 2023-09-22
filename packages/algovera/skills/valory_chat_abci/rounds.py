@@ -38,6 +38,7 @@ from packages.valory.skills.abstract_round_abci.base import (
     BaseSynchronizedData,
     CollectDifferentUntilAllRound,
     CollectSameUntilAllRound,
+    CollectionRound,
     DegenerateRound,
     EventToTimeout,
 )
@@ -102,7 +103,7 @@ def remove_duplicates(lst):
     return result
 
 
-class ChatRound(CollectDifferentUntilAllRound, ValoryChatABCIAbstractRound):
+class ChatRound(CollectionRound, ValoryChatABCIAbstractRound):
     """ChatRound"""
 
     payload_class = ChatPayload
@@ -152,7 +153,7 @@ class ChatRound(CollectDifferentUntilAllRound, ValoryChatABCIAbstractRound):
                 return synchronized_data, Event.DONE
 
 
-class EmbeddingRound(CollectDifferentUntilAllRound, ValoryChatABCIAbstractRound):
+class EmbeddingRound(CollectionRound, ValoryChatABCIAbstractRound):
     """EmbeddingRound"""
 
     payload_class = EmbeddingPayload
@@ -209,7 +210,7 @@ class RegistrationRound(CollectSameUntilAllRound, ValoryChatABCIAbstractRound):
 
 
 class SynchronizeEmbeddingsRound(
-    CollectDifferentUntilAllRound, ValoryChatABCIAbstractRound
+    CollectionRound, ValoryChatABCIAbstractRound
 ):
     """SynchronizeEmbeddingsRound"""
 
@@ -218,7 +219,7 @@ class SynchronizeEmbeddingsRound(
 
     def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
         """Process the end of the block."""
-        if self.collection_threshold_reached:
+        if len(self.collection) == len(self.synchronized_data.all_participants):
             # Get all embedding requests
             all_embedding_requests = cast(
                 SynchronizedData, self.synchronized_data
@@ -287,7 +288,7 @@ class SynchronizeEmbeddingsRound(
 
 
 class SynchronizeRequestsRound(
-    CollectDifferentUntilAllRound, ValoryChatABCIAbstractRound
+    CollectionRound, ValoryChatABCIAbstractRound
 ):
     """SynchronizeRequestsRound"""
 
@@ -296,7 +297,7 @@ class SynchronizeRequestsRound(
 
     def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
         """Process the end of the block."""
-        if self.collection_threshold_reached:
+        if len(self.collection) == len(self.synchronized_data.all_participants):
             # Get al chats
             all_chat_requests = cast(SynchronizedData, self.synchronized_data).chats
 

@@ -3,19 +3,15 @@
 # Load env vars
 export $(grep -v '^#' .env | xargs)
 
-echo "OPENAI_API_KEY = $OPENAI_API_KEY"
-
-rm -rf chat_completion_mas
+rm -rf valory_chat_mas
 
 make clean
 
+autonomy packages lock
+
 autonomy push-all
 
-echo "Pushed all"
-
-autonomy fetch --local --service algovera/chat_completion_mas && cd chat_completion_mas
-
-echo "Fetched chat_completion_mas"
+autonomy fetch --local --service algovera/valory_chat_mas && cd valory_chat_mas
 
 # Build the image
 autonomy build-image

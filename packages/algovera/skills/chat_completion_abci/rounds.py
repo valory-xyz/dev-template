@@ -42,8 +42,8 @@ from packages.valory.skills.abstract_round_abci.base import (
     AbstractRound,
     AppState,
     BaseSynchronizedData,
-    CollectDifferentUntilAllRound,
     CollectSameUntilAllRound,
+    CollectionRound,
     DegenerateRound,
     EventToTimeout,
 )
@@ -92,7 +92,7 @@ class ChatCompletionABCIAbstractRound(AbstractRound, ABC):
         return cast(SynchronizedData, self._synchronized_data)
 
 
-class ChatRound(CollectDifferentUntilAllRound, ChatCompletionABCIAbstractRound):
+class ChatRound(CollectionRound, ChatCompletionABCIAbstractRound):
     """ChatRound"""
 
     payload_class = ChatPayload
@@ -142,7 +142,7 @@ class ChatRound(CollectDifferentUntilAllRound, ChatCompletionABCIAbstractRound):
                 return synchronized_data, Event.DONE
 
 
-class EmbeddingRound(CollectDifferentUntilAllRound, ChatCompletionABCIAbstractRound):
+class EmbeddingRound(CollectionRound, ChatCompletionABCIAbstractRound):
     """EmbeddingRound"""
 
     payload_class = EmbeddingPayload
@@ -214,7 +214,7 @@ def remove_duplicates(lst):
 
 
 class SynchronizeEmbeddingsRound(
-    CollectDifferentUntilAllRound, ChatCompletionABCIAbstractRound
+        CollectionRound, ChatCompletionABCIAbstractRound
 ):
     """SynchronizeEmbeddingsRound"""
 
@@ -223,7 +223,7 @@ class SynchronizeEmbeddingsRound(
 
     def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
         """Process the end of the block."""
-        if self.collection_threshold_reached:
+        if len(self.collection) == len(self.synchronized_data.all_participants):
             # Get all embedding requests
             all_embedding_requests = cast(
                 SynchronizedData, self.synchronized_data
@@ -292,7 +292,7 @@ class SynchronizeEmbeddingsRound(
 
 
 class SynchronizeRequestsRound(
-    CollectDifferentUntilAllRound, ChatCompletionABCIAbstractRound
+    CollectionRound, ChatCompletionABCIAbstractRound
 ):
     """SynchronizeRequestsRound"""
 
@@ -301,7 +301,7 @@ class SynchronizeRequestsRound(
 
     def end_block(self) -> Optional[Tuple[BaseSynchronizedData, Enum]]:
         """Process the end of the block."""
-        if self.collection_threshold_reached:
+        if len(self.collection) == len(self.synchronized_data.all_participants):
             # Get al chats
             all_chat_requests = cast(SynchronizedData, self.synchronized_data).chats
 

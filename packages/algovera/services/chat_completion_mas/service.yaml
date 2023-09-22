@@ -7,7 +7,7 @@ aea_version: '>=1.0.0, <2.0.0'
 license: Apache-2.0
 fingerprint: {}
 fingerprint_ignore_patterns: []
-agent: algovera/chat_completion_agent:0.1.0:bafybeiaw7o4pwmfdyrlxi756nhy7udu2pcxgxsx6lkfbxb5ob67vl3bqzu
+agent: algovera/chat_completion_agent:0.1.0:bafybeihvyv23suny2f42pm4a67rhjbsxmwqabm3sr4xdsqyenjif75wpwu
 number_of_agents: 4
 deployment:
   agent:
@@ -21,7 +21,7 @@ deployment:
       3:
         8003: 8003
 ---
-public_id: valory/chat_completion_abci:0.1.0
+public_id: algovera/chat_completion_abci:0.1.0
 type: skill
 models:
   benchmark_tool:
