@@ -10,7 +10,7 @@ This collaboration between Valory and Algovera will explore whether these crypto
 
 We see this as an important step towards a Decentralized AI Operating System (DAIOS). 
 
-A template for development with the open-autonomy framework. Find the documentation [here](https://docs.autonolas.network).
+A template for development with the open-autonomy framework. Find the documentation [here](docs.autonolas.network).
 
 # Background
 
@@ -18,7 +18,7 @@ This is collaboration between [Algovera](https://www.algovera.ai) and [Valory](h
 
 ## System requirements
 
-- Python `>=3.8`
+- Python `>=3.7`
 - [Tendermint](https://docs.tendermint.com/v0.34/introduction/install.html) `==0.34.19`
 - [IPFS node](https://docs.ipfs.io/install/command-line/#official-distributions) `==0.6.0`
 - [Pip](https://pip.pypa.io/en/stable/installation/)
