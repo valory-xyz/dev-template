@@ -21,7 +21,7 @@
 import json
 from abc import ABC
 from enum import Enum
-from typing import Dict, List, Optional, Set, Tuple, Type, cast
+from typing import Dict, FrozenSet, List, Optional, Set, Tuple, Type, cast
 
 from packages.algovera.skills.valory_chat_abci.payloads import (
     ChatPayload,
@@ -388,8 +388,18 @@ class ValoryChatAbciApp(AbciApp[Event]):
     }
     final_states: Set[AppState] = set()
     event_to_timeout: EventToTimeout = {}
-    cross_period_persisted_keys: Set[str] = set()
+    cross_period_persisted_keys: FrozenSet[str] = frozenset()
     db_pre_conditions: Dict[AppState, Set[str]] = {
         RegistrationRound: set(),
+        SynchronizeEmbeddingsRound: set(),
+        EmbeddingRound: set(),
+        SynchronizeRequestsRound: set(),
+        ChatRound: set(),
     }
-    db_post_conditions: Dict[AppState, Set[str]] = {}
+    db_post_conditions: Dict[AppState, Set[str]] = {
+        RegistrationRound: set(),
+        SynchronizeEmbeddingsRound: set(),
+        EmbeddingRound: set(),
+        SynchronizeRequestsRound: set(),
+        ChatRound: set(),
+    }
