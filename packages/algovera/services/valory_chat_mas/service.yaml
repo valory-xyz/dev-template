@@ -1,4 +1,4 @@
-name: valory_chat_local
+name: valory_chat_mas
 author: algovera
 version: 0.1.0
 description: A service that uses valory_chat_agent & valory_chat_abci to do RAG-based
@@ -8,12 +8,18 @@ license: Apache-2.0
 fingerprint: {}
 fingerprint_ignore_patterns: []
 agent: algovera/valory_chat_agent:0.1.0:bafybeiggfcrzja4vkr5dpc4kmwa5ls4bx5y2xss74tiznsysgqqqekjcae
-number_of_agents: 1
+number_of_agents: 4
 deployment:
   agent:
     ports:
       0:
         8000: 8000
+      1:
+        8001: 8001
+      2:
+        8002: 8002
+      3:
+        8003: 8003
 ---
 public_id: algovera/valory_chat_abci:0.1.0
 type: skill

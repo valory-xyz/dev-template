@@ -49,6 +49,7 @@ pytz = "==2022.2.1"
 toml = "^0.10.2"
 openapi-core = "0.13.8"
 numpy = "1.25.2"
+jsonschema = ">=4.16.0,<=4.19.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.25.2"

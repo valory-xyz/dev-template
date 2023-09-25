@@ -22,7 +22,7 @@
 import json
 from abc import ABC
 from enum import Enum
-from typing import Dict, List, Optional, Set, Tuple, Type, cast
+from typing import Dict, FrozenSet, List, Optional, Set, Tuple, Type, cast
 
 from packages.algovera.skills.chat_completion_abci.payloads import (
     ChatPayload,
@@ -213,9 +213,7 @@ def remove_duplicates(lst):
     return result
 
 
-class SynchronizeEmbeddingsRound(
-        CollectionRound, ChatCompletionABCIAbstractRound
-):
+class SynchronizeEmbeddingsRound(CollectionRound, ChatCompletionABCIAbstractRound):
     """SynchronizeEmbeddingsRound"""
 
     payload_class = SynchronizeEmbeddingsPayload
@@ -291,9 +289,7 @@ class SynchronizeEmbeddingsRound(
                 return synchronized_data, Event.NO_REQUEST
 
 
-class SynchronizeRequestsRound(
-    CollectionRound, ChatCompletionABCIAbstractRound
-):
+class SynchronizeRequestsRound(CollectionRound, ChatCompletionABCIAbstractRound):
     """SynchronizeRequestsRound"""
 
     payload_class = SynchronizeRequestsPayload
@@ -396,8 +392,18 @@ class ChatCompletionAbciApp(AbciApp[Event]):
     }
     final_states: Set[AppState] = set()
     event_to_timeout: EventToTimeout = {}
-    cross_period_persisted_keys: Set[str] = []
+    cross_period_persisted_keys: FrozenSet[str] = frozenset()
     db_pre_conditions: Dict[AppState, Set[str]] = {
-        RegistrationRound: [],
+        RegistrationRound: set(),
+        SynchronizeEmbeddingsRound: set(),
+        EmbeddingRound: set(),
+        SynchronizeRequestsRound: set(),
+        ChatRound: set(),
     }
-    db_post_conditions: Dict[AppState, Set[str]] = {}
+    db_post_conditions: Dict[AppState, Set[str]] = {
+        RegistrationRound: set(),
+        SynchronizeEmbeddingsRound: set(),
+        EmbeddingRound: set(),
+        SynchronizeRequestsRound: set(),
+        ChatRound: set(),
+    }
