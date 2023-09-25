@@ -28,7 +28,7 @@ protocols:
 - valory/ledger_api:1.0.0:bafybeigsvceac33asd6ecbqev34meyyjwu3rangenv6xp5rkxyz4krvcby
 - valory/tendermint:0.1.0:bafybeidjqmwvgi4rqgp65tbkhmi45fwn2odr5ecezw6q47hwitsgyw4jpa
 skills:
-- algovera/chat_completion_abci:0.1.0:bafybeiam32ivevngh2gcf45jkoh5qtn664kt4vr27qeoe6gaz7dczt22pm
+- algovera/chat_completion_abci:0.1.0:bafybeied56ocqnpd73ej4y3ioia4erzhqe2cvquq5nrruqrcen7i4v6rxq
 - valory/abstract_abci:0.1.0:bafybeibpe6ohnm4ritfnghdtpczdqlrcwufrxr5g75inkkgazeqhonyclu
 - valory/abstract_round_abci:0.1.0:bafybeif3cqkks5qx3lqi6nwwhebcirhazt2vidw3sueeqsyxvjeszjt3om
 default_ledger: ethereum
