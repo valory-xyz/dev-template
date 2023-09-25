@@ -13,18 +13,19 @@ leak_report
 /Pipfile.lock
 .env
 
-chat_completion_agent/
-
 ethereum_private_key.txt
-
-chat_completion_local/
-chat_completion_mas/
 
 .hypothesis/
 
 __pycache__/
+
+chat_completion_agent/
+chat_completion_local/
+chat_completion_mas/
 valory_chat_agent/
 valory_chat_local/
 valory_chat_mas/
+
 !packages/algovera/agents/valory_chat_agent
 !packages/algovera/services/valory_chat_local
+!packages/algovera/services/valory_chat_mas

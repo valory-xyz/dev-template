@@ -213,9 +213,7 @@ def remove_duplicates(lst):
     return result
 
 
-class SynchronizeEmbeddingsRound(
-        CollectionRound, ChatCompletionABCIAbstractRound
-):
+class SynchronizeEmbeddingsRound(CollectionRound, ChatCompletionABCIAbstractRound):
     """SynchronizeEmbeddingsRound"""
 
     payload_class = SynchronizeEmbeddingsPayload
@@ -291,9 +289,7 @@ class SynchronizeEmbeddingsRound(
                 return synchronized_data, Event.NO_REQUEST
 
 
-class SynchronizeRequestsRound(
-    CollectionRound, ChatCompletionABCIAbstractRound
-):
+class SynchronizeRequestsRound(CollectionRound, ChatCompletionABCIAbstractRound):
     """SynchronizeRequestsRound"""
 
     payload_class = SynchronizeRequestsPayload

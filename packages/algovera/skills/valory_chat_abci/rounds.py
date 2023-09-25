@@ -209,9 +209,7 @@ class RegistrationRound(CollectSameUntilAllRound, ValoryChatABCIAbstractRound):
         return None
 
 
-class SynchronizeEmbeddingsRound(
-    CollectionRound, ValoryChatABCIAbstractRound
-):
+class SynchronizeEmbeddingsRound(CollectionRound, ValoryChatABCIAbstractRound):
     """SynchronizeEmbeddingsRound"""
 
     payload_class = SynchronizeEmbeddingsPayload
@@ -287,9 +285,7 @@ class SynchronizeEmbeddingsRound(
                 return synchronized_data, Event.NO_REQUEST
 
 
-class SynchronizeRequestsRound(
-    CollectionRound, ValoryChatABCIAbstractRound
-):
+class SynchronizeRequestsRound(CollectionRound, ValoryChatABCIAbstractRound):
     """SynchronizeRequestsRound"""
 
     payload_class = SynchronizeRequestsPayload

@@ -15,7 +15,7 @@ autonomy fetch --local --service algovera/chat_completion_local && cd chat_compl
 autonomy build-image
 
 # Copy keys and build the deployment
-cp /path/to/your/keys.json ./keys.json
+cp /home/marshath/play/openautonomy2/daios/keys.json ./keys.json
 
 autonomy deploy build -ltm
 
