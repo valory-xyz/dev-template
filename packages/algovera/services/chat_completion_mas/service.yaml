@@ -15,11 +15,11 @@ deployment:
       0:
         8000: 8000
       1:
-        8001: 8001
+        8001: 8000
       2:
-        8002: 8002
+        8002: 8000
       3:
-        8003: 8003
+        8003: 8000
 ---
 public_id: algovera/chat_completion_abci:0.1.0
 type: skill
@@ -74,7 +74,7 @@ extra:
         request_retry_delay: 1.0
         request_timeout: 10.0
         round_timeout_seconds: 30.0
-        service_id: chat_completion_local
+        service_id: chat_completion_mas
         service_registry_address: null
         share_tm_config_on_startup: ${USE_ACN:bool:false}
         sleep_time: 1
@@ -113,7 +113,7 @@ extra:
         request_retry_delay: 1.0
         request_timeout: 10.0
         round_timeout_seconds: 30.0
-        service_id: chat_completion_local
+        service_id: chat_completion_mas
         service_registry_address: null
         share_tm_config_on_startup: ${USE_ACN:bool:false}
         sleep_time: 1
@@ -152,7 +152,7 @@ extra:
         request_retry_delay: 1.0
         request_timeout: 10.0
         round_timeout_seconds: 30.0
-        service_id: chat_completion_local
+        service_id: chat_completion_mas
         service_registry_address: null
         share_tm_config_on_startup: ${USE_ACN:bool:false}
         sleep_time: 1
@@ -191,7 +191,7 @@ extra:
         request_retry_delay: 1.0
         request_timeout: 10.0
         round_timeout_seconds: 30.0
-        service_id: chat_completion_local
+        service_id: chat_completion_mas
         service_registry_address: null
         share_tm_config_on_startup: ${USE_ACN:bool:false}
         sleep_time: 1
