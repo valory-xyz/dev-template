@@ -10,8 +10,8 @@
         "agent/algovera/valory_chat_agent/0.1.0": "bafybeie2l7f5ufrvuqopjlxqzytuiozb7undmfnbe2ynes7k6h753gt4ti",
         "service/algovera/valory_chat_local/0.1.0": "bafybeidpai6i22ceexqsmplwsihzw2mii3aitnbipbnbvoqxn6btodkmta",
         "skill/algovera/valory_chat_abci/0.1.0": "bafybeifzmui24njwk6yu5lic57jd3d2ju7bpyx3fh3jeqlymuar4radq6a",
-        "service/algovera/chat_completion_mas/0.1.0": "bafybeiey4n723mcl5fgv3r2zn7ztljk7ki6fxdcgpilm2u4uc2lzyf4bti",
-        "service/algovera/valory_chat_mas/0.1.0": "bafybeidu4txuaanoncrwgmwvlurnbzzhiwlrptb6shahxkr7tlykgsbyk4"
+        "service/algovera/chat_completion_mas/0.1.0": "bafybeibh55kxciuasxdu6e53wuh6rspva4tlep53gf77imjceytd3s2agy",
+        "service/algovera/valory_chat_mas/0.1.0": "bafybeiblnt6b5ppucbrwxfq6hsyuuekflcwrlogofg2yf5oefkezpsvn3e"
     },
     "third_party": {
         "service/valory/hello_world/0.1.0": "bafybeihkkak6becsdrto5uciopjokilsvxjwrzurwsr4mfcwteqrl6quiy",
