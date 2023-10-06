@@ -8,7 +8,7 @@ aea_version: '>=1.0.0, <2.0.0'
 fingerprint: {}
 fingerprint_ignore_patterns: []
 connections:
-- algovera/chat_completion:0.1.0:bafybeia46nkwsxbknc4ykucbc433zzkgf2cm3zbgxfmvnco2wzwretcqoy
+- algovera/chat_completion:0.1.0:bafybeigvndz5rb2zirkhrx67uzmfubcatgqdt6wovr6ygnoymmjuua2sea
 - fetchai/http_server:0.22.0:bafybeihp5umafxzx45aad5pj7s3343se2wjkgnbirt4pybrape22swm6de
 - valory/abci:0.1.0:bafybeif7rsxcw72mbzwcui3ozfaay5qnqorj5c52zedpqf56zczsxox3xe
 - valory/http_client:0.23.0:bafybeieoeuy4brzimtnubmokwirhrx27ezls6cdnl5qik4rkykfle3nn2y
@@ -28,7 +28,7 @@ protocols:
 - valory/ledger_api:1.0.0:bafybeigsvceac33asd6ecbqev34meyyjwu3rangenv6xp5rkxyz4krvcby
 - valory/tendermint:0.1.0:bafybeidjqmwvgi4rqgp65tbkhmi45fwn2odr5ecezw6q47hwitsgyw4jpa
 skills:
-- algovera/chat_completion_abci:0.1.0:bafybeiahphyshexbkd6wm7kwc2eb7wvtjmrzqdkeu6in3op2nkkb2754wq
+- algovera/chat_completion_abci:0.1.0:bafybeig7xrsrb6bj7sw74rrrcdggxbngwkwh7z6y7myjji675sx7ckjb7m
 - valory/abstract_abci:0.1.0:bafybeibpe6ohnm4ritfnghdtpczdqlrcwufrxr5g75inkkgazeqhonyclu
 - valory/abstract_round_abci:0.1.0:bafybeif3cqkks5qx3lqi6nwwhebcirhazt2vidw3sueeqsyxvjeszjt3om
 default_ledger: ethereum
