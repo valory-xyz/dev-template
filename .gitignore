@@ -29,3 +29,4 @@ valory_chat_mas/
 !packages/algovera/agents/valory_chat_agent
 !packages/algovera/services/valory_chat_local
 !packages/algovera/services/valory_chat_mas
+.4env
