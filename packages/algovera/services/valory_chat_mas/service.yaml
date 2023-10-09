@@ -66,7 +66,7 @@ extra:
         keeper_timeout: 30.0
         max_attempts: 10
         max_healthcheck: 120
-        on_chain_service_id: null
+        on_chain_service_id: ${ON_CHAIN_SERVICE_ID:int:17}
         reset_tendermint_after: ${RESET_TENDERMINT_AFTER:int:30}
         retry_attempts: 400
         retry_timeout: 3
@@ -106,7 +106,7 @@ extra:
         keeper_timeout: 30.0
         max_attempts: 10
         max_healthcheck: 120
-        on_chain_service_id: null
+        on_chain_service_id: ${ON_CHAIN_SERVICE_ID:int:17}
         reset_tendermint_after: ${RESET_TENDERMINT_AFTER:int:30}
         retry_attempts: 400
         retry_timeout: 3
@@ -146,7 +146,7 @@ extra:
         keeper_timeout: 30.0
         max_attempts: 10
         max_healthcheck: 120
-        on_chain_service_id: null
+        on_chain_service_id: ${ON_CHAIN_SERVICE_ID:int:17}
         reset_tendermint_after: ${RESET_TENDERMINT_AFTER:int:30}
         retry_attempts: 400
         retry_timeout: 3
@@ -186,7 +186,7 @@ extra:
         keeper_timeout: 30.0
         max_attempts: 10
         max_healthcheck: 120
-        on_chain_service_id: null
+        on_chain_service_id: ${ON_CHAIN_SERVICE_ID:int:17}
         reset_tendermint_after: ${RESET_TENDERMINT_AFTER:int:30}
         retry_attempts: 400
         retry_timeout: 3
