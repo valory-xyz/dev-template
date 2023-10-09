@@ -30,7 +30,7 @@ skills:
 - valory/abstract_abci:0.1.0:bafybeibpe6ohnm4ritfnghdtpczdqlrcwufrxr5g75inkkgazeqhonyclu
 - valory/abstract_round_abci:0.1.0:bafybeif3cqkks5qx3lqi6nwwhebcirhazt2vidw3sueeqsyxvjeszjt3om
 - algovera/valory_chat_abci:0.1.0:bafybeibtngbfx45v2vhuhwbpwmoe4hfnbsycraim6dypj5oktxswfve7yu
-- algovera/valory_chat_chained_abci:0.1.0:bafybeic2ltyiuro4zcbfsm4saionvlqoueekr2aktkv2kwhp7xfzubzh4i
+- algovera/valory_chat_chained_abci:0.1.0:bafybeidtg5bwd2pghvrkwafcirizbosz3q53vjldrait4umccfsuuxbpru
 - valory/registration_abci:0.1.0:bafybeifzdrmgiwx66cvxqg63uct6ul4hty6cg33i2hhwi7kkyljntfdopy
 - valory/reset_pause_abci:0.1.0:bafybeifoihgilpfr76hc5skzspm6qehkwivx7ld2cy3veipcsi4gr2c7na
 - valory/termination_abci:0.1.0:bafybeigcsls72uosoui2y5ppmnvsljjhnxakkeh3fdohklcg66aqq4g7xu
@@ -123,6 +123,7 @@ models:
       use_termination: ${bool:false}
       validate_timeout: 1205
       finalize_timeout: 60.0
+      service_endpoint_base: ${str:http://localhost:8000}
 ---
 public_id: valory/abci:0.1.0
 type: connection

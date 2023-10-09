@@ -136,6 +136,12 @@ models:
       validate_timeout: 1205
       finalize_timeout: 60.0
       history_check_timeout: 1205
+      use_slashing: false
+      slash_cooldown_hours: 0
+      slash_threshold_amount: 0
+      light_slash_unit_amount: 0
+      serious_slash_unit_amount: 0
+      service_endpoint_base: http://localhost:8000
     class_name: Params
   randomness_api:
     args:
