@@ -22,6 +22,9 @@
 from packages.algovera.skills.valory_chat_abci.models import (
     Params as ValoryChatAbciParams,
 )
+from packages.algovera.skills.valory_chat_abci.models import (
+    SharedState as BaseSharedState,
+)
 from packages.algovera.skills.valory_chat_abci.rounds import Event as ValoryChatEvent
 from packages.algovera.skills.valory_chat_chained_abci.composition import (
     ValoryChatChainedAbciApp,
@@ -31,9 +34,6 @@ from packages.valory.skills.abstract_round_abci.models import (
     BenchmarkTool as BaseBenchmarkTool,
 )
 from packages.valory.skills.abstract_round_abci.models import Requests as BaseRequests
-from packages.valory.skills.abstract_round_abci.models import (
-    SharedState as BaseSharedState,
-)
 from packages.valory.skills.reset_pause_abci.rounds import Event as ResetPauseEvent
 from packages.valory.skills.termination_abci.models import TerminationParams
 
