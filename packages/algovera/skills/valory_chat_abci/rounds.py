@@ -370,6 +370,7 @@ class ValoryChatAbciApp(AbciApp[Event]):
             Event.DONE: FinishedValoryChatRound,
             Event.ERROR: SynchronizeEmbeddingsRound,
         },
+        FinishedValoryChatRound: {},
     }
     final_states: Set[AppState] = {FinishedValoryChatRound}
     event_to_timeout: EventToTimeout = {}

@@ -8,13 +8,13 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeicxkfzpty7ulppggno5q7druhpb3qz467sf4byxb5bro5o4eoiz2a
-  behaviours.py: bafybeiasmscedxaqgpnfj73b3yvsdjye43oznh26kmmkde7kcgxkq3yyke
+  behaviours.py: bafybeih2vofmow62kxqa2zed6o32qgj6dmghzuu23tdvbv37xgjoyzg37q
   dialogues.py: bafybeidbq2qgz7nocxfivxoh5eeu4axf3qfhur4tbektfshxnml5y4uq4i
   fsm_specs_valory_chat.yaml: bafybeibttf5ssb6gyjewlm5pkqywcsfmolrqli32pvozdocns4lylmcmyq
   handlers.py: bafybeiepr5bjkhjv7dx2qiciknsygwsvwtpyai524vu2ldsyzvo5rynbie
   models.py: bafybeiahascxnkeubiivtgogkc5ef5g3txj36dt47ek4t2i4l2edjquq3u
   payloads.py: bafybeih7thm5osh5tfg536dxa7oo72suz7l7nhvcqlzcvjlwd7hdu3nqyi
-  rounds.py: bafybeihkmdrbvpsaho47ti2er4avoojcq3egcot2uy5rcklli3hoduryn4
+  rounds.py: bafybeieypffcymbnuzekw5uw4ujm6u4wedkxinwpq2tw6r5xdrtoycrli4
   schemas.py: bafybeia3qzj3c7qmne3dxehpdsordimg26krzyfjjf2luo4qcjbyvkhdam
   tests/__init__.py: bafybeic6evwhxdwtdjvz7xv3dqqhdhd7uxyr55xhymeiqfe4ga7mfdptxm
   tests/test_behaviours.py: bafybeicm7rrrmv4bekgh7gir5zmtvoykcykzfhvswtluysqbjqkh5lj54q
