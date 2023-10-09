@@ -69,16 +69,55 @@ models:
       log_dir: ${str:/benchmarks}
   params:
     args:
-      service_registry_address: ${str:null}
-      share_tm_config_on_startup: ${bool:false}
+      cleanup_history_depth: 1
+      cleanup_history_depth_current: null
+      drand_public_key: 868f005eb8e6e4ca0a47c8a77ceaa5309a47978a7c71bc5cce96366b5d7a569937c529eeda66c7293784a9402801af31
+      genesis_config:
+        genesis_time: '2022-09-26T00:00:00.000000000Z'
+        chain_id: chain-c4daS1
+        consensus_params:
+          block:
+            max_bytes: '22020096'
+            max_gas: '-1'
+            time_iota_ms: '1000'
+          evidence:
+            max_age_num_blocks: '100000'
+            max_age_duration: '172800000000000'
+            max_bytes: '1048576'
+          validator:
+            pub_key_types:
+            - ed25519
+          version: {}
+        voting_power: '10'
+      keeper_timeout: 30.0
+      max_attempts: 10
+      max_healthcheck: 120
+      keeper_allowed_retries: 3
+      reset_pause_duration: ${int:300}
       on_chain_service_id: ${int:null}
+      reset_tendermint_after: ${int:2}
+      retry_attempts: 400
+      retry_timeout: 3
+      request_retry_delay: 1.0
+      request_timeout: 10.0
+      round_timeout_seconds: 30.0
+      service_id: valory_chat_mas
+      service_registry_address: ${str:null}
       setup:
         all_participants: ${list:[]}
-        safe_contract_address: ${str:'0x0000000000000000000000000000000000000000'}
+        safe_contract_address: ${str:0x0000000000000000000000000000000000000000}
         consensus_threshold: ${int:null}
-      tendermint_url: ${str:http://localhost:26657}
+      share_tm_config_on_startup: ${bool:false}
+      sleep_time: 1
+      tendermint_check_sleep_delay: 3
       tendermint_com_url: ${str:http://localhost:8080}
+      tendermint_max_retries: 5
+      tendermint_url: ${str:http://localhost:26657}
       tendermint_p2p_url: ${str:localhost:26656}
+      tx_timeout: 10.0
+      use_termination: ${bool:false}
+      validate_timeout: 1205
+      finalize_timeout: 60.0
 ---
 public_id: valory/abci:0.1.0
 type: connection
