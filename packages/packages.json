@@ -11,7 +11,8 @@
         "service/algovera/valory_chat_local/0.1.0": "bafybeihksqjykh3txu4im6rcmtcizgxgdfjtyp6mdt5sizvzeq4mfwb7de",
         "skill/algovera/valory_chat_abci/0.1.0": "bafybeifzmui24njwk6yu5lic57jd3d2ju7bpyx3fh3jeqlymuar4radq6a",
         "service/algovera/chat_completion_mas/0.1.0": "bafybeibh55kxciuasxdu6e53wuh6rspva4tlep53gf77imjceytd3s2agy",
-        "service/algovera/valory_chat_mas/0.1.0": "bafybeidqpvkvxp7pvxp5s764ie6d263vrjd6yy547nndjw55nuzq5a52ga"
+        "service/algovera/valory_chat_mas/0.1.0": "bafybeidqpvkvxp7pvxp5s764ie6d263vrjd6yy547nndjw55nuzq5a52ga",
+        "skill/algovera/valory_chat_chained/0.1.0": "bafybeidqpvkvxp7pvxp5s764ie6d263vrjd6yy547nndjw55nuzq5a52ga"
     },
     "third_party": {
         "service/valory/hello_world/0.1.0": "bafybeihkkak6becsdrto5uciopjokilsvxjwrzurwsr4mfcwteqrl6quiy",
@@ -34,9 +35,12 @@
         "skill/valory/abstract_round_abci/0.1.0": "bafybeif3cqkks5qx3lqi6nwwhebcirhazt2vidw3sueeqsyxvjeszjt3om",
         "skill/valory/hello_world_abci/0.1.0": "bafybeih2iaypkx7hpahpq5lrwp5qtkk7mqltsrydotxggwgt6ca7x2xu5m",
         "connection/valory/p2p_libp2p_client/0.1.0": "bafybeihdnfdth3qgltefgrem7xyi4b3ejzaz67xglm2hbma2rfvpl2annq",
-        "skill/valory/registration_abci/0.1.0": "bafybeiexf4wgolji54legi3mr4uxloauzotidrwzyd4kjeuyl5bptuue3u",
-        "skill/valory/reset_pause_abci/0.1.0": "bafybeic6iwqsja4uwshow7o6o3en7wgzvwlccysrmalengzpwjny3aeqqm",
-        "skill/valory/termination_abci/0.1.0": "bafybeid6okklrkc7o6ghgohgs6urk2nxi7uxobmvrmd6kg2lmyvflcxgsu",
-        "skill/valory/transaction_settlement_abci/0.1.0": "bafybeifq7ngoj3ywdsglmhwh5oxiprerzpbje5whvgvktwjnr4cqxqgq4i"
+        "skill/valory/registration_abci/0.1.0": "bafybeifzdrmgiwx66cvxqg63uct6ul4hty6cg33i2hhwi7kkyljntfdopy",
+        "skill/valory/reset_pause_abci/0.1.0": "bafybeifoihgilpfr76hc5skzspm6qehkwivx7ld2cy3veipcsi4gr2c7na",
+        "skill/valory/termination_abci/0.1.0": "bafybeigcsls72uosoui2y5ppmnvsljjhnxakkeh3fdohklcg66aqq4g7xu",
+        "skill/valory/transaction_settlement_abci/0.1.0": "bafybeiglsnh2hvfau5gab7requh34k4sbqwbjvrhhqjpes4hakcwq46cpi",
+        "contract/valory/multisend/0.1.0": "bafybeie7m7pjbnw7cccpbvmbgkut24dtlt4cgvug3tbac7gej37xvwbv3a",
+        "contract/valory/gnosis_safe/0.1.0": "bafybeih7gkbdtnhkc3i53mbsj7bcihqa7xau6ewsnew4kkul7phwb4ucjm",
+        "contract/valory/gnosis_safe_proxy_factory/0.1.0": "bafybeiaylgywx2qtoaddokexql3d4iqfz5l7rlm5q24lzbn36we3ovfjmi"
     }
 }
