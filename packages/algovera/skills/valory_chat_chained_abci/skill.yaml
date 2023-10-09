@@ -1,34 +1,29 @@
 name: valory_chat_chained_abci
-author: valory
+author: algovera
 version: 0.1.0
 type: skill
 description: The chained abci for the impact_evaluator skill.
 license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
-  __init__.py: bafybeigmhxenrqb2ysjhcm2au2lang4abyny6irkzqqg4dtclz6net6zpy
-  behaviours.py: bafybeibcqolnjh2e7epjt5npmw3denyxgyyxmugirhn5pdwnw5e4ege3xy
-  composition.py: bafybeifjy4sknt45etzud543l54c6dp6vf7nschuvccqhcbt3owfliymae
-  dialogues.py: bafybeigjknz4qqynbsltjje46gidg4rftsqw6ybjwegz24wetmycutpzh4
-  fsm_specification.yaml: bafybeifpy7qk3psx22xj46izrqznetlgnukanb23ju25q53ydx6sfcctk4
-  handlers.py: bafybeidkli6fphcmdgwsys4lkyf3fx6fbawet4nt2pnixfypzijhg6b3ze
-  models.py: bafybeifhcshu4iwqvc2fz3auu5ngfykkhvqnroeug52ilrwwc4kowkeg5a
-  tests/__init__.py: bafybeievwzwojvq4aofk5kjpf4jzygfes7ew6s6svc6b6frktjnt3sicce
-  tests/test_behaviours.py: bafybeifkazsevd6vsfaapulouxepez3rl24y3rxgja5zhmj7s323zdjlmq
-  tests/test_dialogues.py: bafybeieaos2byphju6i6xvytppqqcuqqvnpilnflsy73l3wqazzjttbg7m
-  tests/test_handlers.py: bafybeiacfkjcxqw73vk36wmilpq2wmejwyfy4sycosgswgzpq35tfvr2ia
-  tests/test_models.py: bafybeia66e3peyycqutyu3yhshqd6ctolisggrsegagpf5vplwiy53gnum
+  __init__.py: bafybeigehts7z7h7wch2llue3zkqlzimcga7xd632jd77xmogjccrpm7si
+  behaviours.py: bafybeia2tbao4ugl6ezn5gq5ozyknwxd2gsyl3o3737mstmqzimrz4tcb4
+  composition.py: bafybeiduduotkwys4c73shy6cnydvnxixn7vsq4zxcnux5ybtnbm6twrim
+  dialogues.py: bafybeid6xs6sgui2yj6tuzg3vw2mv44ivotw225b5kbyj5ijxtg363q7bm
+  fsm_specification.yaml: bafybeidipexskhjklqxr2na2uqtypqp7yrlfczymitwpujfkiztieku6ju
+  handlers.py: bafybeif4jvpscycxqiaelewlmocwmr64qcakbkyfsi2citcxb6w677dwea
+  models.py: bafybeih464kf7apktql3ci42wxbu2bec6dtpkpvggixeckwpm64odke3cy
 fingerprint_ignore_patterns: []
 connections: []
 contracts: []
 protocols: []
 skills:
-- valory/abstract_round_abci:0.1.0:bafybeih2fyfb6kkf7r45pvdk7pyyebr5xloia4xiqxtb3qsrasnstqmepq
-- valory/registration_abci:0.1.0:bafybeibndt6vxiwc2edgtaxpjbhwto3eyu33ujz3zmvtygvo2qz7xme5li
-- valory/reset_pause_abci:0.1.0:bafybeigeoc363gv3wp2rrmk6p2fdxney33nxd3owtpfugzapgruwe4klyu
-- valory/termination_abci:0.1.0:bafybeigqpij2sgrpnilqjljfciixop4fldq5qceixc7534q6af4potdmdm
-- valory/transaction_settlement_abci:0.1.0:bafybeia7rzsbea3ch4gcafyp3z6uvqh4npws2xpdwbkkdbrqqpjops7nui
-- algovera/valory_chat_abci:0.1.0:bafybeia7rzsbea3ch4gcafyp3z6uvqh4npws2xpdwbkkdbrqqpjops7nui
+- valory/abstract_round_abci:0.1.0:bafybeif3cqkks5qx3lqi6nwwhebcirhazt2vidw3sueeqsyxvjeszjt3om
+- valory/registration_abci:0.1.0:bafybeifzdrmgiwx66cvxqg63uct6ul4hty6cg33i2hhwi7kkyljntfdopy
+- valory/reset_pause_abci:0.1.0:bafybeifoihgilpfr76hc5skzspm6qehkwivx7ld2cy3veipcsi4gr2c7na
+- valory/termination_abci:0.1.0:bafybeigcsls72uosoui2y5ppmnvsljjhnxakkeh3fdohklcg66aqq4g7xu
+- valory/transaction_settlement_abci:0.1.0:bafybeiglsnh2hvfau5gab7requh34k4sbqwbjvrhhqjpes4hakcwq46cpi
+- algovera/valory_chat_abci:0.1.0:bafybeibtngbfx45v2vhuhwbpwmoe4hfnbsycraim6dypj5oktxswfve7yu
 behaviours:
   main:
     args: {}
