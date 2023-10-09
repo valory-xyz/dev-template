@@ -1,13 +1,13 @@
 name: valory_chat_mas
 author: algovera
 version: 0.1.0
-description: A service that uses valory_chat_agent & valory_chat_chained_abci to do RAG-based
-  chat.
+description: A service that uses valory_chat_agent & valory_chat_chained_abci to do
+  RAG-based chat.
 aea_version: '>=1.0.0, <2.0.0'
 license: Apache-2.0
 fingerprint: {}
 fingerprint_ignore_patterns: []
-agent: algovera/valory_chat_agent:0.1.0:bafybeiejf7e6uf3ig4j5ui6wrgy42i5upddqvtgjoqwnnkeauaxm6gkale
+agent: algovera/valory_chat_agent:0.1.0:bafybeidzybocm5h2rvulsn54ehpkrgl5l66yzhg52o7e4rhlpcp7kntzqu
 number_of_agents: 4
 deployment:
   agent:
