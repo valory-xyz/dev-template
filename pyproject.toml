@@ -3,12 +3,12 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "dev-template"
+name = "algovera-grant"
 version = "0.1.0"
 description = ""
 authors = []
 readme = "README.md"
-repository = "https://github.com/valory-xyz/dev-template"
+repository = "https://github.com/valory-xyz/algovera-grant"
 keywords = ["autonomy", "autonomous", "autonolas", "service", "multi", "agent"]
 classifiers = [
     "Environment :: Console",
@@ -34,11 +34,12 @@ include = "packages"
 [tool.poetry.dependencies]
 python = "^3.10"
 asn1crypto = "==1.5.1"
-grpcio = "==1.56.0"
+grpcio = "==1.53.0"
 faiss-cpu = "==1.7.4"
 hypothesis = "==6.21.6"
 openai = "==0.27.8"
 open-aea-ledger-ethereum = "==1.38.0"
+open-aea-ledger-cosmos = "==1.38.0"
 openapi-spec-validator = "==0.2.8"
 open-autonomy = "==0.12"
 pydantic = "==1.10.11"

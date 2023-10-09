@@ -1,10 +1,10 @@
 # Security Policy
 
-This document outlines security procedures and general policies for the `dev-template` project.
+This document outlines security procedures and general policies for the `algovera-grant` project.
 
 ## Supported Versions
 
-The following table shows which versions of `dev-template` are currently being supported with security updates.
+The following table shows which versions of `algovera-grant` are currently being supported with security updates.
 
 | Version   | Supported          |
 | --------- | ------------------ |
@@ -12,7 +12,7 @@ The following table shows which versions of `dev-template` are currently being s
 
 ## Reporting a Vulnerability
 
-The `dev-template` team and community take all security bugs in `dev-template` seriously. Thank you for improving the security of `dev-template`. We appreciate your efforts and responsible disclosure and will make every effort to acknowledge your contributions.
+The `algovera-grant` team and community take all security bugs in `algovera-grant` seriously. Thank you for improving the security of `algovera-grant`. We appreciate your efforts and responsible disclosure and will make every effort to acknowledge your contributions.
 
 Report security bugs by emailing `info@valory.xyz`.
 
