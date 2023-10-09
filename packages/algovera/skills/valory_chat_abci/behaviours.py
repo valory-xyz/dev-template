@@ -41,8 +41,6 @@ from packages.algovera.skills.valory_chat_abci.rounds import (
     ChatRound,
     EmbeddingPayload,
     EmbeddingRound,
-    RegistrationPayload,
-    RegistrationRound,
     SynchronizeEmbeddingsPayload,
     SynchronizeEmbeddingsRound,
     SynchronizeRequestsPayload,
@@ -463,25 +461,6 @@ class EmbeddingBehaviour(ValoryChatBaseBehaviour):
         return chunks
 
 
-class RegistrationBehaviour(ValoryChatBaseBehaviour):
-    """RegistrationBehaviour"""
-
-    matching_round: Type[AbstractRound] = RegistrationRound
-
-    def async_act(self) -> Generator:
-        """Do the act, supporting asynchronous execution."""
-
-        with self.context.benchmark_tool.measure(self.behaviour_id).local():
-            sender = self.context.agent_address
-            payload = RegistrationPayload(sender=sender)
-
-        with self.context.benchmark_tool.measure(self.behaviour_id).consensus():
-            yield from self.send_a2a_transaction(payload)
-            yield from self.wait_until_round_end()
-
-        self.set_done()
-
-
 class SynchronizeEmbeddingsBehaviour(ValoryChatBaseBehaviour):
     """SynchronizeEmbeddingsBehaviour"""
 
@@ -553,12 +532,11 @@ class SynchronizeRequestsBehaviour(ValoryChatBaseBehaviour):
 class ValoryChatRoundBehaviour(AbstractRoundBehaviour):
     """ValoryChatRoundBehaviour"""
 
-    initial_behaviour_cls = RegistrationBehaviour
+    initial_behaviour_cls = SynchronizeEmbeddingsBehaviour
     abci_app_cls = ValoryChatAbciApp  # type: ignore
     behaviours: Set[Type[BaseBehaviour]] = [
         ChatBehaviour,
         EmbeddingBehaviour,
-        RegistrationBehaviour,
         SynchronizeEmbeddingsBehaviour,
         SynchronizeRequestsBehaviour,
     ]

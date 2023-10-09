@@ -33,6 +33,10 @@
         "skill/valory/abstract_abci/0.1.0": "bafybeibpe6ohnm4ritfnghdtpczdqlrcwufrxr5g75inkkgazeqhonyclu",
         "skill/valory/abstract_round_abci/0.1.0": "bafybeif3cqkks5qx3lqi6nwwhebcirhazt2vidw3sueeqsyxvjeszjt3om",
         "skill/valory/hello_world_abci/0.1.0": "bafybeih2iaypkx7hpahpq5lrwp5qtkk7mqltsrydotxggwgt6ca7x2xu5m",
-        "connection/valory/p2p_libp2p_client/0.1.0": "bafybeihdnfdth3qgltefgrem7xyi4b3ejzaz67xglm2hbma2rfvpl2annq"
+        "connection/valory/p2p_libp2p_client/0.1.0": "bafybeihdnfdth3qgltefgrem7xyi4b3ejzaz67xglm2hbma2rfvpl2annq",
+        "skill/valory/registration_abci/0.1.0": "bafybeiexf4wgolji54legi3mr4uxloauzotidrwzyd4kjeuyl5bptuue3u",
+        "skill/valory/reset_pause_abci/0.1.0": "bafybeic6iwqsja4uwshow7o6o3en7wgzvwlccysrmalengzpwjny3aeqqm",
+        "skill/valory/termination_abci/0.1.0": "bafybeid6okklrkc7o6ghgohgs6urk2nxi7uxobmvrmd6kg2lmyvflcxgsu",
+        "skill/valory/transaction_settlement_abci/0.1.0": "bafybeifq7ngoj3ywdsglmhwh5oxiprerzpbje5whvgvktwjnr4cqxqgq4i"
     }
 }

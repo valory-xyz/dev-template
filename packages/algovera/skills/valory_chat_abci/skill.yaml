@@ -161,4 +161,4 @@ models:
 dependencies:
   pydantic:
     version: ==1.10.11
-is_abstract: false
+is_abstract: true

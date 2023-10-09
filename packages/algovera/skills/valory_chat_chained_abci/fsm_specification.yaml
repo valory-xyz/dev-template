@@ -1,0 +1,172 @@
+alphabet_in:
+- API_ERROR
+- CONTINUE
+- CONTRACT_ERROR
+- DAILY_ORBIS
+- DAILY_TWEET
+- DB_UPDATE
+- DID_NOT_SEND
+- DONE
+- DONE_API_LIMITS
+- DONE_CONTINUE
+- DONE_FINISHED
+- DONE_MAX_RETRIES
+- DONE_SKIP
+- EVALUATE
+- LLM
+- MAX_RETRIES_ERROR
+- NEXT_CENTAUR
+- NO_ALLOWANCE
+- NO_MAJORITY
+- OPENAI_CALL_CHECK
+- READ_CENTAURS
+- READ_CONTRIBUTE_DB
+- READ_MANUAL_POINTS
+- RESET_AND_PAUSE_TIMEOUT
+- RETRIEVE_HASHTAGS
+- RETRIEVE_MENTIONS
+- ROUND_TIMEOUT
+- SCHEDULED_TWEET
+- SCORE
+- SELECT_KEEPERS
+- TWEET_EVALUATION_ROUND_TIMEOUT
+- UPDATE_CENTAURS
+- VERIFICATION_ERROR
+- WRITE_CONTRIBUTE_DB
+default_start_state: RegistrationStartupRound
+final_states: []
+label: ValoryChatChainedAbciApp
+start_states:
+- RegistrationRound
+- RegistrationStartupRound
+states:
+- DBUpdateRound
+- DecisionMakingRound
+- GenericScoringRound
+- LLMRandomnessRound
+- LLMRound
+- LLMSelectKeeperRound
+- OpenAICallCheckRound
+- RandomnessRound
+- RandomnessTwitterRound
+- RegistrationRound
+- RegistrationStartupRound
+- ResetAndPauseRound
+- SelectKeeperRound
+- SelectKeeperTwitterRound
+- StreamReadRound
+- StreamWriteRound
+- TokenTrackRound
+- PreMechRequestRound
+- TwitterDecisionMakingRound
+- TwitterHashtagsCollectionRound
+- TwitterMentionsCollectionRound
+- TwitterRandomnessRound
+- TwitterSelectKeepersRound
+- TwitterWriteRound
+- VerificationRound
+transition_func:
+    (DBUpdateRound, DONE): TwitterDecisionMakingRound
+    (DBUpdateRound, NO_MAJORITY): DBUpdateRound
+    (DBUpdateRound, ROUND_TIMEOUT): DBUpdateRound
+    (DecisionMakingRound, DAILY_ORBIS): RandomnessRound
+    (DecisionMakingRound, DAILY_TWEET): RandomnessTwitterRound
+    (DecisionMakingRound, DONE): ResetAndPauseRound
+    (DecisionMakingRound, LLM): LLMRandomnessRound
+    (DecisionMakingRound, NEXT_CENTAUR): DecisionMakingRound
+    (DecisionMakingRound, NO_MAJORITY): DecisionMakingRound
+    (DecisionMakingRound, READ_CENTAURS): StreamReadRound
+    (DecisionMakingRound, READ_CONTRIBUTE_DB): StreamReadRound
+    (DecisionMakingRound, READ_MANUAL_POINTS): StreamReadRound
+    (DecisionMakingRound, ROUND_TIMEOUT): DecisionMakingRound
+    (DecisionMakingRound, SCHEDULED_TWEET): RandomnessTwitterRound
+    (DecisionMakingRound, SCORE): GenericScoringRound
+    (DecisionMakingRound, UPDATE_CENTAURS): RandomnessRound
+    (DecisionMakingRound, WRITE_CONTRIBUTE_DB): RandomnessRound
+    (GenericScoringRound, DONE): TwitterDecisionMakingRound
+    (GenericScoringRound, NO_MAJORITY): GenericScoringRound
+    (GenericScoringRound, ROUND_TIMEOUT): GenericScoringRound
+    (LLMRandomnessRound, DONE): LLMSelectKeeperRound
+    (LLMRandomnessRound, NO_MAJORITY): LLMRandomnessRound
+    (LLMRandomnessRound, ROUND_TIMEOUT): LLMRandomnessRound
+    (LLMRound, DID_NOT_SEND): LLMRandomnessRound
+    (LLMRound, DONE_CONTINUE): LLMRound
+    (LLMRound, DONE_FINISHED): DecisionMakingRound
+    (LLMRound, ROUND_TIMEOUT): LLMRandomnessRound
+    (LLMSelectKeeperRound, DONE): LLMRound
+    (LLMSelectKeeperRound, NO_MAJORITY): LLMRandomnessRound
+    (LLMSelectKeeperRound, ROUND_TIMEOUT): LLMRandomnessRound
+    (OpenAICallCheckRound, DONE): TwitterDecisionMakingRound
+    (OpenAICallCheckRound, NO_ALLOWANCE): TwitterDecisionMakingRound
+    (OpenAICallCheckRound, NO_MAJORITY): OpenAICallCheckRound
+    (OpenAICallCheckRound, ROUND_TIMEOUT): OpenAICallCheckRound
+    (RandomnessRound, DONE): SelectKeeperRound
+    (RandomnessRound, NO_MAJORITY): RandomnessRound
+    (RandomnessRound, ROUND_TIMEOUT): RandomnessRound
+    (RandomnessTwitterRound, DONE): SelectKeeperTwitterRound
+    (RandomnessTwitterRound, NO_MAJORITY): RandomnessTwitterRound
+    (RandomnessTwitterRound, ROUND_TIMEOUT): RandomnessTwitterRound
+    (RegistrationRound, DONE): DecisionMakingRound
+    (RegistrationRound, NO_MAJORITY): RegistrationRound
+    (RegistrationStartupRound, DONE): DecisionMakingRound
+    (ResetAndPauseRound, DONE): DecisionMakingRound
+    (ResetAndPauseRound, NO_MAJORITY): ResetAndPauseRound
+    (ResetAndPauseRound, RESET_AND_PAUSE_TIMEOUT): ResetAndPauseRound
+    (SelectKeeperRound, DONE): StreamWriteRound
+    (SelectKeeperRound, NO_MAJORITY): RandomnessRound
+    (SelectKeeperRound, ROUND_TIMEOUT): RandomnessRound
+    (SelectKeeperTwitterRound, DONE): TwitterWriteRound
+    (SelectKeeperTwitterRound, NO_MAJORITY): RandomnessTwitterRound
+    (SelectKeeperTwitterRound, ROUND_TIMEOUT): RandomnessTwitterRound
+    (StreamReadRound, API_ERROR): StreamReadRound
+    (StreamReadRound, DONE): DecisionMakingRound
+    (StreamReadRound, NO_MAJORITY): StreamReadRound
+    (StreamReadRound, ROUND_TIMEOUT): StreamReadRound
+    (StreamWriteRound, API_ERROR): RandomnessRound
+    (StreamWriteRound, DID_NOT_SEND): RandomnessRound
+    (StreamWriteRound, DONE): VerificationRound
+    (StreamWriteRound, MAX_RETRIES_ERROR): DecisionMakingRound
+    (StreamWriteRound, ROUND_TIMEOUT): RandomnessRound
+    (TokenTrackRound, CONTRACT_ERROR): TokenTrackRound
+    (TokenTrackRound, DONE): DecisionMakingRound
+    (TokenTrackRound, NO_MAJORITY): TokenTrackRound
+    (TokenTrackRound, ROUND_TIMEOUT): TokenTrackRound
+    (PreMechRequestRound, DONE): TwitterDecisionMakingRound
+    (PreMechRequestRound, TWEET_EVALUATION_ROUND_TIMEOUT): PreMechRequestRound
+    (TwitterDecisionMakingRound, DB_UPDATE): DBUpdateRound
+    (TwitterDecisionMakingRound, DONE): TokenTrackRound
+    (TwitterDecisionMakingRound, DONE_SKIP): TokenTrackRound
+    (TwitterDecisionMakingRound, EVALUATE): PreMechRequestRound
+    (TwitterDecisionMakingRound, NO_MAJORITY): TwitterDecisionMakingRound
+    (TwitterDecisionMakingRound, OPENAI_CALL_CHECK): OpenAICallCheckRound
+    (TwitterDecisionMakingRound, RETRIEVE_HASHTAGS): TwitterHashtagsCollectionRound
+    (TwitterDecisionMakingRound, RETRIEVE_MENTIONS): TwitterMentionsCollectionRound
+    (TwitterDecisionMakingRound, ROUND_TIMEOUT): TwitterDecisionMakingRound
+    (TwitterDecisionMakingRound, SELECT_KEEPERS): TwitterRandomnessRound
+    (TwitterHashtagsCollectionRound, API_ERROR): TwitterHashtagsCollectionRound
+    (TwitterHashtagsCollectionRound, DONE): TwitterDecisionMakingRound
+    (TwitterHashtagsCollectionRound, DONE_API_LIMITS): TwitterDecisionMakingRound
+    (TwitterHashtagsCollectionRound, DONE_MAX_RETRIES): TwitterDecisionMakingRound
+    (TwitterHashtagsCollectionRound, NO_MAJORITY): TwitterRandomnessRound
+    (TwitterHashtagsCollectionRound, ROUND_TIMEOUT): TwitterRandomnessRound
+    (TwitterMentionsCollectionRound, API_ERROR): TwitterMentionsCollectionRound
+    (TwitterMentionsCollectionRound, DONE): TwitterDecisionMakingRound
+    (TwitterMentionsCollectionRound, DONE_API_LIMITS): TwitterDecisionMakingRound
+    (TwitterMentionsCollectionRound, DONE_MAX_RETRIES): TwitterDecisionMakingRound
+    (TwitterMentionsCollectionRound, NO_MAJORITY): TwitterRandomnessRound
+    (TwitterMentionsCollectionRound, ROUND_TIMEOUT): TwitterRandomnessRound
+    (TwitterRandomnessRound, DONE): TwitterSelectKeepersRound
+    (TwitterRandomnessRound, NO_MAJORITY): TwitterRandomnessRound
+    (TwitterRandomnessRound, ROUND_TIMEOUT): TwitterRandomnessRound
+    (TwitterSelectKeepersRound, DONE): TwitterDecisionMakingRound
+    (TwitterSelectKeepersRound, NO_MAJORITY): TwitterRandomnessRound
+    (TwitterSelectKeepersRound, ROUND_TIMEOUT): TwitterRandomnessRound
+    (TwitterWriteRound, API_ERROR): RandomnessTwitterRound
+    (TwitterWriteRound, CONTINUE): TwitterWriteRound
+    (TwitterWriteRound, DONE): DecisionMakingRound
+    (TwitterWriteRound, ROUND_TIMEOUT): RandomnessTwitterRound
+    (VerificationRound, DONE_CONTINUE): StreamWriteRound
+    (VerificationRound, DONE_FINISHED): DecisionMakingRound
+    (VerificationRound, NO_MAJORITY): RandomnessRound
+    (VerificationRound, ROUND_TIMEOUT): RandomnessRound
+    (VerificationRound, VERIFICATION_ERROR): RandomnessRound
