@@ -16,7 +16,7 @@ include = "packages"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-open-autonomy = "==0.12.1.post4"
+open-autonomy = "==0.13.4"
 toml = "^0.10.2"
 
 [tool.poetry.group.dev.dependencies.tomte]
