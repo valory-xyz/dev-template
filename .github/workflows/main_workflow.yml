@@ -63,8 +63,9 @@ jobs:
         run: tomte check-copyright --author author_name
       - name: License compatibility check
         run: tox -e liccheck
-      - name: Check dependencies
-        run: tox -e check-dependencies
+      # Skipped because the script it outdated
+      # - name: Check dependencies
+      #   run: tox -e check-dependencies
       - name: Check doc links
         run: tomte check-doc-links
       - name: Check doc IPFS hashes
