@@ -43,7 +43,6 @@ from aea.package_manager.v1 import PackageManagerV1
 
 from autonomy.cli.helpers.ipfs_hash import load_configuration
 
-
 BUMP_BRANCH = "chore/bump"
 PIPFILE = Path.cwd() / "Pipfile"
 PYPROJECT_TOML = Path.cwd() / "pyproject.toml"
@@ -119,8 +118,10 @@ def make_git_request(url: str) -> requests.Response:
     """Make git request"""
     auth = os.environ.get("GITHUB_AUTH")
     if auth is None:
-        return requests.get(url=url)
-    return requests.get(url=url, headers={"Authorization": f"Bearer {auth}"})
+        return requests.get(url=url, timeout=10)
+    return requests.get(
+        url=url, headers={"Authorization": f"Bearer {auth}"}, timeout=10
+    )
 
 
 def get_latest_tag(repo: str) -> str:
