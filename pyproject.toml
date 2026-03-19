@@ -19,5 +19,5 @@ python = "<4.0,>=3.10"
 open-autonomy = "==0.21.13"
 
 [tool.poetry.group.development.dependencies]
-toml = "==0.10.2"
-tomte = {version = "==0.6.2", extras = ["cli", "tests"]}
+toml = "*"
+tomte = {version = "==0.6.2", extras = ["liccheck", "cli"]}
