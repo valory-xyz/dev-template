@@ -16,7 +16,11 @@ include = "packages"
 
 [tool.poetry.dependencies]
 python = "<4.0,>=3.10"
-open-autonomy = "==0.21.18"
+open-autonomy = {version = "==0.21.18", extras = ["all"]}
+open-aea = {version = "==2.2.1", extras = ["all"]}
+open-aea-cli-ipfs = "==2.2.1"
+open-aea-ci-helpers = "==2.2.1"
+setuptools = "<=81.0.0"
 toml = "==0.10.2"
 
 [tool.poetry.group.development.dependencies]
