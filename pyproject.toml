@@ -20,4 +20,4 @@ open-autonomy = "==0.21.17"
 toml = "==0.10.2"
 
 [tool.poetry.group.development.dependencies]
-tomte = {version = "==0.6.2", extras = ["liccheck", "cli"]}
+tomte = {version = "==0.6.5", extras = ["liccheck", "cli"]}
