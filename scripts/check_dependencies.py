@@ -63,8 +63,6 @@ class Pipfile:
         "open-aea-ledger-cosmos",
         "open-aea-ledger-ethereum",
         "open-aea-ledger-fetchai",
-        "open-aea-flashbots",
-        "open-aea-flashbots",
         "tomte",
     ]
 
