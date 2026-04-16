@@ -16,7 +16,7 @@ include = "packages"
 
 [tool.poetry.dependencies]
 python = "<4.0,>=3.10"
-open-autonomy = "==0.21.17"
+open-autonomy = "==0.21.18"
 toml = "==0.10.2"
 
 [tool.poetry.group.development.dependencies]
