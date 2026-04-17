@@ -2297,6 +2297,26 @@ open-aea = ">=2.0.0,<3.0.0"
 test-tools = ["pytest (>=7.0,<10)"]
 
 [[package]]
+name = "open-aea-helpers"
+version = "0.21.18"
+description = "CLI helpers for CI and dependency management in AEA-based projects."
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "open_aea_helpers-0.21.18-py3-none-any.whl", hash = "sha256:ef41562dafbfce310ce32f77ad31e183a536372c13a2a7b5e59307584e1b6564"},
+    {file = "open_aea_helpers-0.21.18.tar.gz", hash = "sha256:2a55fe9b437471887dc3f1334496b63f365d2690e111cf42416c1c2c7b479fe2"},
+]
+
+[package.dependencies]
+click = ">=8.1.0,<9"
+open-autonomy = ">=0.21.0,<0.22.0"
+python-dotenv = ">=0.14.5,<2"
+PyYAML = ">=6.0,<7"
+requests = ">=2.28.0,<3"
+toml = ">=0.10,<1"
+
+[[package]]
 name = "open-aea-ledger-cosmos"
 version = "2.2.1"
 description = "Python package wrapping the public and private key cryptography and ledger api of Cosmos."
@@ -4148,4 +4168,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = "<3.15,>=3.10"
-content-hash = "8f30e14451b44083f32765c2e9b04eab204940cac8ed28cc2e14ddff1486911b"
+content-hash = "2df98d7db3c3db194a7430b262a3a70a95e083fa842a1e0a936d20e92b3837ad"
