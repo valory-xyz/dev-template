@@ -15,9 +15,10 @@ classifiers = [ "Environment :: Console", "Environment :: Web Environment", "Dev
 include = "packages"
 
 [tool.poetry.dependencies]
-python = "<4.0,>=3.10"
+python = "<3.15,>=3.10"
 open-autonomy = {version = "==0.21.18", extras = ["all"]}
 open-aea-ci-helpers = "==2.2.1"
+pytest-custom_exit_code = "==0.3.0"
 setuptools = "<=81.0.0"
 toml = "==0.10.2"
 
