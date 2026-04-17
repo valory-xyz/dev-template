@@ -22,11 +22,12 @@ dependencies = [
 Repository = "https://github.com/valory-xyz/dev-template"
 
 [dependency-groups]
-dev = ["tomte[liccheck, cli]==0.6.5"]
+dev = ["tomte[liccheck, cli]==0.6.5", "tox-uv"]
 
 [tool.uv]
 default-groups = "all"
 prerelease = "allow"
+constraint-dependencies = ["httpx<1"]
 
 [tool.uv.build-backend]
 module-name = ["packages"]
