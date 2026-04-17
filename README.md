@@ -28,8 +28,12 @@ docker container run -it valory/open-autonomy-user:latest
 
 ```bash
 uv sync --all-groups
-source .venv/bin/activate
 ```
+
+Run commands through `uv run` (e.g. `uv run tox`, `uv run autonomy test`) or activate the venv directly:
+
+- Linux / macOS: `source .venv/bin/activate`
+- Windows (PowerShell): `.venv\Scripts\Activate.ps1`
 
 Then start building under `packages/<your-author>/<your-skill>/`.
 
