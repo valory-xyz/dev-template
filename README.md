@@ -4,7 +4,7 @@ A template repository for developing agent services with the [open-autonomy](htt
 
 ## System requirements
 
-- Python `>=3.10, <4.0` (tested on 3.10–3.14)
+- Python `>=3.10, <3.15`
 - [Poetry](https://python-poetry.org/) `>=2.0`
 - [Tendermint](https://docs.tendermint.com/v0.34/introduction/install.html) `==0.34.19`
 - [IPFS](https://docs.ipfs.io/install/command-line/#official-distributions) `==0.6.0`
@@ -30,8 +30,6 @@ docker container run -it valory/open-autonomy-user:latest
 poetry install
 eval $(poetry env activate)
 ```
-
-> `poetry shell` was removed in Poetry 2.0 — use `poetry env activate` (prints the activation command) or prefix commands with `poetry run`.
 
 Then start building under `packages/<your-author>/<your-skill>/`.
 
