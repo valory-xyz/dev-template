@@ -1,27 +1,41 @@
 [build-system]
-requires = [ "poetry-core>=2.0.0",]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.11.2,<0.12.0"]
+build-backend = "uv_build"
 
-[tool.poetry]
+[project]
 name = "dev-template"
 version = "0.1.0"
 description = ""
-authors = []
+requires-python = "<3.15,>=3.10"
 readme = "README.md"
-repository = "https://github.com/valory-xyz/dev-template"
-keywords = [ "autonomy", "autonomous", "autonolas", "service", "multi", "agent",]
-classifiers = [ "Environment :: Console", "Environment :: Web Environment", "Development Status :: 2 - Pre-Alpha", "Intended Audience :: Developers", "License :: OSI Approved :: Apache Software License", "Natural Language :: English", "Operating System :: MacOS", "Operating System :: Microsoft", "Operating System :: Unix", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11",  "Programming Language :: Python :: 3.12",  "Programming Language :: Python :: 3.13",  "Programming Language :: Python :: 3.14", "Topic :: Communications", "Topic :: Internet", "Topic :: Scientific/Engineering", "Topic :: Software Development", "Topic :: System",]
-[[tool.poetry.packages]]
-include = "packages"
+license = "Apache-2.0"
+dependencies = [
+    "open-autonomy[all]==0.21.18",
+    "toml==0.10.2",
+]
 
-[tool.poetry.dependencies]
-python = "<3.15,>=3.10"
-open-autonomy = {version = "==0.21.18", extras = ["all"]}
-open-aea-ci-helpers = "==2.2.1"
-open-aea-helpers = "==0.21.18"
-pytest-custom_exit_code = "==0.3.0"
-setuptools = "<=81.0.0"
-toml = "==0.10.2"
+[project.urls]
+Repository = "https://github.com/valory-xyz/dev-template"
 
-[tool.poetry.group.development.dependencies]
-tomte = {version = "==0.6.5", extras = ["liccheck", "cli"]}
+[dependency-groups]
+dev = [
+    "tomte[liccheck, cli]==0.6.5",
+    "tox-uv",
+    # CI tooling, not runtime:
+    "open-aea-ci-helpers==2.2.1",  # aea-ci check-dependencies etc.
+    "open-aea-helpers==0.21.18",   # aea-helpers check-doc-hashes etc.
+    "pytest-custom_exit_code==0.3.0",  # --suppress-no-test-exit-code for empty template
+    "setuptools<=81.0.0",  # liccheck 0.6.0 imports pkg_resources (removed in setuptools 81+)
+]
+
+[tool.uv]
+default-groups = "all"
+prerelease = "allow"
+# Keep httpx on the 0.x series: safety 3.7.0 (pulled via tomte[safety])
+# imports httpx.NetworkError, which was removed in httpx 1.x. Without
+# this constraint, UV_PRERELEASE=allow lets uv resolve to httpx 1.0.devN.
+constraint-dependencies = ["httpx<1"]
+
+[tool.uv.build-backend]
+module-name = ["packages"]
+module-root = ""

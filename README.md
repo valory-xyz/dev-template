@@ -5,7 +5,7 @@ A template repository for developing agent services with the [open-autonomy](htt
 ## System requirements
 
 - Python `>=3.10, <3.15`
-- [Poetry](https://python-poetry.org/) `>=2.0`
+- [uv](https://docs.astral.sh/uv/) `>=0.11`
 - [Tendermint](https://docs.tendermint.com/v0.34/introduction/install.html) `==0.34.19`
 - [IPFS](https://docs.ipfs.io/install/command-line/#official-distributions) `==0.6.0`
 - [Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
@@ -27,9 +27,13 @@ docker container run -it valory/open-autonomy-user:latest
 ## How to use
 
 ```bash
-poetry install
-eval $(poetry env activate)
+uv sync --all-groups
 ```
+
+Run commands through `uv run` (e.g. `uv run tox`, `uv run autonomy test`) or activate the venv directly:
+
+- Linux / macOS: `source .venv/bin/activate`
+- Windows (PowerShell): `.venv\Scripts\Activate.ps1`
 
 Then start building under `packages/<your-author>/<your-skill>/`.
 
