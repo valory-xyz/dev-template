@@ -13,7 +13,6 @@ docstrings
 env
 linter
 linters
-Pipenv
 PyPI
 Tendermint
 white_check_mark
