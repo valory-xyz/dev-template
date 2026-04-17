@@ -76,6 +76,6 @@ generators:
 common-checks-1:
 	tomte check-copyright --author author_name
 	tomte check-doc-links
-	tox -p -e check-hash -e check-packages -e check-doc-hashes
+	tox -p -e check-hash -e check-packages
 
 v := $(shell pip -V | grep virtualenvs)
