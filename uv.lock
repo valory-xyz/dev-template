@@ -993,32 +993,32 @@ name = "dev-template"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "open-aea-ci-helpers" },
-    { name = "open-aea-helpers" },
     { name = "open-autonomy", extra = ["all"] },
-    { name = "pytest-custom-exit-code" },
-    { name = "setuptools" },
     { name = "toml" },
 ]
 
 [package.dev-dependencies]
 dev = [
+    { name = "open-aea-ci-helpers" },
+    { name = "open-aea-helpers" },
+    { name = "pytest-custom-exit-code" },
+    { name = "setuptools" },
     { name = "tomte", extra = ["cli", "liccheck"] },
     { name = "tox-uv" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "open-aea-ci-helpers", specifier = "==2.2.1" },
-    { name = "open-aea-helpers", specifier = "==0.21.18" },
     { name = "open-autonomy", extras = ["all"], specifier = "==0.21.18" },
-    { name = "pytest-custom-exit-code", specifier = "==0.3.0" },
-    { name = "setuptools", specifier = "<=81.0.0" },
     { name = "toml", specifier = "==0.10.2" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "open-aea-ci-helpers", specifier = "==2.2.1" },
+    { name = "open-aea-helpers", specifier = "==0.21.18" },
+    { name = "pytest-custom-exit-code", specifier = "==0.3.0" },
+    { name = "setuptools", specifier = "<=81.0.0" },
     { name = "tomte", extras = ["liccheck", "cli"], specifier = "==0.6.5" },
     { name = "tox-uv" },
 ]
